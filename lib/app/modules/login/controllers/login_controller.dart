@@ -20,11 +20,12 @@ class LoginController extends GetxController {
 
   @override
   Future<void> onInit() async {
-    isLoading = true.obs;
+    isLoading.value = true;
     final response = await adminValidate();
     if (response.statusCode == 200) {
-      Get.offAllNamed(Routes.HOME);
+      Get.offAllNamed(Routes.PRODUCT);
     }
+    isLoading.value = false;
     super.onInit();
   }
 
@@ -34,7 +35,7 @@ class LoginController extends GetxController {
     final response = await login(username: "admin", password: hashString("password"));
     if (response.statusCode == 200) {
       buttonState.value = ButtonState.disable;
-      Get.offAllNamed(Routes.HOME);
+      Get.offAllNamed(Routes.PRODUCT);
     } else {
       isError.value = true;
     }

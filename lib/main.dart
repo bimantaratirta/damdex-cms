@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
       scrollBehavior: ScrollConfiguration.of(context).copyWith(physics: const ClampingScrollPhysics()),
       initialRoute: AppPages.INITIAL,
       debugShowCheckedModeBanner: false,
-      defaultTransition: Transition.rightToLeft,
+      defaultTransition: Transition.noTransition,
       transitionDuration: const Duration(milliseconds: 200),
     );
   }

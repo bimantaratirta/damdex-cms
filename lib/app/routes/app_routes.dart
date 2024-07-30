@@ -5,12 +5,22 @@ part of 'app_pages.dart';
 
 abstract class Routes {
   Routes._();
-  static const HOME = _Paths.HOME;
   static const LOGIN = _Paths.LOGIN;
+  static const PRODUCT = _Paths.PRODUCT;
+  static const USAGE = _Paths.USAGE;
+  static const ARTICLE = _Paths.ARTICLE;
+  static const TOKO = _Paths.TOKO;
+  static const LOGS = _Paths.LOGS;
+  static const SETTINGS = _Paths.SETTINGS;
 }
 
 abstract class _Paths {
   _Paths._();
-  static const HOME = '/home';
   static const LOGIN = '/login';
+  static const PRODUCT = '/product';
+  static const USAGE = '/usage';
+  static const ARTICLE = '/article';
+  static const TOKO = '/toko';
+  static const LOGS = '/logs';
+  static const SETTINGS = '/settings';
 }
