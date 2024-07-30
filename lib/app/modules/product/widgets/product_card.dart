@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
 
 import '../../../constants/sizes.dart';
 import '../../../data/api/api_path.dart';
 import '../../../data/api/product/models/model_get_produk.dart';
+import '../../../routes/app_pages.dart';
 import '../../../theme/app_colors.dart';
 import '../../shareds/widgets/app_button.dart';
 import '../../shareds/widgets/app_gaps.dart';
@@ -28,6 +30,7 @@ class ProductCard extends StatelessWidget {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
             height: 150,
@@ -54,7 +57,7 @@ class ProductCard extends StatelessWidget {
           Gaps.vertical.r,
           AppButton(
             type: ButtonType.elevated,
-            onPressed: () {},
+            onPressed: () => Get.toNamed(Routes.PRODUCT_DETAIL, arguments: produk.id),
             child: const Text("Details"),
           ),
         ],

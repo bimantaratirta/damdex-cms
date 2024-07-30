@@ -12,11 +12,13 @@ class HomeSidebarMenu extends StatelessWidget {
     required this.icon,
     required this.title,
     required this.route,
+    required this.routes,
   });
 
   final Widget icon;
   final String title;
   final String route;
+  final List<String> routes;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,7 @@ class HomeSidebarMenu extends StatelessWidget {
       },
       child: Container(
         padding: const EdgeInsets.all(Sizes.m),
-        color: Get.currentRoute == route ? AppColors.lightBlue : null,
+        color: Get.currentRoute == route || routes.contains(Get.currentRoute) ? AppColors.lightBlue : null,
         child: Row(
           children: [
             icon,

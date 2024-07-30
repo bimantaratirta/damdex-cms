@@ -33,11 +33,13 @@ class HomeSideBar extends StatelessWidget {
             ),
             title: "Produk",
             route: Routes.PRODUCT,
+            routes: [Routes.PRODUCT, Routes.PRODUCT_DETAIL],
           ),
           HomeSidebarMenu(
             icon: Image.asset("assets/icon/usage.png"),
             title: "Cara Pakai",
             route: Routes.USAGE,
+            routes: const [Routes.USAGE],
           ),
           const HomeSidebarMenu(
             icon: Icon(
@@ -47,6 +49,7 @@ class HomeSideBar extends StatelessWidget {
             ),
             title: "Artikel",
             route: Routes.ARTICLE,
+            routes: [Routes.ARTICLE],
           ),
           const HomeSidebarMenu(
             icon: Icon(
@@ -56,6 +59,7 @@ class HomeSideBar extends StatelessWidget {
             ),
             title: "Direktori Toko",
             route: Routes.TOKO,
+            routes: [Routes.TOKO],
           ),
           const HomeSidebarMenu(
             icon: Icon(
@@ -65,6 +69,7 @@ class HomeSideBar extends StatelessWidget {
             ),
             title: "User Log",
             route: Routes.LOGS,
+            routes: [Routes.LOGS],
           ),
           const HomeSidebarMenu(
             icon: Icon(
@@ -74,6 +79,7 @@ class HomeSideBar extends StatelessWidget {
             ),
             title: "Pengaturan",
             route: Routes.SETTINGS,
+            routes: [Routes.SETTINGS],
           ),
         ],
       ),
