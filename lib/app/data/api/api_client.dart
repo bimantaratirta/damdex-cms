@@ -26,7 +26,7 @@ class APIParam<T> {
 }
 
 class APIResponse<T> {
-  Map<String, String>? headers;
+  Headers? headers;
   T? data;
   int? statusCode;
   dynamic error;
@@ -49,7 +49,8 @@ class APIClient {
   ));
 
   APIClient() {
-    _dio.interceptors.add(APIInterceptor(_dio));
+    _dio.interceptors.add(APIInterceptor());
+    _dio.options.extra['withCredentials'] = true;
   }
 
   Future<APIResponse<T>> _responseHandler<T>(Response response, APIParam<T> param) async {
@@ -58,6 +59,7 @@ class APIClient {
       final jsonBody = response.data is String ? json.decode(response.data) : response.data;
       final T data = param.fromJson(jsonBody['result'] ?? {});
       final APIResponse<T> result = APIResponse(
+        headers: response.headers,
         data: data,
         error: null,
         statusCode: sc,

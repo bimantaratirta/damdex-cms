@@ -12,19 +12,26 @@ class LoginView extends GetView<LoginController> {
   Widget build(BuildContext context) {
     final isWide = Get.width > 600;
     return Scaffold(
-      body: isWide
-          ? const Row(
-              children: [
-                Expanded(child: LoginHeader()),
-                Expanded(child: LoginForm()),
-              ],
-            )
-          : const Column(
-              children: [
-                Expanded(child: LoginHeader()),
-                Expanded(child: LoginForm()),
-              ],
-            ),
+      body: Obx(() {
+        final isLoading = controller.isLoading.value;
+        if (isLoading) {
+          return const Center(child: CircularProgressIndicator());
+        } else {
+          return isWide
+              ? const Row(
+                  children: [
+                    Expanded(child: LoginHeader()),
+                    Expanded(child: LoginForm()),
+                  ],
+                )
+              : const Column(
+                  children: [
+                    Expanded(child: LoginHeader()),
+                    Expanded(child: LoginForm()),
+                  ],
+                );
+        }
+      }),
     );
   }
 }
