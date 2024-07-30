@@ -2,20 +2,25 @@ name: cms
 version: 1.0.0+1
 publish_to: none
 description: A new Flutter project.
-environment: 
-  sdk: '>=3.4.3 <4.0.0'
+environment:
+  sdk: ">=3.4.3 <4.0.0"
 
-dependencies: 
+dependencies:
   cupertino_icons: ^1.0.6
   get: 4.6.6
-  flutter: 
+  google_fonts: ^6.2.1
+  flutter:
     sdk: flutter
+  shared_preferences: ^2.2.3
+  dio: ^5.5.0+1
+  crypto: ^3.0.3
 
-dev_dependencies: 
+dev_dependencies:
   flutter_lints: 4.0.0
-  flutter_test: 
+  flutter_test:
     sdk: flutter
 
-flutter: 
+flutter:
+  assets:
+    - assets/logo/
   uses-material-design: true
-
