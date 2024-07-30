@@ -65,7 +65,7 @@ class AppButton extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         elevation: 0,
         minimumSize: Size.zero,
-        fixedSize: fixedSize ?? const Size(double.infinity, 48),
+        fixedSize: fixedSize ?? const Size(double.infinity, 40),
         foregroundColor: foregroundColor ?? AppColors.white,
         backgroundColor: backgroundColor ?? AppColors.accent,
         disabledForegroundColor: AppColors.white.withOpacity(.5),
@@ -91,7 +91,7 @@ class AppButton extends StatelessWidget {
       onPressed: state == ButtonState.enable ? onPressed : null,
       style: OutlinedButton.styleFrom(
         elevation: 0,
-        fixedSize: fixedSize ?? const Size(double.infinity, 48),
+        fixedSize: fixedSize ?? const Size(double.infinity, 40),
         foregroundColor: foregroundColor ?? AppColors.accent,
         backgroundColor: backgroundColor ?? Colors.transparent,
         disabledForegroundColor: foregroundColor ?? AppColors.accent.withOpacity(.5),
@@ -120,7 +120,7 @@ class AppButton extends StatelessWidget {
       onPressed: state == ButtonState.enable ? onPressed : null,
       style: TextButton.styleFrom(
         elevation: 0,
-        fixedSize: fixedSize ?? const Size(double.infinity, 48),
+        fixedSize: fixedSize ?? const Size(double.infinity, 40),
         foregroundColor: foregroundColor ?? AppColors.accent,
         backgroundColor: backgroundColor ?? Colors.transparent,
         disabledForegroundColor: foregroundColor ?? AppColors.accent.withOpacity(.5),

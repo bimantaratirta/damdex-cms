@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import '../../home/widgets/home_sidebar.dart';
 import '../controllers/product_controller.dart';
+import '../widgets/product_content.dart';
 
 class ProductView extends GetView<ProductController> {
   const ProductView({super.key});
@@ -13,6 +14,7 @@ class ProductView extends GetView<ProductController> {
       body: Row(
         children: [
           HomeSideBar(),
+          ProductContent(),
         ],
       ),
     );

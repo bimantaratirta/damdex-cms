@@ -1,23 +1,23 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ProductController extends GetxController {
-  //TODO: Implement ProductController
+import '../../../data/api/product/data/get_products.dart';
+import '../../../data/api/product/models/model_get_produk.dart';
 
-  final count = 0.obs;
+class ProductController extends GetxController {
+  Rx<List<Produk>?> listProduk = Rx<List<Produk>?>(null);
+
+  final TextEditingController searchC = TextEditingController();
+  final FocusNode searchFN = FocusNode();
+
+  RxBool isLoading = true.obs;
+
   @override
-  void onInit() {
+  Future<void> onInit() async {
+    final response = await getProducts();
+    if (response.data != null) {
+      listProduk.value = response.data?.payload ?? [];
+    }
     super.onInit();
   }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }
