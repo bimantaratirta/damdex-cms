@@ -6,9 +6,9 @@ import '../../../data/api/api_path.dart';
 import '../../../data/api/product/models/model_get_produk.dart';
 import '../../../routes/app_pages.dart';
 import '../../../theme/app_colors.dart';
-import '../../shareds/widgets/app_button.dart';
-import '../../shareds/widgets/app_gaps.dart';
-import '../../shareds/widgets/text_bold.dart';
+import '../../../shareds/widgets/app_button.dart';
+import '../../../shareds/widgets/app_gaps.dart';
+import '../../../shareds/widgets/text_bold.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({

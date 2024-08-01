@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../constants/sizes.dart';
-import '../../../theme/app_colors.dart';
+import '../../constants/sizes.dart';
+import '../../theme/app_colors.dart';
 
 enum ButtonType {
   elevated,

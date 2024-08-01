@@ -4,7 +4,7 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 
 import '../../../constants/sizes.dart';
 import '../../../theme/app_colors.dart';
-import '../../shareds/widgets/text_bold.dart';
+import '../../../shareds/widgets/text_bold.dart';
 import '../controllers/product_detail_controller.dart';
 
 class ProductDetailFeatureCard extends GetView<ProductDetailController> {

@@ -3,8 +3,8 @@ import 'package:get/route_manager.dart';
 
 import '../../../constants/sizes.dart';
 import '../../../theme/app_colors.dart';
-import '../../shareds/widgets/app_gaps.dart';
-import '../../shareds/widgets/text_bold.dart';
+import '../../../shareds/widgets/app_gaps.dart';
+import '../../../shareds/widgets/text_bold.dart';
 
 class HomeSidebarMenu extends StatelessWidget {
   const HomeSidebarMenu({

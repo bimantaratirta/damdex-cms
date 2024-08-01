@@ -4,10 +4,10 @@ import 'package:get/get_state_manager/src/simple/get_view.dart';
 
 import '../../../constants/sizes.dart';
 import '../../../theme/app_colors.dart';
-import '../../shareds/widgets/app_button.dart';
-import '../../shareds/widgets/app_gaps.dart';
-import '../../shareds/widgets/app_textfield.dart';
-import '../../shareds/widgets/text_bold.dart';
+import '../../../shareds/widgets/app_button.dart';
+import '../../../shareds/widgets/app_gaps.dart';
+import '../../../shareds/widgets/app_textfield.dart';
+import '../../../shareds/widgets/text_bold.dart';
 import '../controllers/login_controller.dart';
 
 class LoginForm extends GetView<LoginController> {

@@ -33,7 +33,7 @@ class HomeSideBar extends StatelessWidget {
             ),
             title: "Produk",
             route: Routes.PRODUCT,
-            routes: [Routes.PRODUCT, Routes.PRODUCT_DETAIL],
+            routes: [Routes.PRODUCT, Routes.PRODUCT_DETAIL, Routes.PRODUCT_EDIT],
           ),
           HomeSidebarMenu(
             icon: Image.asset("assets/icon/usage.png"),

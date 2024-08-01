@@ -5,5 +5,11 @@ class ProductDetailController extends GetxController {
 
   RxInt selectedFeature = 0.obs;
 
-  void setSelectedFeature(int val) => selectedFeature.value = val;
+  void setSelectedFeature(int val) {
+    if (selectedFeature.value == val) {
+      selectedFeature.value = 99;
+    } else {
+      selectedFeature.value = val;
+    }
+  }
 }

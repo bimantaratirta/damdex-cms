@@ -10,6 +10,8 @@ import '../modules/logs/bindings/logs_binding.dart';
 import '../modules/logs/views/logs_view.dart';
 import '../modules/product-detail/bindings/product_detail_binding.dart';
 import '../modules/product-detail/views/product_detail_view.dart';
+import '../modules/product-edit/bindings/product_edit_binding.dart';
+import '../modules/product-edit/views/product_edit_view.dart';
 import '../modules/product/bindings/product_binding.dart';
 import '../modules/product/views/product_view.dart';
 import '../modules/settings/bindings/settings_binding.dart';
@@ -73,6 +75,11 @@ class AppPages {
       name: _Paths.ARTCLE_DETAIL,
       page: () => const ArtcleDetailView(),
       binding: ArtcleDetailBinding(),
+    ),
+    GetPage(
+      name: _Paths.PRODUCT_EDIT,
+      page: () => const ProductEditView(),
+      binding: ProductEditBinding(),
     ),
   ];
 }

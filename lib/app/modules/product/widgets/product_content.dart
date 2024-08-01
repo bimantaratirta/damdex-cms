@@ -3,10 +3,10 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 
 import '../../../constants/sizes.dart';
-import '../../shareds/widgets/app_button.dart';
-import '../../shareds/widgets/app_gaps.dart';
-import '../../shareds/widgets/app_textfield.dart';
-import '../../shareds/widgets/text_bold.dart';
+import '../../../shareds/widgets/app_button.dart';
+import '../../../shareds/widgets/app_gaps.dart';
+import '../../../shareds/widgets/app_textfield.dart';
+import '../../../shareds/widgets/text_bold.dart';
 import '../controllers/product_controller.dart';
 import 'product_card.dart';
 

@@ -6,9 +6,9 @@ import 'package:get/route_manager.dart';
 import '../../../constants/sizes.dart';
 import '../../../routes/app_pages.dart';
 import '../../../theme/app_colors.dart';
-import '../../shareds/widgets/app_button.dart';
-import '../../shareds/widgets/app_gaps.dart';
-import '../../shareds/widgets/text_bold.dart';
+import '../../../shareds/widgets/app_button.dart';
+import '../../../shareds/widgets/app_gaps.dart';
+import '../../../shareds/widgets/text_bold.dart';
 import '../controllers/product_detail_controller.dart';
 import 'product_detail_feature_card.dart';
 
@@ -51,7 +51,7 @@ class ProductDetailContent extends GetView<ProductDetailController> {
               children: [
                 AppButton(
                   type: ButtonType.elevated,
-                  onPressed: () {},
+                  onPressed: () => Get.toNamed(Routes.PRODUCT_EDIT),
                   fixedSize: const Size(100, 40),
                   child: const Text("Edit"),
                 ),

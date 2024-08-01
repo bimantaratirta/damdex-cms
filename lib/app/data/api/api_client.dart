@@ -9,6 +9,7 @@ class APIParam<T> {
   final String path;
   final T Function(Map<String, dynamic>) fromJson;
   final Map<String, dynamic>? data;
+  final FormData? formData;
   final Map<String, dynamic>? queryParameters;
   final Options? options;
   final Function(int, int)? onReceiveProgress;
@@ -19,6 +20,7 @@ class APIParam<T> {
     required this.fromJson,
     this.queryParameters,
     this.data,
+    this.formData,
     this.options,
     this.onReceiveProgress,
     this.onSendProgress,
@@ -108,7 +110,7 @@ class APIClient {
     try {
       final response = await _dio.post(
         param.path,
-        data: param.data,
+        data: param.data ?? param.formData,
         queryParameters: param.queryParameters,
         options: param.options,
         cancelToken: cancelToken,

@@ -6,7 +6,7 @@ import '../../../data/api/admin/data/admin_login.dart';
 import '../../../data/api/admin/data/admin_validate.dart';
 import '../../../routes/app_pages.dart';
 import '../../../utils/hash_string.dart';
-import '../../shareds/widgets/app_button.dart';
+import '../../../shareds/widgets/app_button.dart';
 
 class LoginController extends GetxController {
   TextEditingController usernameC = TextEditingController();
