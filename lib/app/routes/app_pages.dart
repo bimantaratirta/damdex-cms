@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../modules/add-product/bindings/add_product_binding.dart';
+import '../modules/add-product/views/add_product_view.dart';
 import '../modules/artcle-detail/bindings/artcle_detail_binding.dart';
 import '../modules/artcle-detail/views/artcle_detail_view.dart';
 import '../modules/article/bindings/article_binding.dart';
@@ -80,6 +82,11 @@ class AppPages {
       name: _Paths.PRODUCT_EDIT,
       page: () => const ProductEditView(),
       binding: ProductEditBinding(),
+    ),
+    GetPage(
+      name: _Paths.ADD_PRODUCT,
+      page: () => const AddProductView(),
+      binding: AddProductBinding(),
     ),
   ];
 }

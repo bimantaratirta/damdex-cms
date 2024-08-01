@@ -1,28 +1,28 @@
 import 'dart:convert';
 
-class ModelGetProduk {
+class ModelGetProducts {
   final int? totalAllData;
   final List<Produk>? payload;
 
-  ModelGetProduk({
+  ModelGetProducts({
     this.totalAllData,
     this.payload,
   });
 
-  ModelGetProduk copyWith({
+  ModelGetProducts copyWith({
     int? totalAllData,
     List<Produk>? payload,
   }) =>
-      ModelGetProduk(
+      ModelGetProducts(
         totalAllData: totalAllData ?? this.totalAllData,
         payload: payload ?? this.payload,
       );
 
-  factory ModelGetProduk.fromRawJson(String str) => ModelGetProduk.fromJson(json.decode(str));
+  factory ModelGetProducts.fromRawJson(String str) => ModelGetProducts.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory ModelGetProduk.fromJson(Map<String, dynamic> json) => ModelGetProduk(
+  factory ModelGetProducts.fromJson(Map<String, dynamic> json) => ModelGetProducts(
         totalAllData: json["totalAllData"],
         payload: json["payload"] == null ? [] : List<Produk>.from(json["payload"]!.map((x) => Produk.fromJson(x))),
       );

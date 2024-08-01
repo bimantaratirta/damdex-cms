@@ -2,17 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
 
+import '../../../data/api/product/models/model_get_product.dart';
 import '../../../shareds/widgets/app_gaps.dart';
 import '../../../shareds/widgets/app_html_editor.dart';
 import '../../../shareds/widgets/app_icon_button.dart';
 import '../../../shareds/widgets/app_textfield.dart';
 import '../../../theme/app_colors.dart';
-import '../controllers/product_edit_controller.dart';
+import '../controllers/add_product_controller.dart';
 
-class ProductEditFeatureCard extends GetView<ProductEditController> {
-  const ProductEditFeatureCard({super.key, required this.feature});
+class AddProductInputFeatureCard extends GetView<AddProductController> {
+  const AddProductInputFeatureCard({super.key, required this.fitur});
 
-  final int feature;
+  final Fitur fitur;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class ProductEditFeatureCard extends GetView<ProductEditController> {
       children: [
         AppIconButton(
           onTap: () {
-            controller.features.removeWhere((feature) => feature == this.feature);
+            controller.product.value.listFitur?.removeWhere((fitur) => fitur == this.fitur);
           },
           icon: Icons.remove_rounded,
           color: AppColors.red,
@@ -31,7 +32,7 @@ class ProductEditFeatureCard extends GetView<ProductEditController> {
           child: Column(
             children: [
               AppTextField(
-                label: const Text("Nama Fitur"),
+                label: Text(fitur.judul ?? ""),
                 isError: false,
                 focusNode: FocusNode(),
                 controller: TextEditingController(),
@@ -39,7 +40,7 @@ class ProductEditFeatureCard extends GetView<ProductEditController> {
               Gaps.vertical.s,
               AppHtmlEditor(
                 editorController: HtmlEditorController(),
-                hint: "Deskripsi Fitur",
+                hint: fitur.body ?? "",
               ),
             ],
           ),

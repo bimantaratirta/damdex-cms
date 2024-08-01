@@ -1,15 +1,70 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:html_editor_enhanced/html_editor.dart';
+
+import '../../../data/api/product/data/get_product.dart';
+import '../../../data/api/product/models/model_get_product.dart';
+import '../../../routes/app_pages.dart';
+import '../../../shareds/widgets/app_button.dart' as b;
+import '../../../shareds/widgets/app_gaps.dart';
+import '../../../theme/app_colors.dart';
 
 class ProductDetailController extends GetxController {
-  List<int> features = [0, 1, 2, 3, 4, 5];
+  final Rx<ModelGetProduct?> produk = Rx<ModelGetProduct?>(null);
 
-  RxInt selectedFeature = 0.obs;
+  final TextEditingController nameC = TextEditingController();
+  final FocusNode nameFN = FocusNode();
+  final HtmlEditorController editorController = HtmlEditorController();
 
-  void setSelectedFeature(int val) {
+  Rx<Fitur?> selectedFeature = Rx<Fitur?>(null);
+  RxBool isOnEdit = false.obs;
+
+  void setSelectedFeature(Fitur val) {
     if (selectedFeature.value == val) {
-      selectedFeature.value = 99;
+      selectedFeature.value = null;
     } else {
       selectedFeature.value = val;
     }
+  }
+
+  @override
+  Future<void> onInit() async {
+    if (Get.arguments == null) {
+      Get.offAllNamed(Routes.PRODUCT);
+    } else {
+      final response = await getProduct(Get.arguments);
+      if (response.data != null) {
+        produk.value = response.data;
+        nameC.text = response.data?.judul ?? "";
+      }
+    }
+    super.onInit();
+  }
+
+  Future<void> deleteProduct() async {
+    final produk = this.produk.value;
+    Get.dialog(AlertDialog(
+      title: Text("Hapus ${produk?.judul}"),
+      actions: [
+        b.AppButton(
+          type: b.ButtonType.outlined,
+          onPressed: Get.back,
+          fixedSize: const Size(100, 40),
+          child: const Text("Batal"),
+        ),
+        Gaps.horizontal.r,
+        b.AppButton(
+          type: b.ButtonType.elevated,
+          backgroundColor: AppColors.red,
+          onPressed: () {
+            deleteProduct().then((res) {
+              Get.offAllNamed(Routes.PRODUCT);
+            });
+          },
+          fixedSize: const Size(100, 40),
+          child: const Text("Hapus"),
+        ),
+      ],
+    ));
   }
 }

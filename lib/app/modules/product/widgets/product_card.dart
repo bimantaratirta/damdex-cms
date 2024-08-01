@@ -3,7 +3,7 @@ import 'package:get/route_manager.dart';
 
 import '../../../constants/sizes.dart';
 import '../../../data/api/api_path.dart';
-import '../../../data/api/product/models/model_get_produk.dart';
+import '../../../data/api/product/models/model_get_products.dart';
 import '../../../routes/app_pages.dart';
 import '../../../theme/app_colors.dart';
 import '../../../shareds/widgets/app_button.dart';
@@ -57,7 +57,7 @@ class ProductCard extends StatelessWidget {
           Gaps.vertical.r,
           AppButton(
             type: ButtonType.elevated,
-            onPressed: () => Get.toNamed(Routes.PRODUCT_DETAIL, arguments: produk.id),
+            onPressed: () => Get.toNamed(Routes.PRODUCT_DETAIL, arguments: produk.id, preventDuplicates: false),
             child: const Text("Details"),
           ),
         ],

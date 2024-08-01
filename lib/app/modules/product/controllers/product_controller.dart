@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 import '../../../data/api/admin/data/admin_validate.dart';
 import '../../../data/api/product/data/get_products.dart';
-import '../../../data/api/product/models/model_get_produk.dart';
+import '../../../data/api/product/models/model_get_products.dart';
 
 class ProductController extends GetxController {
   Rx<List<Produk>?> listProduk = Rx<List<Produk>?>(null);

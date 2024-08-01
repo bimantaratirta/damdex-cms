@@ -3,9 +3,11 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 
 import '../../../constants/sizes.dart';
+import '../../../routes/app_pages.dart';
 import '../../../shareds/widgets/app_button.dart';
 import '../../../shareds/widgets/app_gaps.dart';
 import '../../../shareds/widgets/app_textfield.dart';
+import '../../../shareds/widgets/empty_list.dart';
 import '../../../shareds/widgets/text_bold.dart';
 import '../controllers/product_controller.dart';
 import 'product_card.dart';
@@ -21,6 +23,7 @@ class ProductContent extends GetView<ProductController> {
         if (listProduk == null) {
           return const Center(child: SizedBox(width: 50, height: 50, child: CircularProgressIndicator()));
         }
+
         return Align(
           alignment: Alignment.topCenter,
           child: ListView(
@@ -50,22 +53,26 @@ class ProductContent extends GetView<ProductController> {
                 alignment: Alignment.centerRight,
                 child: AppButton(
                   type: ButtonType.elevated,
-                  onPressed: () {},
+                  onPressed: () => Get.toNamed(Routes.ADD_PRODUCT, preventDuplicates: false),
                   child: const Text("Tambah Produk"),
                 ),
               ),
               Gaps.vertical.l,
-              AlignedGridView.extent(
-                shrinkWrap: true,
-                maxCrossAxisExtent: 200,
-                itemCount: listProduk.length,
-                mainAxisSpacing: Sizes.r,
-                crossAxisSpacing: Sizes.r,
-                itemBuilder: (context, index) {
-                  final produk = listProduk[index];
-                  return ProductCard(produk: produk);
-                },
-              ),
+              if (listProduk.isEmpty) ...[
+                const EmptyList(description: "Produk Kosong"),
+              ] else ...[
+                AlignedGridView.extent(
+                  shrinkWrap: true,
+                  maxCrossAxisExtent: 200,
+                  itemCount: listProduk.length,
+                  mainAxisSpacing: Sizes.r,
+                  crossAxisSpacing: Sizes.r,
+                  itemBuilder: (context, index) {
+                    final produk = listProduk[index];
+                    return ProductCard(produk: produk);
+                  },
+                ),
+              ]
             ],
           ),
         );

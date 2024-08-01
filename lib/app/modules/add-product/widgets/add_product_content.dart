@@ -1,11 +1,12 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
-import 'package:get/get_state_manager/src/simple/get_view.dart';
-import 'package:get/route_manager.dart';
+import 'package:get/get.dart';
 
 import '../../../constants/sizes.dart';
+import '../../../data/api/api_path.dart';
 import '../../../data/api/asset/data/upload_asset.dart';
+import '../../../data/api/product/models/model_get_product.dart';
+import '../../../routes/app_pages.dart';
 import '../../../shareds/widgets/app_button.dart' as b;
 import '../../../shareds/widgets/app_gaps.dart';
 import '../../../shareds/widgets/app_html_editor.dart';
@@ -13,10 +14,11 @@ import '../../../shareds/widgets/app_icon_button.dart';
 import '../../../shareds/widgets/app_textfield.dart';
 import '../../../shareds/widgets/text_bold.dart';
 import '../../../theme/app_colors.dart';
-import '../controllers/product_edit_controller.dart';
+import '../controllers/add_product_controller.dart';
+import 'add_product_input_feature_card.dart';
 
-class ProductEditContent extends GetView<ProductEditController> {
-  const ProductEditContent({super.key});
+class AddProductContent extends GetView<AddProductController> {
+  const AddProductContent({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +32,7 @@ class ProductEditContent extends GetView<ProductEditController> {
             Align(
               alignment: Alignment.centerLeft,
               child: InkWell(
-                onTap: Get.back,
+                onTap: () => Get.offAllNamed(Routes.PRODUCT),
                 child: Padding(
                   padding: const EdgeInsets.all(Sizes.s),
                   child: Row(
@@ -54,7 +56,7 @@ class ProductEditContent extends GetView<ProductEditController> {
               children: [
                 b.AppButton(
                   type: b.ButtonType.outlined,
-                  onPressed: Get.back,
+                  onPressed: () => Get.offAllNamed(Routes.PRODUCT),
                   fixedSize: const Size(100, 40),
                   child: const Text("Batal"),
                 ),
@@ -78,6 +80,9 @@ class ProductEditContent extends GetView<ProductEditController> {
                   isError: false,
                   focusNode: controller.nameFN,
                   controller: controller.nameC,
+                  onChanged: (text) {
+                    controller.product.value.judul = text;
+                  },
                 ),
               ),
             ),
@@ -91,29 +96,35 @@ class ProductEditContent extends GetView<ProductEditController> {
                     final file = result?.files[0];
                     final response = await uploadAsset(bytes: file?.bytes?.toList(), fileName: file?.name ?? "");
                     if (response.data != null) {
-                      final _ = response.data ?? "";
+                      final id = response.data ?? "";
+                      controller.product.value.idAsset = APIPath.assetId(id);
+                      controller.update();
                     }
                   }
                 },
-                child: Container(
-                  width: 350,
-                  height: 150,
-                  alignment: Alignment.topRight,
-                  padding: const EdgeInsets.all(Sizes.s),
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(Sizes.xs),
+                child: GetBuilder<AddProductController>(builder: (controller) {
+                  final image = controller.product.value.idAsset;
+                  return Container(
+                    width: 350,
+                    height: 150,
+                    alignment: Alignment.topRight,
+                    padding: const EdgeInsets.all(Sizes.s),
+                    decoration: BoxDecoration(
+                      color: AppColors.lightenGrey,
+                      borderRadius: const BorderRadius.all(Radius.circular(Sizes.xs)),
+                      image: image == null
+                          ? null
+                          : DecorationImage(
+                              image: NetworkImage(image),
+                              fit: BoxFit.cover,
+                            ),
                     ),
-                    image: DecorationImage(
-                      image: AssetImage("assets/dummy/product1.jpg"),
-                      fit: BoxFit.cover,
+                    child: const Icon(
+                      Icons.edit_rounded,
+                      size: 24,
                     ),
-                  ),
-                  child: const Icon(
-                    Icons.edit_rounded,
-                    size: 24,
-                  ),
-                ),
+                  );
+                }),
               ),
             ),
             Gaps.vertical.m,
@@ -135,18 +146,19 @@ class ProductEditContent extends GetView<ProductEditController> {
                 ),
                 AppIconButton(
                   onTap: () {
-                    controller.features.add(controller.features.length + 1);
+                    controller.product.value.listFitur?.add(Fitur());
+                    controller.update();
                   },
                   icon: Icons.add,
                 ),
               ],
             ),
             Gaps.vertical.r,
-            Obx(() {
-              final _ = controller.features;
+            GetBuilder<AddProductController>(builder: (controller) {
+              final features = controller.product.value.listFitur ?? [];
               return Column(
-                  // children: [...features.map((i) => ProductInputFeatureCard(fitur: fitur))],
-                  );
+                children: [...features.map((fitur) => AddProductInputFeatureCard(fitur: fitur))],
+              );
             })
           ],
         ),
