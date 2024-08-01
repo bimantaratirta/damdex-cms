@@ -8,7 +8,6 @@ import '../../../data/api/product/data/patch_product.dart';
 import '../../../data/api/product/models/model_get_product.dart';
 import '../../../routes/app_pages.dart';
 import '../../../shareds/widgets/app_button.dart' as b;
-import '../../../shareds/widgets/app_gaps.dart';
 import '../../../theme/app_colors.dart';
 
 class ProductDetailController extends GetxController {
@@ -71,7 +70,7 @@ class ProductDetailController extends GetxController {
 
   @override
   Future<void> onInit() async {
-    final response = await getProduct(Get.arguments ?? "");
+    final response = await getProduct(Get.arguments ?? "null");
     if (response.data != null) {
       produk.value = response.data;
       nameC.text = response.data?.judul ?? "";
@@ -101,7 +100,6 @@ class ProductDetailController extends GetxController {
           fixedSize: const Size(100, 40),
           child: const Text("Batal"),
         ),
-        Gaps.horizontal.r,
         b.AppButton(
           type: b.ButtonType.elevated,
           backgroundColor: AppColors.red,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
 
@@ -26,9 +25,7 @@ class AddProductController extends GetxController {
       "listFitur": features.map((feature) => feature.fitur.toJson()).toList()
     });
     if (response.data != null) {
-      SchedulerBinding.instance.addPersistentFrameCallback((e) {
-        Get.offNamed(Routes.PRODUCT);
-      });
+      Get.toNamed(Routes.PRODUCT_DETAIL, arguments: response.data);
       isError.value = false;
     } else {
       scrollController.jumpTo(0);
