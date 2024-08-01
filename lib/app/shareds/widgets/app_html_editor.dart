@@ -12,11 +12,13 @@ class AppHtmlEditor extends StatelessWidget {
     required this.editorController,
     this.initialText,
     required this.hint,
+    this.onChanged,
   });
 
   final String? initialText;
   final String hint;
   final HtmlEditorController editorController;
+  final Function(String?)? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +31,7 @@ class AppHtmlEditor extends StatelessWidget {
       ),
       htmlToolbarOptions: HtmlToolbarOptions(
         toolbarPosition: ToolbarPosition.aboveEditor,
-        toolbarType: ToolbarType.nativeScrollable,
+        toolbarType: ToolbarType.nativeGrid,
         mediaLinkInsertInterceptor: (String url, InsertFileType type) {
           return true;
         },
@@ -52,7 +54,7 @@ class AppHtmlEditor extends StatelessWidget {
       callbacks: Callbacks(
         onImageLinkInsert: (String? url) {},
         onImageUpload: (FileUpload file) async {},
-        onChangeCodeview: (p0) {},
+        onChangeCodeview: onChanged,
         onImageUploadError: (FileUpload? file, String? base64Str, UploadError error) {},
       ),
     );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
 
+import '../../../data/api/product/data/delete_product.dart';
 import '../../../data/api/product/data/get_product.dart';
 import '../../../data/api/product/models/model_get_product.dart';
 import '../../../routes/app_pages.dart';
@@ -41,7 +42,7 @@ class ProductDetailController extends GetxController {
     super.onInit();
   }
 
-  Future<void> deleteProduct() async {
+  Future<void> delete() async {
     final produk = this.produk.value;
     Get.dialog(AlertDialog(
       title: Text("Hapus ${produk?.judul}"),
@@ -57,7 +58,7 @@ class ProductDetailController extends GetxController {
           type: b.ButtonType.elevated,
           backgroundColor: AppColors.red,
           onPressed: () {
-            deleteProduct().then((res) {
+            deleteProduct(produk?.id ?? "").then((res) {
               Get.offAllNamed(Routes.PRODUCT);
             });
           },

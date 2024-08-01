@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
-import 'package:html_editor_enhanced/html_editor.dart';
 
-import '../../../data/api/product/models/model_get_product.dart';
 import '../../../shareds/widgets/app_gaps.dart';
 import '../../../shareds/widgets/app_html_editor.dart';
 import '../../../shareds/widgets/app_icon_button.dart';
@@ -11,9 +9,9 @@ import '../../../theme/app_colors.dart';
 import '../controllers/add_product_controller.dart';
 
 class AddProductInputFeatureCard extends GetView<AddProductController> {
-  const AddProductInputFeatureCard({super.key, required this.fitur});
+  const AddProductInputFeatureCard({super.key, required this.feature});
 
-  final Fitur fitur;
+  final Feature feature;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +20,8 @@ class AddProductInputFeatureCard extends GetView<AddProductController> {
       children: [
         AppIconButton(
           onTap: () {
-            controller.product.value.listFitur?.removeWhere((fitur) => fitur == this.fitur);
+            controller.features.removeWhere((fitur) => fitur == feature);
+            controller.update();
           },
           icon: Icons.remove_rounded,
           color: AppColors.red,
@@ -32,15 +31,22 @@ class AddProductInputFeatureCard extends GetView<AddProductController> {
           child: Column(
             children: [
               AppTextField(
-                label: Text(fitur.judul ?? ""),
+                label: Text(feature.fitur.judul ?? ""),
                 isError: false,
-                focusNode: FocusNode(),
-                controller: TextEditingController(),
+                focusNode: feature.focusNode,
+                controller: feature.textController,
+                onTapOutside: (e) {},
+                onChanged: (text) {
+                  controller.features.firstWhere((fitur) => fitur == feature).fitur.judul = text;
+                },
               ),
               Gaps.vertical.s,
               AppHtmlEditor(
-                editorController: HtmlEditorController(),
-                hint: fitur.body ?? "",
+                editorController: feature.editorController,
+                hint: feature.fitur.body ?? "",
+                onChanged: (text) {
+                  controller.features.firstWhere((fitur) => fitur == feature).fitur.body = text;
+                },
               ),
             ],
           ),

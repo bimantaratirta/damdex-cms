@@ -53,7 +53,7 @@ class ProductContent extends GetView<ProductController> {
                 alignment: Alignment.centerRight,
                 child: AppButton(
                   type: ButtonType.elevated,
-                  onPressed: () => Get.toNamed(Routes.ADD_PRODUCT, preventDuplicates: false),
+                  onPressed: () => Get.toNamed(Routes.ADD_PRODUCT),
                   child: const Text("Tambah Produk"),
                 ),
               ),

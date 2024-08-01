@@ -6,6 +6,6 @@ Future<APIResponse<dynamic>> deleteProduct(String id) async {
     path: APIPath.productId(id),
     fromJson: (e) => e,
   );
-  final response = await apiClient.get<dynamic>(param);
+  final response = await apiClient.delete<dynamic>(param);
   return response;
 }

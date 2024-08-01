@@ -1,6 +1,7 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:html_editor_enhanced/html_editor.dart';
 
 import '../../../constants/sizes.dart';
 import '../../../data/api/api_path.dart';
@@ -64,7 +65,7 @@ class AddProductContent extends GetView<AddProductController> {
                 b.AppButton(
                   type: b.ButtonType.elevated,
                   backgroundColor: AppColors.primary,
-                  onPressed: () {},
+                  onPressed: controller.submit,
                   fixedSize: const Size(100, 40),
                   child: const Text("Simpan"),
                 ),
@@ -97,7 +98,7 @@ class AddProductContent extends GetView<AddProductController> {
                     final response = await uploadAsset(bytes: file?.bytes?.toList(), fileName: file?.name ?? "");
                     if (response.data != null) {
                       final id = response.data ?? "";
-                      controller.product.value.idAsset = APIPath.assetId(id);
+                      controller.product.value.idAsset = id;
                       controller.update();
                     }
                   }
@@ -115,7 +116,7 @@ class AddProductContent extends GetView<AddProductController> {
                       image: image == null
                           ? null
                           : DecorationImage(
-                              image: NetworkImage(image),
+                              image: NetworkImage(APIPath.assetId(image)),
                               fit: BoxFit.cover,
                             ),
                     ),
@@ -134,7 +135,7 @@ class AddProductContent extends GetView<AddProductController> {
               fontSize: Sizes.r,
             ),
             Gaps.vertical.r,
-            AppHtmlEditor(editorController: controller.editorController, hint: "Deskripsi Produk"),
+            const AddProductDescription(),
             Gaps.vertical.m,
             Wrap(
               spacing: Sizes.m,
@@ -146,7 +147,14 @@ class AddProductContent extends GetView<AddProductController> {
                 ),
                 AppIconButton(
                   onTap: () {
-                    controller.product.value.listFitur?.add(Fitur());
+                    controller.features.add(
+                      Feature(
+                        fitur: Fitur(index: (controller.features.length)),
+                        focusNode: FocusNode(),
+                        textController: TextEditingController(),
+                        editorController: HtmlEditorController(),
+                      ),
+                    );
                     controller.update();
                   },
                   icon: Icons.add,
@@ -155,14 +163,30 @@ class AddProductContent extends GetView<AddProductController> {
             ),
             Gaps.vertical.r,
             GetBuilder<AddProductController>(builder: (controller) {
-              final features = controller.product.value.listFitur ?? [];
+              final features = controller.features;
               return Column(
-                children: [...features.map((fitur) => AddProductInputFeatureCard(fitur: fitur))],
+                children: [...features.map((feature) => AddProductInputFeatureCard(feature: feature))],
               );
             })
           ],
         ),
       ),
     );
+  }
+}
+
+class AddProductDescription extends StatelessWidget {
+  const AddProductDescription({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<AddProductController>(builder: (controller) {
+      return AppHtmlEditor(
+        editorController: controller.editorController,
+        hint: "Deskripsi Produk",
+      );
+    });
   }
 }

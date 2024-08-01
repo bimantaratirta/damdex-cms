@@ -87,7 +87,7 @@ class ProductDetailContent extends GetView<ProductDetailController> {
                         b.AppButton(
                           type: b.ButtonType.elevated,
                           backgroundColor: AppColors.red,
-                          onPressed: controller.deleteProduct,
+                          onPressed: controller.delete,
                           fixedSize: const Size(100, 40),
                           child: const Text("Hapus"),
                         ),
@@ -146,7 +146,7 @@ class ProductDetailContent extends GetView<ProductDetailController> {
                       borderRadius: const BorderRadius.all(Radius.circular(Sizes.xs)),
                       color: AppColors.lightenGrey,
                       image: DecorationImage(
-                        image: NetworkImage(image),
+                        image: NetworkImage(APIPath.assetId(image)),
                         fit: BoxFit.cover,
                       ),
                     ),
