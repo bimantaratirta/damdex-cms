@@ -19,7 +19,7 @@ class ProductContent extends GetView<ProductController> {
   Widget build(BuildContext context) {
     return Expanded(
       child: Obx(() {
-        final listProduk = controller.listProduk.value;
+        final listProduk = controller.searchedList.value;
         if (listProduk == null) {
           return const Center(child: SizedBox(width: 50, height: 50, child: CircularProgressIndicator()));
         }
@@ -45,6 +45,7 @@ class ProductContent extends GetView<ProductController> {
                     isError: false,
                     focusNode: controller.searchFN,
                     controller: controller.searchC,
+                    onChanged: controller.onSearch,
                   ),
                 ),
               ),

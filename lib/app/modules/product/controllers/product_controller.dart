@@ -6,7 +6,8 @@ import '../../../data/api/product/data/get_products.dart';
 import '../../../data/api/product/models/model_get_products.dart';
 
 class ProductController extends GetxController {
-  Rx<List<Produk>?> listProduk = Rx<List<Produk>?>(null);
+  List<Produk>? listProduk;
+  Rx<List<Produk>?> searchedList = Rx<List<Produk>?>(null);
 
   final TextEditingController searchC = TextEditingController();
   final FocusNode searchFN = FocusNode();
@@ -19,11 +20,22 @@ class ProductController extends GetxController {
       if (res.statusCode == 200) {
         final response = await getProducts();
         if (response.data != null) {
-          listProduk.value = response.data?.payload ?? [];
+          listProduk = response.data?.payload ?? [];
+          searchedList.value = response.data?.payload ?? [];
         }
       }
     });
 
     super.onInit();
+  }
+
+  void onSearch(String text) {
+    bool isOnSearch = text != "";
+    searchedList.value = listProduk?.where((produk) {
+      final String judul = produk.judul?.toLowerCase() ?? "";
+      final String keyword = text.toLowerCase();
+      bool searchedItem = judul.contains(keyword);
+      return isOnSearch ? searchedItem : true;
+    }).toList();
   }
 }

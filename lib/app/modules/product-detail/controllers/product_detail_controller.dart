@@ -4,6 +4,7 @@ import 'package:html_editor_enhanced/html_editor.dart';
 
 import '../../../data/api/product/data/delete_product.dart';
 import '../../../data/api/product/data/get_product.dart';
+import '../../../data/api/product/data/patch_product.dart';
 import '../../../data/api/product/models/model_get_product.dart';
 import '../../../routes/app_pages.dart';
 import '../../../shareds/widgets/app_button.dart' as b;
@@ -12,15 +13,18 @@ import '../../../theme/app_colors.dart';
 
 class ProductDetailController extends GetxController {
   final Rx<ModelGetProduct?> produk = Rx<ModelGetProduct?>(null);
+  final RxList<Feature> features = RxList<Feature>([]);
 
+  final ScrollController scrollController = ScrollController();
   final TextEditingController nameC = TextEditingController();
   final FocusNode nameFN = FocusNode();
   final HtmlEditorController editorController = HtmlEditorController();
 
-  Rx<Fitur?> selectedFeature = Rx<Fitur?>(null);
+  Rx<Feature?> selectedFeature = Rx<Feature?>(null);
   RxBool isOnEdit = false.obs;
+  RxBool isError = false.obs;
 
-  void setSelectedFeature(Fitur val) {
+  void setSelectedFeature(Feature val) {
     if (selectedFeature.value == val) {
       selectedFeature.value = null;
     } else {
@@ -28,24 +32,68 @@ class ProductDetailController extends GetxController {
     }
   }
 
-  @override
-  Future<void> onInit() async {
-    if (Get.arguments == null) {
-      Get.offAllNamed(Routes.PRODUCT);
-    } else {
-      final response = await getProduct(Get.arguments);
+  Future<void> patch() async {
+    final response = await patchProduct(produk.value?.id ?? "", {
+      "judul": produk.value?.judul,
+      "deskripsi": await editorController.getText(),
+      "idAsset": produk.value?.idAsset,
+      "listFitur": features.map((feature) {
+        final result = feature.fitur.toJson();
+        if (result["id"] == null) {
+          result.remove("id");
+        }
+        return result;
+      }).toList()
+    });
+    final sc = response.statusCode ?? 0;
+    if (sc >= 200 && sc < 300) {
+      isOnEdit.value = false;
+      final response = await getProduct(Get.arguments ?? "");
       if (response.data != null) {
         produk.value = response.data;
         nameC.text = response.data?.judul ?? "";
+        features.value = (response.data?.listFitur ?? []).map((fitur) {
+          return Feature(
+            focusNode: FocusNode(),
+            textController: TextEditingController(text: fitur.judul),
+            editorController: HtmlEditorController(),
+            fitur: fitur,
+          );
+        }).toList();
       }
+      isError.value = false;
+      update();
+    } else {
+      scrollController.jumpTo(0);
+      isError.value = true;
     }
+  }
+
+  @override
+  Future<void> onInit() async {
+    final response = await getProduct(Get.arguments ?? "");
+    if (response.data != null) {
+      produk.value = response.data;
+      nameC.text = response.data?.judul ?? "";
+      features.value = (response.data?.listFitur ?? []).map((fitur) {
+        return Feature(
+          focusNode: FocusNode(),
+          textController: TextEditingController(text: fitur.judul),
+          editorController: HtmlEditorController(),
+          fitur: fitur,
+        );
+      }).toList();
+    } else {
+      Get.offNamed(Routes.PRODUCT);
+    }
+    update();
     super.onInit();
   }
 
   Future<void> delete() async {
     final produk = this.produk.value;
     Get.dialog(AlertDialog(
-      title: Text("Hapus ${produk?.judul}"),
+      title: Text("Hapus Produk ${produk?.judul}?"),
       actions: [
         b.AppButton(
           type: b.ButtonType.outlined,
@@ -68,4 +116,18 @@ class ProductDetailController extends GetxController {
       ],
     ));
   }
+}
+
+class Feature {
+  final FocusNode focusNode;
+  final TextEditingController textController;
+  final HtmlEditorController editorController;
+  final Fitur fitur;
+
+  Feature({
+    required this.focusNode,
+    required this.textController,
+    required this.editorController,
+    required this.fitur,
+  });
 }

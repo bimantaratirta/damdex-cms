@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
 
@@ -10,6 +11,7 @@ class AddProductController extends GetxController {
   final Rx<ModelGetProduct> product = ModelGetProduct(listFitur: []).obs;
   final RxList<Feature> features = RxList<Feature>([]);
 
+  final ScrollController scrollController = ScrollController();
   final HtmlEditorController editorController = HtmlEditorController();
   final TextEditingController nameC = TextEditingController();
   final FocusNode nameFN = FocusNode();
@@ -24,8 +26,12 @@ class AddProductController extends GetxController {
       "listFitur": features.map((feature) => feature.fitur.toJson()).toList()
     });
     if (response.data != null) {
-      Get.offAllNamed(Routes.PRODUCT_DETAIL, arguments: response.data);
+      SchedulerBinding.instance.addPersistentFrameCallback((e) {
+        Get.offNamed(Routes.PRODUCT);
+      });
+      isError.value = false;
     } else {
+      scrollController.jumpTo(0);
       isError.value = true;
     }
   }

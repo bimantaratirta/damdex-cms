@@ -24,7 +24,7 @@ class HomeSidebarMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        if (Get.currentRoute != route) Get.toNamed(route);
+        if (Get.currentRoute != route) Get.offAllNamed(route);
       },
       child: Container(
         padding: const EdgeInsets.all(Sizes.m),

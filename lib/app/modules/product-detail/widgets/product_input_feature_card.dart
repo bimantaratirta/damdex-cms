@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
-import 'package:html_editor_enhanced/html_editor.dart';
 
-import '../../../data/api/product/models/model_get_product.dart';
 import '../../../shareds/widgets/app_gaps.dart';
 import '../../../shareds/widgets/app_html_editor.dart';
 import '../../../shareds/widgets/app_icon_button.dart';
@@ -11,9 +9,9 @@ import '../../../theme/app_colors.dart';
 import '../controllers/product_detail_controller.dart';
 
 class ProductInputFeatureCard extends GetView<ProductDetailController> {
-  const ProductInputFeatureCard({super.key, required this.fitur});
+  const ProductInputFeatureCard({super.key, required this.feature});
 
-  final Fitur fitur;
+  final Feature feature;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +20,7 @@ class ProductInputFeatureCard extends GetView<ProductDetailController> {
       children: [
         AppIconButton(
           onTap: () {
-            controller.produk.value?.listFitur?.removeWhere((fitur) => fitur == this.fitur);
+            controller.features.removeWhere((feature) => feature == this.feature);
           },
           icon: Icons.remove_rounded,
           color: AppColors.red,
@@ -32,15 +30,18 @@ class ProductInputFeatureCard extends GetView<ProductDetailController> {
           child: Column(
             children: [
               AppTextField(
-                label: Text(fitur.judul ?? ""),
+                label: const Text("Nama Fitur"),
                 isError: false,
-                focusNode: FocusNode(),
-                controller: TextEditingController(),
+                focusNode: feature.focusNode,
+                controller: feature.textController,
+                onChanged: (text) => controller.features.firstWhere((feature) => feature == this.feature).fitur.judul = text,
               ),
               Gaps.vertical.s,
               AppHtmlEditor(
-                editorController: HtmlEditorController(),
-                hint: fitur.body ?? "",
+                editorController: feature.editorController,
+                hint: "Deskripsi Fitur",
+                initialText: feature.fitur.body,
+                onChanged: (text) => controller.features.firstWhere((feature) => feature == this.feature).fitur.body = text,
               ),
             ],
           ),
