@@ -2,7 +2,6 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
 
-import '../../constants/sizes.dart';
 import '../../data/api/api_path.dart';
 import '../../data/api/asset/data/upload_asset.dart';
 import '../../theme/app_colors.dart';
@@ -53,9 +52,7 @@ class AppHtmlEditor extends StatelessWidget {
       callbacks: Callbacks(
         onImageLinkInsert: (String? url) {},
         onImageUpload: (FileUpload file) async {},
-        onChangeCodeview: (p0) {
-          print("code $p0");
-        },
+        onChangeCodeview: (p0) {},
         onImageUploadError: (FileUpload? file, String? base64Str, UploadError error) {},
       ),
     );
