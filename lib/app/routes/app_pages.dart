@@ -10,6 +10,8 @@ import '../modules/article-detail/bindings/article_detail_binding.dart';
 import '../modules/article-detail/views/article_detail_view.dart';
 import '../modules/article/bindings/article_binding.dart';
 import '../modules/article/views/article_view.dart';
+import '../modules/log-detail/bindings/log_detail_binding.dart';
+import '../modules/log-detail/views/log_detail_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/logs/bindings/logs_binding.dart';
@@ -108,6 +110,11 @@ class AppPages {
       name: _Paths.TOKO_KOTA,
       page: () => const TokoKotaView(),
       binding: TokoKotaBinding(),
+    ),
+    GetPage(
+      name: _Paths.LOG_DETAIL,
+      page: () => const LogDetailView(),
+      binding: LogDetailBinding(),
     ),
   ];
 }
