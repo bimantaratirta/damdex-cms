@@ -1,9 +1,13 @@
 import 'package:get/get.dart';
 
+import '../modules/add-article/bindings/add_article_binding.dart';
+import '../modules/add-article/views/add_article_view.dart';
 import '../modules/add-product/bindings/add_product_binding.dart';
 import '../modules/add-product/views/add_product_view.dart';
-import '../modules/artcle-detail/bindings/artcle_detail_binding.dart';
-import '../modules/artcle-detail/views/artcle_detail_view.dart';
+import '../modules/add-usage/bindings/add_usage_binding.dart';
+import '../modules/add-usage/views/add_usage_view.dart';
+import '../modules/article-detail/bindings/article_detail_binding.dart';
+import '../modules/article-detail/views/article_detail_view.dart';
 import '../modules/article/bindings/article_binding.dart';
 import '../modules/article/views/article_view.dart';
 import '../modules/login/bindings/login_binding.dart';
@@ -20,6 +24,8 @@ import '../modules/settings/bindings/settings_binding.dart';
 import '../modules/settings/views/settings_view.dart';
 import '../modules/toko/bindings/toko_binding.dart';
 import '../modules/toko/views/toko_view.dart';
+import '../modules/usage-detail/bindings/usage_detail_binding.dart';
+import '../modules/usage-detail/views/usage_detail_view.dart';
 import '../modules/usage/bindings/usage_binding.dart';
 import '../modules/usage/views/usage_view.dart';
 
@@ -74,11 +80,6 @@ class AppPages {
       binding: ProductDetailBinding(),
     ),
     GetPage(
-      name: _Paths.ARTCLE_DETAIL,
-      page: () => const ArtcleDetailView(),
-      binding: ArtcleDetailBinding(),
-    ),
-    GetPage(
       name: _Paths.PRODUCT_EDIT,
       page: () => const ProductEditView(),
       binding: ProductEditBinding(),
@@ -87,6 +88,26 @@ class AppPages {
       name: _Paths.ADD_PRODUCT,
       page: () => const AddProductView(),
       binding: AddProductBinding(),
+    ),
+    GetPage(
+      name: _Paths.USAGE_DETAIL,
+      page: () => const UsageDetailView(),
+      binding: UsageDetailBinding(),
+    ),
+    GetPage(
+      name: _Paths.ADD_USAGE,
+      page: () => const AddUsageView(),
+      binding: AddUsageBinding(),
+    ),
+    GetPage(
+      name: _Paths.ARTICLE_DETAIL,
+      page: () => const ArticleDetailView(),
+      binding: ArticleDetailBinding(),
+    ),
+    GetPage(
+      name: _Paths.ADD_ARTICLE,
+      page: () => const AddArticleView(),
+      binding: AddArticleBinding(),
     ),
   ];
 }

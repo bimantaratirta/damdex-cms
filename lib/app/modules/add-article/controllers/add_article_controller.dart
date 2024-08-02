@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
-class ArtcleDetailController extends GetxController {
-  //TODO: Implement ArtcleDetailController
+class AddArticleController extends GetxController {
+  //TODO: Implement AddArticleController
 
   final count = 0.obs;
   @override

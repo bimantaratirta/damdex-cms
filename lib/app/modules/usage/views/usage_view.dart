@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import '../../home/widgets/home_sidebar.dart';
 import '../controllers/usage_controller.dart';
+import '../widgets/usage_content.dart';
 
 class UsageView extends GetView<UsageController> {
   const UsageView({super.key});
@@ -13,6 +14,7 @@ class UsageView extends GetView<UsageController> {
       body: Row(
         children: [
           HomeSideBar(),
+          UsageContent(),
         ],
       ),
     );

@@ -11,4 +11,10 @@ class APIPath {
 
   static const product = "$base/produk";
   static String productId(String id) => "$base/produk/$id";
+
+  static const usage = "$base/penggunaan";
+  static String usageId(String id) => "$base/penggunaan/$id";
+
+  static const article = "$base/artikel";
+  static String articleId(String id) => "$base/artikel/$id";
 }
