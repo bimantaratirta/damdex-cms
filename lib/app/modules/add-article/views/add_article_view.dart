@@ -2,22 +2,20 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
+import '../../home/widgets/home_sidebar.dart';
 import '../controllers/add_article_controller.dart';
+import '../widgets/add_article_content.dart';
 
 class AddArticleView extends GetView<AddArticleController> {
-  const AddArticleView({Key? key}) : super(key: key);
+  const AddArticleView({super.key});
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('AddArticleView'),
-        centerTitle: true,
-      ),
-      body: const Center(
-        child: Text(
-          'AddArticleView is working',
-          style: TextStyle(fontSize: 20),
-        ),
+    return const Scaffold(
+      body: Row(
+        children: [
+          HomeSideBar(),
+          AddArticleContent(),
+        ],
       ),
     );
   }
