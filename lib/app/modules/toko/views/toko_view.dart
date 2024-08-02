@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import '../../home/widgets/home_sidebar.dart';
 import '../controllers/toko_controller.dart';
+import '../widgets/toko_content.dart';
 
 class TokoView extends GetView<TokoController> {
   const TokoView({super.key});
@@ -13,6 +14,7 @@ class TokoView extends GetView<TokoController> {
       body: Row(
         children: [
           HomeSideBar(),
+          TokoContent(),
         ],
       ),
     );

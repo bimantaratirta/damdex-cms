@@ -17,4 +17,10 @@ class APIPath {
 
   static const article = "$base/artikel";
   static String articleId(String id) => "$base/artikel/$id";
+
+  static const toko = "$base/toko";
+  static const tokoProvinsi = "$toko/provinsi";
+  static const tokoWilayah = "$toko/wilayah";
+  static String tokoId(String id) => "$base/toko/$id";
+  static String tokoKotaId(String id) => "$base/toko/kota/$id";
 }

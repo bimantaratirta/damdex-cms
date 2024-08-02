@@ -22,6 +22,8 @@ import '../modules/product/bindings/product_binding.dart';
 import '../modules/product/views/product_view.dart';
 import '../modules/settings/bindings/settings_binding.dart';
 import '../modules/settings/views/settings_view.dart';
+import '../modules/toko-kota/bindings/toko_kota_binding.dart';
+import '../modules/toko-kota/views/toko_kota_view.dart';
 import '../modules/toko/bindings/toko_binding.dart';
 import '../modules/toko/views/toko_view.dart';
 import '../modules/usage-detail/bindings/usage_detail_binding.dart';
@@ -108,6 +110,11 @@ class AppPages {
       name: _Paths.ADD_ARTICLE,
       page: () => const AddArticleView(),
       binding: AddArticleBinding(),
+    ),
+    GetPage(
+      name: _Paths.TOKO_KOTA,
+      page: () => const TokoKotaView(),
+      binding: TokoKotaBinding(),
     ),
   ];
 }

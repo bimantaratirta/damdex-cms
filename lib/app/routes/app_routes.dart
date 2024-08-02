@@ -19,6 +19,7 @@ abstract class Routes {
   static const ADD_USAGE = _Paths.ADD_USAGE;
   static const ARTICLE_DETAIL = _Paths.ARTICLE_DETAIL;
   static const ADD_ARTICLE = _Paths.ADD_ARTICLE;
+  static const TOKO_KOTA = _Paths.TOKO_KOTA;
 }
 
 abstract class _Paths {
@@ -37,4 +38,5 @@ abstract class _Paths {
   static const ADD_USAGE = '/add-usage';
   static const ARTICLE_DETAIL = '/article-detail';
   static const ADD_ARTICLE = '/add-article';
+  static const TOKO_KOTA = '/toko-kota';
 }
