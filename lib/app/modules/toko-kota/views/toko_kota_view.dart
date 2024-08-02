@@ -2,22 +2,20 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
+import '../../home/widgets/home_sidebar.dart';
 import '../controllers/toko_kota_controller.dart';
+import '../widgets/toko_kota_content.dart';
 
 class TokoKotaView extends GetView<TokoKotaController> {
-  const TokoKotaView({Key? key}) : super(key: key);
+  const TokoKotaView({super.key});
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('TokoKotaView'),
-        centerTitle: true,
-      ),
-      body: const Center(
-        child: Text(
-          'TokoKotaView is working',
-          style: TextStyle(fontSize: 20),
-        ),
+    return const Scaffold(
+      body: Row(
+        children: [
+          HomeSideBar(),
+          TokoKotaContent(),
+        ],
       ),
     );
   }

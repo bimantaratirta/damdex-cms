@@ -94,7 +94,7 @@ class TokoContent extends GetView<TokoController> {
                         DataCell(
                           AppButton(
                             type: ButtonType.elevated,
-                            onPressed: () => Get.toNamed(Routes.TOKO_KOTA, arguments: toko.idKota),
+                            onPressed: () => Get.toNamed(Routes.TOKO_KOTA, arguments: toko.idKota.toString()),
                             fixedSize: const Size(80, 25),
                             borderRadius: const BorderRadius.all(Radius.circular(Sizes.xs)),
                             child: const Text(
