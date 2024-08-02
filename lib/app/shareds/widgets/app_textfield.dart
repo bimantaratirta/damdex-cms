@@ -21,7 +21,7 @@ class AppTextField extends StatelessWidget {
     required this.label,
     required this.isError,
     required this.focusNode,
-    required this.controller,
+    this.controller,
   });
 
   final Widget label;
@@ -34,7 +34,7 @@ class AppTextField extends StatelessWidget {
   final FocusNode focusNode;
   final String? initialValue;
   final TextInputType? keyboardType;
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final EdgeInsetsGeometry? contentPadding;
   final Function()? onEditingComplete;
   final Function(String text)? onChanged;

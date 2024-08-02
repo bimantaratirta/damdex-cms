@@ -12,6 +12,7 @@ import '../../../shareds/widgets/app_textfield.dart';
 import '../../../shareds/widgets/empty_list.dart';
 import '../../../shareds/widgets/text_bold.dart';
 import '../controllers/toko_controller.dart';
+import 'toko_add_dialog.dart';
 
 class TokoContent extends GetView<TokoController> {
   const TokoContent({super.key});
@@ -48,6 +49,17 @@ class TokoContent extends GetView<TokoController> {
                     controller: controller.searchC,
                     onChanged: controller.onSearch,
                   ),
+                ),
+              ),
+              Gaps.vertical.m,
+              Align(
+                alignment: Alignment.centerRight,
+                child: AppButton(
+                  type: ButtonType.elevated,
+                  onPressed: () {
+                    Get.dialog(const TokoAddDialog());
+                  },
+                  child: const Text("Tambah Toko"),
                 ),
               ),
               Gaps.vertical.l,
