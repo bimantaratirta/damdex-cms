@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 
 import '../../../shareds/widgets/app_gaps.dart';
@@ -37,12 +39,23 @@ class UsageDetailInputTypeCard extends GetView<UsageDetailController> {
                 onChanged: (text) => controller.types.firstWhere((type) => type == this.type).tipe.judul = text,
               ),
               Gaps.vertical.s,
-              AppHtmlEditor(
-                editorController: type.editorController,
-                hint: "Deskripsi Tipe",
-                initialText: type.tipe.body,
-                onChanged: (text) => controller.types.firstWhere((type) => type == this.type).tipe.body = text,
-              ),
+              Obx(() {
+                final isOnDialog = controller.isOnDialog.value;
+                if (isOnDialog) {
+                  return HtmlWidget(
+                    controller.types.firstWhere((type) => type == this.type).tipe.body ?? "",
+                    renderMode: RenderMode.column,
+                    textStyle: const TextStyle(fontSize: 14),
+                  );
+                } else {
+                  return AppHtmlEditor(
+                    editorController: type.editorController,
+                    hint: "Deskripsi Tipe",
+                    initialText: type.tipe.body,
+                    onChanged: (text) => controller.types.firstWhere((type) => type == this.type).tipe.body = text,
+                  );
+                }
+              }),
             ],
           ),
         )

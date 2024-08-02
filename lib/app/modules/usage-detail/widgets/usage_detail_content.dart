@@ -10,6 +10,7 @@ import 'package:html_editor_enhanced/html_editor.dart';
 
 import '../../../constants/sizes.dart';
 import '../../../data/api/api_path.dart';
+import '../../../data/api/article/model/model_articles.dart';
 import '../../../data/api/asset/data/upload_asset.dart';
 import '../../../data/api/usage/model/model_usage.dart';
 import '../../../routes/app_pages.dart';
@@ -20,7 +21,9 @@ import '../../../shareds/widgets/app_icon_button.dart';
 import '../../../shareds/widgets/app_textfield.dart';
 import '../../../shareds/widgets/text_bold.dart';
 import '../../../theme/app_colors.dart';
+import '../../article/widgets/article_card.dart';
 import '../controllers/usage_detail_controller.dart';
+import 'usage_detail_article_dialog.dart';
 import 'usage_detail_input_type_card.dart';
 import 'usage_detail_type_card.dart';
 
@@ -68,7 +71,11 @@ class UsageDetailContent extends GetView<UsageDetailController> {
                       ? [
                           b.AppButton(
                             type: b.ButtonType.outlined,
-                            onPressed: () => controller.isOnEdit.value = false,
+                            onPressed: () {
+                              controller.isOnEdit.value = false;
+                              controller.update();
+                              controller.onInit();
+                            },
                             fixedSize: const Size(100, 40),
                             child: const Text("Batal"),
                           ),
@@ -84,7 +91,10 @@ class UsageDetailContent extends GetView<UsageDetailController> {
                       : [
                           b.AppButton(
                             type: b.ButtonType.elevated,
-                            onPressed: () => controller.isOnEdit.value = true,
+                            onPressed: () {
+                              controller.isOnEdit.value = true;
+                              controller.update();
+                            },
                             fixedSize: const Size(100, 40),
                             child: const Text("Edit"),
                           ),
@@ -194,7 +204,8 @@ class UsageDetailContent extends GetView<UsageDetailController> {
               Obx(() {
                 final deskripsi = controller.usage.value?.deskripsi ?? "";
                 final isOnEdit = controller.isOnEdit.value;
-                return isOnEdit
+                final isOnDialog = controller.isOnDialog.value;
+                return isOnEdit && !isOnDialog
                     ? GetBuilder<UsageDetailController>(builder: (controller) {
                         return AppHtmlEditor(
                           editorController: controller.editorController,
@@ -257,7 +268,7 @@ class UsageDetailContent extends GetView<UsageDetailController> {
                 );
               }),
               Gaps.vertical.m,
-              Obx(() {
+              GetBuilder<UsageDetailController>(builder: (controller) {
                 final isOnEdit = controller.isOnEdit.value;
                 return Wrap(
                   spacing: Sizes.m,
@@ -269,18 +280,10 @@ class UsageDetailContent extends GetView<UsageDetailController> {
                     ),
                     if (isOnEdit)
                       AppIconButton(
-                        onTap: () {
-                          // controller.types.add(
-                          //   UsageType(
-                          //     tipe: Tipe(index: controller.usage.value?.listTipe?.length),
-                          //     focusNode: FocusNode(),
-                          //     textController: TextEditingController(),
-                          //     editorController: HtmlEditorController(),
-                          //   ),
-                          // );
-                          Future.delayed(const Duration(milliseconds: 1)).then((e) {
-                            controller.scrollController.jumpTo(controller.scrollController.position.maxScrollExtent);
-                          });
+                        onTap: () async {
+                          controller.isOnDialog.value = true;
+                          await Get.dialog(const UsageDetailArticleDialog());
+                          controller.isOnDialog.value = false;
                         },
                         icon: Icons.add,
                       ),
@@ -288,21 +291,39 @@ class UsageDetailContent extends GetView<UsageDetailController> {
                 );
               }),
               Gaps.vertical.r,
-              // Obx(() {
-              //   final isOnEdit = controller.isOnEdit.value;
-              //   final listArtikel = controller.usage.value?.listArtikel ?? [];
-              //   return AlignedGridView.extent(
-              //     shrinkWrap: true,
-              //     maxCrossAxisExtent: 200,
-              //     itemCount: listArtikel.length,
-              //     mainAxisSpacing: Sizes.r,
-              //     crossAxisSpacing: Sizes.r,
-              //     itemBuilder: (context, index) {
-              //       final artikel = listArtikel[index];
-              //       return UsageDetailArticleCard(artikel: artikel);
-              //     },
-              //   );
-              // }),
+              GetBuilder<UsageDetailController>(builder: (controller) {
+                final isOnEdit = controller.isOnEdit.value;
+                final listArtikel = controller.usage.value?.listArtikel ?? [];
+                return AlignedGridView.extent(
+                  shrinkWrap: true,
+                  maxCrossAxisExtent: 600,
+                  itemCount: listArtikel.length,
+                  mainAxisSpacing: Sizes.r,
+                  crossAxisSpacing: Sizes.r,
+                  itemBuilder: (context, index) {
+                    final artikel = listArtikel[index];
+                    return Stack(
+                      children: [
+                        ArticleCard(
+                          artikel: Artikel.fromJson(artikel.toJson()),
+                        ),
+                        if (isOnEdit)
+                          Align(
+                            alignment: Alignment.topRight,
+                            child: AppIconButton(
+                              onTap: () {
+                                controller.usage.value?.listArtikel?.removeWhere((article) => article == artikel);
+                                controller.update();
+                              },
+                              icon: Icons.remove_rounded,
+                              color: AppColors.red,
+                            ),
+                          ),
+                      ],
+                    );
+                  },
+                );
+              }),
             ],
           ),
         ),

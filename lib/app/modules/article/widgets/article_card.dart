@@ -20,6 +20,7 @@ class ArticleCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(Sizes.r),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
             height: 80,
