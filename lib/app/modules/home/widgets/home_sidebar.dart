@@ -33,13 +33,13 @@ class HomeSideBar extends StatelessWidget {
             ),
             title: "Produk",
             route: Routes.PRODUCT,
-            routes: [Routes.PRODUCT, Routes.PRODUCT_DETAIL, Routes.PRODUCT_EDIT],
+            routes: [Routes.PRODUCT, Routes.PRODUCT_DETAIL, Routes.ADD_PRODUCT],
           ),
           HomeSidebarMenu(
             icon: Image.asset("assets/icon/usage.png"),
             title: "Cara Pakai",
             route: Routes.USAGE,
-            routes: const [Routes.USAGE],
+            routes: const [Routes.USAGE, Routes.USAGE_DETAIL, Routes.ADD_USAGE],
           ),
           const HomeSidebarMenu(
             icon: Icon(
