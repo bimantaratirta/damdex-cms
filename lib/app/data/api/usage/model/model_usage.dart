@@ -2,7 +2,7 @@ import 'dart:convert';
 
 class ModelUsage {
   String? id;
-  dynamic idAsset;
+  String? idAsset;
   String? judul;
   String? deskripsi;
   bool? isAktif;
@@ -25,7 +25,7 @@ class ModelUsage {
 
   ModelUsage copyWith({
     String? id,
-    dynamic idAsset,
+    String? idAsset,
     String? judul,
     String? deskripsi,
     bool? isAktif,

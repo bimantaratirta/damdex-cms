@@ -2,19 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
 
+import '../../../data/api/article/data/get_articles.dart';
+import '../../../data/api/article/model/model_articles.dart';
 import '../../../data/api/usage/data/post_usage.dart';
 import '../../../data/api/usage/model/model_usage.dart';
 import '../../../routes/app_pages.dart';
 
 class AddUsageController extends GetxController {
   final Rx<ModelUsage> usage = Rx<ModelUsage>(ModelUsage(listArtikel: [], listTipe: []));
+  final Rx<ModelArticles> articles = Rx<ModelArticles>(ModelArticles(totalAllData: 0, payload: []));
   final RxList<UsageType> types = RxList<UsageType>([]);
+  final Rx<Artikel?> selectedArticle = Rx<Artikel?>(null);
 
   final ScrollController scrollController = ScrollController();
   final HtmlEditorController editorController = HtmlEditorController();
   final TextEditingController nameC = TextEditingController();
   final FocusNode nameFN = FocusNode();
 
+  Rx<UsageType?> seletedType = Rx<UsageType?>(null);
+  RxBool isOnDialog = false.obs;
   final RxBool isError = false.obs;
 
   Future<void> submit() async {
@@ -35,6 +41,16 @@ class AddUsageController extends GetxController {
       scrollController.jumpTo(0);
       isError.value = true;
     }
+  }
+
+  @override
+  void onInit() async {
+    getArticles().then((res) {
+      if (res.data != null) {
+        articles.value = res.data!;
+      }
+    });
+    super.onInit();
   }
 }
 

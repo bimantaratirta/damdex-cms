@@ -2,11 +2,13 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:get/get.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
 
 import '../../../constants/sizes.dart';
 import '../../../data/api/api_path.dart';
+import '../../../data/api/article/model/model_articles.dart';
 import '../../../data/api/asset/data/upload_asset.dart';
 import '../../../data/api/usage/model/model_usage.dart';
 import '../../../routes/app_pages.dart';
@@ -17,8 +19,9 @@ import '../../../shareds/widgets/app_icon_button.dart';
 import '../../../shareds/widgets/app_textfield.dart';
 import '../../../shareds/widgets/text_bold.dart';
 import '../../../theme/app_colors.dart';
+import '../../article/widgets/article_card.dart';
 import '../controllers/add_usage_controller.dart';
-import 'add_usage_article_card.dart';
+import 'add_usage_article_dialog.dart';
 import 'add_usage_input_type_card.dart';
 
 class AddUsageContent extends GetView<AddUsageController> {
@@ -98,7 +101,7 @@ class AddUsageContent extends GetView<AddUsageController> {
                 child: ConstrainedBox(
                   constraints: const BoxConstraints(maxWidth: 400),
                   child: AppTextField(
-                    label: const Text("Nama Cara Pakai"),
+                    label: const Text("Nama Cara"),
                     isError: false,
                     focusNode: controller.nameFN,
                     controller: controller.nameC,
@@ -108,32 +111,32 @@ class AddUsageContent extends GetView<AddUsageController> {
                   ),
                 ),
               ),
-              Gaps.vertical.m,
-              Align(
-                alignment: Alignment.centerLeft,
-                child: InkWell(
-                  onTap: () async {
-                    final result = await FilePicker.platform.pickFiles(type: FileType.image);
-                    if (result?.files.isNotEmpty ?? false) {
-                      final file = result?.files[0];
-                      final response = await uploadAsset(bytes: file?.bytes?.toList(), fileName: file?.name ?? "");
-                      if (response.data != null) {
-                        final id = response.data ?? "";
-                        controller.usage.value.idAsset = id;
-                        controller.update();
+              Gaps.vertical.r,
+              GetBuilder<AddUsageController>(builder: (controller) {
+                final image = controller.usage.value.idAsset;
+                return Align(
+                  alignment: Alignment.centerLeft,
+                  child: InkWell(
+                    onTap: () async {
+                      final result = await FilePicker.platform.pickFiles(type: FileType.image);
+                      if (result?.files.isNotEmpty ?? false) {
+                        final file = result?.files[0];
+                        final response = await uploadAsset(bytes: file?.bytes?.toList(), fileName: file?.name ?? "");
+                        if (response.data != null) {
+                          final id = response.data ?? "";
+                          controller.usage.value.idAsset = id;
+                          controller.update();
+                        }
                       }
-                    }
-                  },
-                  child: GetBuilder<AddUsageController>(builder: (controller) {
-                    final image = controller.usage.value.idAsset;
-                    return Container(
+                    },
+                    child: Container(
                       width: 350,
                       height: 150,
                       alignment: Alignment.topRight,
                       padding: const EdgeInsets.all(Sizes.s),
                       decoration: BoxDecoration(
-                        color: AppColors.lightenGrey,
                         borderRadius: const BorderRadius.all(Radius.circular(Sizes.xs)),
+                        color: AppColors.lightenGrey,
                         image: image == null
                             ? null
                             : DecorationImage(
@@ -145,10 +148,10 @@ class AddUsageContent extends GetView<AddUsageController> {
                         Icons.edit_rounded,
                         size: 24,
                       ),
-                    );
-                  }),
-                ),
-              ),
+                    ),
+                  ),
+                );
+              }),
               Gaps.vertical.m,
               const TextBold(
                 text: "Deskripsi",
@@ -156,10 +159,26 @@ class AddUsageContent extends GetView<AddUsageController> {
                 fontSize: Sizes.r,
               ),
               Gaps.vertical.r,
-              AppHtmlEditor(
-                editorController: controller.editorController,
-                hint: "Deskripsi Cara Pakai",
-              ),
+              Obx(() {
+                final deskripsi = controller.usage.value.deskripsi ?? "";
+                final isOnDialog = controller.isOnDialog.value;
+                return !isOnDialog
+                    ? GetBuilder<AddUsageController>(
+                        builder: (controller) {
+                          return AppHtmlEditor(
+                            editorController: controller.editorController,
+                            hint: "Deskripsi Cara Pakai",
+                            initialText: deskripsi,
+                            onChanged: (text) => controller.usage.value.deskripsi = text,
+                          );
+                        },
+                      )
+                    : HtmlWidget(
+                        deskripsi,
+                        renderMode: RenderMode.column,
+                        textStyle: const TextStyle(fontSize: 14),
+                      );
+              }),
               Gaps.vertical.m,
               Wrap(
                 spacing: Sizes.m,
@@ -173,13 +192,12 @@ class AddUsageContent extends GetView<AddUsageController> {
                     onTap: () {
                       controller.types.add(
                         UsageType(
-                          tipe: Tipe(),
+                          tipe: Tipe(index: controller.usage.value.listTipe?.length),
                           focusNode: FocusNode(),
                           textController: TextEditingController(),
                           editorController: HtmlEditorController(),
                         ),
                       );
-                      controller.update();
                       Future.delayed(const Duration(milliseconds: 1)).then((e) {
                         controller.scrollController.jumpTo(controller.scrollController.position.maxScrollExtent);
                       });
@@ -189,55 +207,75 @@ class AddUsageContent extends GetView<AddUsageController> {
                 ],
               ),
               Gaps.vertical.r,
-              GetBuilder<AddUsageController>(builder: (controller) {
+              Obx(() {
                 final types = controller.types;
+                final isOnDialog = controller.isOnDialog.value;
                 return Column(
-                  children: [...types.map((type) => AddUsageInputTypeCard(type: type))],
+                  children: [
+                    for (UsageType type in types) ...[
+                      if (isOnDialog)
+                        HtmlWidget(
+                          controller.types.firstWhere((type) => type == type).tipe.body ?? "",
+                          renderMode: RenderMode.column,
+                          textStyle: const TextStyle(fontSize: 14),
+                        )
+                      else
+                        AddUsageInputTypeCard(type: type),
+                      Gaps.vertical.s,
+                    ]
+                  ],
                 );
               }),
               Gaps.vertical.m,
-              Wrap(
-                spacing: Sizes.m,
-                children: [
-                  const TextBold(
-                    text: "Artikel Terkait",
-                    fontWeight: FontWeight.bold,
-                    fontSize: Sizes.r,
-                  ),
-                  AppIconButton(
-                    onTap: () {
-                      Get.dialog(AlertDialog(
-                        title: const Text("Artikel Lainnya"),
-                        actions: [
-                          b.AppButton(
-                            type: b.ButtonType.outlined,
-                            onPressed: Get.back,
-                            fixedSize: const Size(100, 40),
-                            child: const Text("Batal"),
-                          ),
-                        ],
-                      ));
-                      controller.update();
-                      Future.delayed(const Duration(milliseconds: 1)).then((e) {
-                        controller.scrollController.jumpTo(controller.scrollController.position.maxScrollExtent);
-                      });
-                    },
-                    icon: Icons.add,
-                  ),
-                ],
-              ),
+              GetBuilder<AddUsageController>(builder: (controller) {
+                return Wrap(
+                  spacing: Sizes.m,
+                  children: [
+                    const TextBold(
+                      text: "Artikel Terkait",
+                      fontWeight: FontWeight.bold,
+                      fontSize: Sizes.r,
+                    ),
+                    AppIconButton(
+                      onTap: () async {
+                        controller.isOnDialog.value = true;
+                        await Get.dialog(const AddUsageArticleDialog());
+                        controller.isOnDialog.value = false;
+                      },
+                      icon: Icons.add,
+                    ),
+                  ],
+                );
+              }),
               Gaps.vertical.r,
               GetBuilder<AddUsageController>(builder: (controller) {
                 final listArtikel = controller.usage.value.listArtikel ?? [];
                 return AlignedGridView.extent(
                   shrinkWrap: true,
-                  maxCrossAxisExtent: 200,
+                  maxCrossAxisExtent: 600,
                   itemCount: listArtikel.length,
                   mainAxisSpacing: Sizes.r,
                   crossAxisSpacing: Sizes.r,
                   itemBuilder: (context, index) {
                     final artikel = listArtikel[index];
-                    return AddUsageArticleCard(artikel: artikel);
+                    return Stack(
+                      children: [
+                        ArticleCard(
+                          artikel: Artikel.fromJson(artikel.toJson()),
+                        ),
+                        Align(
+                          alignment: Alignment.topRight,
+                          child: AppIconButton(
+                            onTap: () {
+                              controller.usage.value.listArtikel?.removeWhere((article) => article == artikel);
+                              controller.update();
+                            },
+                            icon: Icons.remove_rounded,
+                            color: AppColors.red,
+                          ),
+                        ),
+                      ],
+                    );
                   },
                 );
               }),
