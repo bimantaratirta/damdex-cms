@@ -5,6 +5,7 @@ class APIPath {
   static const adminLogin = "$admin/login";
   static const adminLogout = "$admin/logout";
   static const adminValidate = "$admin/validate";
+  static const adminProfile = "$admin/profile";
 
   static const asset = "$base/asset";
   static String assetId(String id) => "$base/asset/$id";
@@ -26,5 +27,8 @@ class APIPath {
 
   static const userLog = "$base/user-log";
   static const userLogHeader = "$userLog/header";
-  static String userLogId(String id) => "$userLog/id";
+  static String userLogId(String id) => "$userLog/$id";
+
+  static const settings = "$base/pengaturan";
+  static String settingId(String id) => "$base/pengaturan/$id";
 }

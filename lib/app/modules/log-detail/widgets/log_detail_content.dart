@@ -57,8 +57,8 @@ class LogDetailContent extends GetView<LogDetailController> {
                       fontSize: 20,
                     ),
                     Gaps.vertical.xs,
-                    const TextBold(
-                      text: "Samsung",
+                    TextBold(
+                      text: log?.device ?? "-",
                       fontWeight: FontWeight.w500,
                       fontSize: 16,
                     ),
@@ -72,60 +72,26 @@ class LogDetailContent extends GetView<LogDetailController> {
                     Text.rich(
                       TextSpan(
                         children: [
-                          TextSpan(
-                            text: "Title: ",
-                            children: [
-                              TextSpan(
-                                text: "Description\n",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontFamily: GoogleFonts.poppins(fontWeight: FontWeight.w400).fontFamily,
-                                  fontWeight: FontWeight.w400,
+                          for (dynamic key in log?.lokasi?.keys ?? []) ...[
+                            TextSpan(
+                              text: "$key: ",
+                              children: [
+                                TextSpan(
+                                  text: "${log?.lokasi?["$key"]}\n",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontFamily: GoogleFonts.poppins(fontWeight: FontWeight.w400).fontFamily,
+                                    fontWeight: FontWeight.w400,
+                                  ),
                                 ),
+                              ],
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                                fontFamily: GoogleFonts.poppins(fontWeight: FontWeight.w500).fontFamily,
                               ),
-                            ],
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: GoogleFonts.poppins(fontWeight: FontWeight.w500).fontFamily,
-                            ),
-                          ),
-                          TextSpan(
-                            text: "Title: ",
-                            children: [
-                              TextSpan(
-                                text: "Description\n",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontFamily: GoogleFonts.poppins(fontWeight: FontWeight.w400).fontFamily,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                            ],
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: GoogleFonts.poppins(fontWeight: FontWeight.w500).fontFamily,
-                            ),
-                          ),
-                          TextSpan(
-                            text: "Title: ",
-                            children: [
-                              TextSpan(
-                                text: "Description\n",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontFamily: GoogleFonts.poppins(fontWeight: FontWeight.w400).fontFamily,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                            ],
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: GoogleFonts.poppins(fontWeight: FontWeight.w500).fontFamily,
-                            ),
-                          ),
+                            )
+                          ]
                         ],
                       ),
                     ),
@@ -135,8 +101,8 @@ class LogDetailContent extends GetView<LogDetailController> {
                       fontSize: 20,
                     ),
                     Gaps.vertical.xs,
-                    const TextBold(
-                      text: "[Produk] Nama Produk 1",
+                    TextBold(
+                      text: log?.konten ?? "-",
                       fontWeight: FontWeight.w500,
                       fontSize: 16,
                     ),

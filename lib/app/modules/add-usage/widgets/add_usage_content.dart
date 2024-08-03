@@ -192,7 +192,7 @@ class AddUsageContent extends GetView<AddUsageController> {
                     onTap: () {
                       controller.types.add(
                         UsageType(
-                          tipe: Tipe(index: controller.usage.value.listTipe?.length),
+                          tipe: Tipe(index: controller.types.length),
                           focusNode: FocusNode(),
                           textController: TextEditingController(),
                           editorController: HtmlEditorController(),
@@ -201,6 +201,7 @@ class AddUsageContent extends GetView<AddUsageController> {
                       Future.delayed(const Duration(milliseconds: 1)).then((e) {
                         controller.scrollController.jumpTo(controller.scrollController.position.maxScrollExtent);
                       });
+                      print(controller.types.length);
                     },
                     icon: Icons.add,
                   ),

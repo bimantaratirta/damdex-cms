@@ -11,6 +11,7 @@ import '../../../shareds/widgets/app_gaps.dart';
 import '../../../shareds/widgets/app_textfield.dart';
 import '../../../shareds/widgets/empty_list.dart';
 import '../../../shareds/widgets/text_bold.dart';
+import '../../../theme/app_colors.dart';
 import '../controllers/logs_controller.dart';
 
 class LogsContent extends GetView<LogsController> {
@@ -37,6 +38,39 @@ class LogsContent extends GetView<LogsController> {
                 fontSize: Sizes.l,
               ),
               Gaps.vertical.xh,
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(vertical: Sizes.r, horizontal: Sizes.m),
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(Sizes.s),
+                    ),
+                    color: AppColors.primary,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const TextBold(
+                        text: "Total",
+                        fontWeight: FontWeight.w500,
+                        fontSize: 24,
+                        color: AppColors.white,
+                      ),
+                      Obx(() {
+                        final total = controller.logsHeader.value.total;
+                        return TextBold(
+                          text: (total ?? 0).toString(),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 32,
+                          color: AppColors.white,
+                        );
+                      }),
+                    ],
+                  ),
+                ),
+              ),
+              Gaps.vertical.l,
               Align(
                 alignment: Alignment.centerLeft,
                 child: ConstrainedBox(
@@ -83,7 +117,7 @@ class LogsContent extends GetView<LogsController> {
                         DataCell(
                           AppButton(
                             type: ButtonType.elevated,
-                            onPressed: () => Get.toNamed(Routes.LOG_DETAIL, arguments: userLog.toString()),
+                            onPressed: () => Get.toNamed(Routes.LOG_DETAIL, arguments: userLog.id),
                             fixedSize: const Size(80, 25),
                             borderRadius: const BorderRadius.all(Radius.circular(Sizes.xs)),
                             child: const Text(

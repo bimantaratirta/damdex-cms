@@ -152,7 +152,7 @@ class UsageDetailContent extends GetView<UsageDetailController> {
                       );
               }),
               Gaps.vertical.r,
-              Obx(() {
+              GetBuilder<UsageDetailController>(builder: (controller) {
                 final isOnEdit = controller.isOnEdit.value;
                 final image = controller.usage.value?.idAsset ?? "";
                 return Align(
@@ -168,6 +168,7 @@ class UsageDetailContent extends GetView<UsageDetailController> {
                                 final id = response.data ?? "";
                                 controller.usage.value?.idAsset = id;
                               }
+                              controller.update();
                             }
                           }
                         : null,
@@ -235,7 +236,7 @@ class UsageDetailContent extends GetView<UsageDetailController> {
                         onTap: () {
                           controller.types.add(
                             UsageType(
-                              tipe: Tipe(index: controller.usage.value?.listTipe?.length),
+                              tipe: Tipe(index: controller.types.length + 1),
                               focusNode: FocusNode(),
                               textController: TextEditingController(),
                               editorController: HtmlEditorController(),

@@ -57,6 +57,7 @@ class LoginForm extends GetView<LoginController> {
                   label: const Text("Password"),
                   isError: isError,
                   errorText: "Username atau password salah",
+                  isObscure: true,
                   focusNode: controller.passFN,
                   controller: controller.passC,
                 );

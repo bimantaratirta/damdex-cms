@@ -9,6 +9,7 @@ import '../../../shareds/widgets/app_button.dart';
 import '../../../shareds/widgets/app_gaps.dart';
 import '../../../shareds/widgets/text_bold.dart';
 import '../../../theme/app_colors.dart';
+import '../../../utils/iso_parser.dart';
 
 class ArticleCard extends StatelessWidget {
   const ArticleCard({super.key, required this.artikel});
@@ -47,9 +48,9 @@ class ArticleCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
                 Gaps.vertical.xs,
-                const Text(
-                  "1 Januari 2024",
-                  style: TextStyle(
+                Text(
+                  isoParser(artikel.updatedAt?.toIso8601String()),
+                  style: const TextStyle(
                     fontWeight: FontWeight.w300,
                     fontSize: 10,
                   ),
