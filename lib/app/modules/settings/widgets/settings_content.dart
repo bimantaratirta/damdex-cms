@@ -195,6 +195,9 @@ class SettingsContent extends GetView<SettingsController> {
               Align(
                 alignment: Alignment.centerRight,
                 child: AppButton(
+                  state: (controller.settings.value?.payload?.where((data) => data.kode == "banner").length ?? 0) > 4
+                      ? ButtonState.disable
+                      : ButtonState.enable,
                   type: ButtonType.elevated,
                   onPressed: () async {
                     final result = await FilePicker.platform.pickFiles(type: FileType.image);
