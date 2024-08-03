@@ -32,6 +32,8 @@ class SettingsContent extends GetView<SettingsController> {
         final profile = controller.profile.value;
         final isOnEdit = controller.isOnEdit.value;
         final isError = controller.isError.value;
+        final isLoading = controller.isLoading.value;
+        final state = isLoading ? ButtonState.loading : ButtonState.enable;
         if (settings == null || profile == null) {
           return const Center(child: SizedBox(width: 50, height: 50, child: CircularProgressIndicator()));
         }
@@ -90,6 +92,7 @@ class SettingsContent extends GetView<SettingsController> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     AppButton(
+                      state: state,
                       type: ButtonType.outlined,
                       onPressed: () {
                         controller.isError.value = false;
@@ -100,6 +103,7 @@ class SettingsContent extends GetView<SettingsController> {
                     ),
                     Gaps.horizontal.r,
                     AppButton(
+                      state: state,
                       type: ButtonType.elevated,
                       backgroundColor: AppColors.primary,
                       onPressed: controller.patch,
@@ -112,6 +116,7 @@ class SettingsContent extends GetView<SettingsController> {
                 Align(
                   alignment: Alignment.centerRight,
                   child: AppButton(
+                    state: state,
                     type: ButtonType.elevated,
                     onPressed: () => controller.isOnEdit.value = true,
                     child: const Text("Edit Profil"),
@@ -195,20 +200,24 @@ class SettingsContent extends GetView<SettingsController> {
               Align(
                 alignment: Alignment.centerRight,
                 child: AppButton(
-                  state: (controller.settings.value?.payload?.where((data) => data.kode == "banner").length ?? 0) > 4
-                      ? ButtonState.disable
-                      : ButtonState.enable,
+                  state: isLoading
+                      ? ButtonState.loading
+                      : (controller.settings.value?.payload?.where((data) => data.kode == "banner").length ?? 0) > 4
+                          ? ButtonState.disable
+                          : ButtonState.enable,
                   type: ButtonType.elevated,
                   onPressed: () async {
                     final result = await FilePicker.platform.pickFiles(type: FileType.image);
                     if (result?.files.isNotEmpty ?? false) {
                       final file = result?.files[0];
+                      controller.isLoading.value = true;
                       final response = await uploadAsset(bytes: file?.bytes?.toList(), fileName: file?.name ?? "");
                       if (response.data != null) {
                         final id = response.data ?? "";
                         await postSetting({"kode": "banner", "value": id});
                         controller.onInit();
                       }
+                      controller.isLoading.value = false;
                     }
                   },
                   child: const Text("Tambah Banner"),
@@ -240,30 +249,39 @@ class SettingsContent extends GetView<SettingsController> {
                         ),
                       ),
                       child: AppIconButton(
+                        state: state,
                         onTap: () async {
-                          Get.dialog(AlertDialog(
-                            title: const Text("Hapus Banner?"),
-                            actions: [
-                              AppButton(
-                                type: ButtonType.outlined,
-                                onPressed: Get.back,
-                                fixedSize: const Size(100, 40),
-                                child: const Text("Batal"),
-                              ),
-                              AppButton(
-                                type: ButtonType.elevated,
-                                backgroundColor: AppColors.red,
-                                onPressed: () async {
-                                  controller.settings.value?.payload?.removeWhere((data) => data == banner);
-                                  await deleteSetting(banner?.id ?? "");
-                                  Get.back();
-                                  controller.onInit();
-                                },
-                                fixedSize: const Size(100, 40),
-                                child: const Text("Hapus"),
-                              ),
-                            ],
-                          ));
+                          Get.dialog(Obx(() {
+                            final isLoading = controller.isLoading.value;
+                            final state = isLoading ? ButtonState.loading : ButtonState.enable;
+                            return AlertDialog(
+                              title: const Text("Hapus Banner?"),
+                              actions: [
+                                AppButton(
+                                  state: state,
+                                  type: ButtonType.outlined,
+                                  onPressed: Get.back,
+                                  fixedSize: const Size(100, 40),
+                                  child: const Text("Batal"),
+                                ),
+                                AppButton(
+                                  state: state,
+                                  type: ButtonType.elevated,
+                                  backgroundColor: AppColors.red,
+                                  onPressed: () async {
+                                    controller.isLoading.value = true;
+                                    controller.settings.value?.payload?.removeWhere((data) => data == banner);
+                                    await deleteSetting(banner?.id ?? "");
+                                    Get.back();
+                                    await controller.onInit();
+                                    controller.isLoading.value = false;
+                                  },
+                                  fixedSize: const Size(100, 40),
+                                  child: const Text("Hapus"),
+                                ),
+                              ],
+                            );
+                          }));
                         },
                         icon: Icons.remove_rounded,
                         color: AppColors.red,

@@ -24,6 +24,7 @@ class SettingsController extends GetxController {
 
   RxBool isOnEdit = false.obs;
   RxBool isError = false.obs;
+  RxBool isLoading = false.obs;
 
   @override
   Future<void> onInit() async {
@@ -47,6 +48,7 @@ class SettingsController extends GetxController {
   }
 
   Future<void> patch() async {
+    isLoading.value = true;
     isError.value = false;
     final param = {
       "nama": namaC.text,
@@ -63,5 +65,6 @@ class SettingsController extends GetxController {
     } else {
       isError.value = true;
     }
+    isLoading.value = false;
   }
 }

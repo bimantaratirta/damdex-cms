@@ -56,11 +56,14 @@ class ArticleDetailContent extends GetView<ArticleDetailController> {
               Gaps.vertical.l,
               Obx(() {
                 final isOnEdit = controller.isOnEdit.value;
+                final isLoading = controller.isLoading.value;
+                final state = isLoading ? b.ButtonState.loading : b.ButtonState.enable;
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: isOnEdit
                       ? [
                           b.AppButton(
+                            state: state,
                             type: b.ButtonType.outlined,
                             onPressed: () {
                               controller.isOnEdit.value = false;
@@ -71,6 +74,7 @@ class ArticleDetailContent extends GetView<ArticleDetailController> {
                           ),
                           Gaps.horizontal.r,
                           b.AppButton(
+                            state: state,
                             type: b.ButtonType.elevated,
                             backgroundColor: AppColors.primary,
                             onPressed: controller.patch,
@@ -80,6 +84,7 @@ class ArticleDetailContent extends GetView<ArticleDetailController> {
                         ]
                       : [
                           b.AppButton(
+                            state: state,
                             type: b.ButtonType.elevated,
                             onPressed: () {
                               controller.isOnEdit.value = true;
@@ -90,6 +95,7 @@ class ArticleDetailContent extends GetView<ArticleDetailController> {
                           ),
                           Gaps.horizontal.r,
                           b.AppButton(
+                            state: state,
                             type: b.ButtonType.elevated,
                             backgroundColor: AppColors.red,
                             onPressed: controller.delete,
@@ -144,6 +150,7 @@ class ArticleDetailContent extends GetView<ArticleDetailController> {
               Gaps.vertical.r,
               GetBuilder<ArticleDetailController>(builder: (controller) {
                 final isOnEdit = controller.isOnEdit.value;
+                final isLoading = controller.isLoading.value;
                 final image = controller.article.value?.idAsset ?? "";
                 return Align(
                   alignment: Alignment.centerLeft,
@@ -153,19 +160,23 @@ class ArticleDetailContent extends GetView<ArticleDetailController> {
                             final result = await FilePicker.platform.pickFiles(type: FileType.image);
                             if (result?.files.isNotEmpty ?? false) {
                               final file = result?.files[0];
+                              controller.isLoading.value = true;
+                              controller.update();
                               final response = await uploadAsset(bytes: file?.bytes?.toList(), fileName: file?.name ?? "");
                               if (response.data != null) {
                                 final id = response.data ?? "";
                                 controller.article.value?.idAsset = id;
                               }
-                              controller.update();
                             }
+
+                            controller.isLoading.value = false;
+                            controller.update();
                           }
                         : null,
                     child: Container(
                       width: 350,
                       height: 150,
-                      alignment: Alignment.topRight,
+                      alignment: isLoading ? Alignment.center : Alignment.topRight,
                       padding: const EdgeInsets.all(Sizes.s),
                       decoration: BoxDecoration(
                         borderRadius: const BorderRadius.all(Radius.circular(Sizes.xs)),
@@ -176,10 +187,9 @@ class ArticleDetailContent extends GetView<ArticleDetailController> {
                         ),
                       ),
                       child: isOnEdit
-                          ? const Icon(
-                              Icons.edit_rounded,
-                              size: 24,
-                            )
+                          ? isLoading
+                              ? const SizedBox(width: 24, height: 24, child: CircularProgressIndicator())
+                              : const Icon(Icons.edit_rounded, size: 24)
                           : null,
                     ),
                   ),

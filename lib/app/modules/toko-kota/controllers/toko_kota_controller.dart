@@ -17,9 +17,12 @@ class TokoKotaController extends GetxController {
   final ScrollController scrollController = ScrollController();
 
   RxBool isError = false.obs;
+  RxBool isLoading = false.obs;
 
   @override
   Future<void> onInit() async {
+    isLoading.value = true;
+    update();
     final response = await getTokoKota(Get.arguments ?? "null");
     if (response.data != null) {
       if (response.data?.idProvinsi == null || response.data?.kota == null) {
@@ -31,12 +34,15 @@ class TokoKotaController extends GetxController {
     } else {
       Get.offNamed(Routes.TOKO);
     }
+    isLoading.value = false;
     update();
     super.onInit();
   }
 
   Future<void> add() async {
     isError.value = false;
+    isLoading.value = true;
+    update();
     final response = await postToko(newToko.value.toJson());
     if (response.data != null) {
       newToko.value = NewToko();
@@ -45,9 +51,13 @@ class TokoKotaController extends GetxController {
     } else {
       isError.value = true;
     }
+    isLoading.value = false;
+    update();
   }
 
   Future<void> edit(Toko toko) async {
+    isLoading.value = true;
+    update();
     final response = await patchToko(toko.id ?? "", {
       "nama": toko.nama,
       "detail": toko.detail,
@@ -64,6 +74,7 @@ class TokoKotaController extends GetxController {
       scrollController.jumpTo(0);
       isError.value = true;
     }
+    isLoading.value = false;
     update();
   }
 
@@ -71,24 +82,37 @@ class TokoKotaController extends GetxController {
     Get.dialog(AlertDialog(
       title: Text("Hapus Toko ${toko.nama}?"),
       actions: [
-        AppButton(
-          type: ButtonType.outlined,
-          onPressed: Get.back,
-          fixedSize: const Size(100, 40),
-          child: const Text("Batal"),
-        ),
-        AppButton(
-          type: ButtonType.elevated,
-          backgroundColor: AppColors.red,
-          onPressed: () {
-            deleteToko(toko.id ?? "").then((res) {
+        GetBuilder<TokoKotaController>(builder: (controller) {
+          final isLoading = controller.isLoading.value;
+          final state = isLoading ? ButtonState.loading : ButtonState.enable;
+          return AppButton(
+            state: state,
+            type: ButtonType.outlined,
+            onPressed: Get.back,
+            fixedSize: const Size(100, 40),
+            child: const Text("Batal"),
+          );
+        }),
+        GetBuilder<TokoKotaController>(builder: (controller) {
+          final isLoading = controller.isLoading.value;
+          final state = isLoading ? ButtonState.loading : ButtonState.enable;
+          return AppButton(
+            state: state,
+            type: ButtonType.elevated,
+            backgroundColor: AppColors.red,
+            onPressed: () async {
+              this.isLoading.value = true;
+              update();
+              await deleteToko(toko.id ?? "");
               Get.back();
-              onInit();
-            });
-          },
-          fixedSize: const Size(100, 40),
-          child: const Text("Hapus"),
-        ),
+              await onInit();
+              this.isLoading.value = false;
+              update();
+            },
+            fixedSize: const Size(100, 40),
+            child: const Text("Hapus"),
+          );
+        }),
       ],
     ));
   }

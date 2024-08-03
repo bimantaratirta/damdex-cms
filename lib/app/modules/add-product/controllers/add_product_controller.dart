@@ -16,6 +16,7 @@ class AddProductController extends GetxController {
   final FocusNode nameFN = FocusNode();
 
   final RxBool isError = false.obs;
+  final RxBool isLoading = false.obs;
 
   Future<void> submit() async {
     final response = await postProduct({
