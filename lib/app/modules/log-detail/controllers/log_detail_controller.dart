@@ -12,13 +12,13 @@ class LogDetailController extends GetxController {
 
   @override
   Future<void> onInit() async {
-    // final response = await getLog(Get.arguments ?? "null");
-    // if (response.data != null) {
-    //   log.value = response.data;
-    // } else {
-    //   Get.offNamed(Routes.LOGS);
-    // }
-    // update();
+    final response = await getLog(Get.arguments ?? "null");
+    if (response.data != null) {
+      log.value = response.data;
+    } else {
+      Get.offNamed(Routes.LOGS);
+    }
+    update();
     super.onInit();
   }
 }

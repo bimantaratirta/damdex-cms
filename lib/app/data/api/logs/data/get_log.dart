@@ -4,7 +4,7 @@ import '../model/model_log.dart';
 
 Future<APIResponse<ModelLog>> getLog(String id) async {
   final param = APIParam<ModelLog>(
-    path: APIPath.articleId(id),
+    path: APIPath.userLogId(id),
     fromJson: ModelLog.fromJson,
   );
   final response = await apiClient.get<ModelLog>(param);

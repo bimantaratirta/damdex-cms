@@ -26,5 +26,5 @@ class APIPath {
 
   static const userLog = "$base/user-log";
   static const userLogHeader = "$userLog/header";
-  static String userLogId(String id) => "$userLog/id";
+  static String userLogId(String id) => "$userLog/$id";
 }

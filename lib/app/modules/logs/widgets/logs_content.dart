@@ -83,7 +83,7 @@ class LogsContent extends GetView<LogsController> {
                         DataCell(
                           AppButton(
                             type: ButtonType.elevated,
-                            onPressed: () => Get.toNamed(Routes.LOG_DETAIL, arguments: userLog.toString()),
+                            onPressed: () => Get.toNamed(Routes.LOG_DETAIL, arguments: userLog.id),
                             fixedSize: const Size(80, 25),
                             borderRadius: const BorderRadius.all(Radius.circular(Sizes.xs)),
                             child: const Text(
