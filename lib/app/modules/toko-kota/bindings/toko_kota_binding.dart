@@ -5,8 +5,6 @@ import '../controllers/toko_kota_controller.dart';
 class TokoKotaBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<TokoKotaController>(
-      () => TokoKotaController(),
-    );
+    Get.put<TokoKotaController>(TokoKotaController());
   }
 }

@@ -13,13 +13,13 @@ abstract class Routes {
   static const LOGS = _Paths.LOGS;
   static const SETTINGS = _Paths.SETTINGS;
   static const PRODUCT_DETAIL = _Paths.PRODUCT_DETAIL;
-  static const PRODUCT_EDIT = _Paths.PRODUCT_EDIT;
   static const ADD_PRODUCT = _Paths.ADD_PRODUCT;
   static const USAGE_DETAIL = _Paths.USAGE_DETAIL;
   static const ADD_USAGE = _Paths.ADD_USAGE;
   static const ARTICLE_DETAIL = _Paths.ARTICLE_DETAIL;
   static const ADD_ARTICLE = _Paths.ADD_ARTICLE;
   static const TOKO_KOTA = _Paths.TOKO_KOTA;
+  static const LOG_DETAIL = _Paths.LOG_DETAIL;
 }
 
 abstract class _Paths {
@@ -32,11 +32,11 @@ abstract class _Paths {
   static const LOGS = '/logs';
   static const SETTINGS = '/settings';
   static const PRODUCT_DETAIL = '/product-detail';
-  static const PRODUCT_EDIT = '/product-edit';
   static const ADD_PRODUCT = '/add-product';
   static const USAGE_DETAIL = '/usage-detail';
   static const ADD_USAGE = '/add-usage';
   static const ARTICLE_DETAIL = '/article-detail';
   static const ADD_ARTICLE = '/add-article';
   static const TOKO_KOTA = '/toko-kota';
+  static const LOG_DETAIL = '/log-detail';
 }

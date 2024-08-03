@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import '../../home/widgets/home_sidebar.dart';
 import '../controllers/logs_controller.dart';
+import '../widgets/logs_content.dart';
 
 class LogsView extends GetView<LogsController> {
   const LogsView({super.key});
@@ -13,6 +14,7 @@ class LogsView extends GetView<LogsController> {
       body: Row(
         children: [
           HomeSideBar(),
+          LogsContent(),
         ],
       ),
     );

@@ -4,25 +4,24 @@ import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:get/route_manager.dart';
 
 import '../../../constants/sizes.dart';
-import '../../../data/api/toko/model/model_toko_provinsi.dart';
+import '../../../data/api/logs/model/model_logs.dart';
 import '../../../routes/app_pages.dart';
 import '../../../shareds/widgets/app_button.dart';
 import '../../../shareds/widgets/app_gaps.dart';
 import '../../../shareds/widgets/app_textfield.dart';
 import '../../../shareds/widgets/empty_list.dart';
 import '../../../shareds/widgets/text_bold.dart';
-import '../controllers/toko_controller.dart';
-import 'toko_add_dialog.dart';
+import '../controllers/logs_controller.dart';
 
-class TokoContent extends GetView<TokoController> {
-  const TokoContent({super.key});
+class LogsContent extends GetView<LogsController> {
+  const LogsContent({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: Obx(() {
-        final listTokoProvinsi = controller.searchedList.value;
-        if (listTokoProvinsi == null) {
+        final listUserLog = controller.searchedList.value;
+        if (listUserLog == null) {
           return const Center(child: SizedBox(width: 50, height: 50, child: CircularProgressIndicator()));
         }
 
@@ -33,7 +32,7 @@ class TokoContent extends GetView<TokoController> {
             padding: const EdgeInsets.all(Sizes.l),
             children: [
               const TextBold(
-                text: "Direktori Toko",
+                text: "User Log",
                 fontWeight: FontWeight.bold,
                 fontSize: Sizes.l,
               ),
@@ -43,7 +42,7 @@ class TokoContent extends GetView<TokoController> {
                 child: ConstrainedBox(
                   constraints: const BoxConstraints(maxWidth: 400),
                   child: AppTextField(
-                    label: const Text("Cari Provinsi/Kota"),
+                    label: const Text("Cari Log"),
                     isError: false,
                     focusNode: controller.searchFN,
                     controller: controller.searchC,
@@ -51,50 +50,40 @@ class TokoContent extends GetView<TokoController> {
                   ),
                 ),
               ),
-              Gaps.vertical.m,
-              Align(
-                alignment: Alignment.centerRight,
-                child: AppButton(
-                  type: ButtonType.elevated,
-                  onPressed: () {
-                    Get.dialog(const TokoAddDialog());
-                  },
-                  child: const Text("Tambah Toko"),
-                ),
-              ),
               Gaps.vertical.l,
-              if (listTokoProvinsi.isEmpty) ...[
+              if (listUserLog.isEmpty) ...[
                 const EmptyList(description: "Data Kosong"),
               ] else ...[
                 DataTable(
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
                   columns: const [
                     DataColumn(
                       label: Text('No'),
                     ),
                     DataColumn(
-                      label: Text('Provinsi'),
+                      label: Text('Device'),
                     ),
                     DataColumn(
-                      label: Text('Kota'),
+                      label: Text('Lokasi'),
                     ),
                     DataColumn(
-                      label: Text('Total'),
+                      label: Text('Menu'),
                     ),
                     DataColumn(
                       label: Text('Aksi'),
                     ),
                   ],
                   rows: [
-                    for (TokoProvinsi toko in listTokoProvinsi) ...[
+                    for (UserLog userLog in listUserLog) ...[
                       DataRow(cells: [
-                        DataCell(Text((listTokoProvinsi.indexOf(toko) + 1).toString())),
-                        DataCell(Text(toko.provinsi ?? "-")),
-                        DataCell(Text(toko.kota ?? "-")),
-                        DataCell(Text(toko.total.toString())),
+                        DataCell(Text((listUserLog.indexOf(userLog) + 1).toString())),
+                        DataCell(Text(userLog.device ?? "-")),
+                        DataCell(Text(userLog.lokasi?.toString() ?? "-")),
+                        DataCell(Text(userLog.konten.toString())),
                         DataCell(
                           AppButton(
                             type: ButtonType.elevated,
-                            onPressed: () => Get.toNamed(Routes.TOKO_KOTA, arguments: toko.idKota.toString()),
+                            onPressed: () => Get.toNamed(Routes.LOG_DETAIL, arguments: userLog.toString()),
                             fixedSize: const Size(80, 25),
                             borderRadius: const BorderRadius.all(Radius.circular(Sizes.xs)),
                             child: const Text(

@@ -10,14 +10,14 @@ import '../modules/article-detail/bindings/article_detail_binding.dart';
 import '../modules/article-detail/views/article_detail_view.dart';
 import '../modules/article/bindings/article_binding.dart';
 import '../modules/article/views/article_view.dart';
+import '../modules/log-detail/bindings/log_detail_binding.dart';
+import '../modules/log-detail/views/log_detail_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/logs/bindings/logs_binding.dart';
 import '../modules/logs/views/logs_view.dart';
 import '../modules/product-detail/bindings/product_detail_binding.dart';
 import '../modules/product-detail/views/product_detail_view.dart';
-import '../modules/product-edit/bindings/product_edit_binding.dart';
-import '../modules/product-edit/views/product_edit_view.dart';
 import '../modules/product/bindings/product_binding.dart';
 import '../modules/product/views/product_view.dart';
 import '../modules/settings/bindings/settings_binding.dart';
@@ -82,11 +82,6 @@ class AppPages {
       binding: ProductDetailBinding(),
     ),
     GetPage(
-      name: _Paths.PRODUCT_EDIT,
-      page: () => const ProductEditView(),
-      binding: ProductEditBinding(),
-    ),
-    GetPage(
       name: _Paths.ADD_PRODUCT,
       page: () => const AddProductView(),
       binding: AddProductBinding(),
@@ -115,6 +110,11 @@ class AppPages {
       name: _Paths.TOKO_KOTA,
       page: () => const TokoKotaView(),
       binding: TokoKotaBinding(),
+    ),
+    GetPage(
+      name: _Paths.LOG_DETAIL,
+      page: () => const LogDetailView(),
+      binding: LogDetailBinding(),
     ),
   ];
 }

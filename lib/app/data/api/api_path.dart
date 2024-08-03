@@ -22,5 +22,9 @@ class APIPath {
   static const tokoProvinsi = "$toko/provinsi";
   static const tokoWilayah = "$toko/wilayah";
   static String tokoId(String id) => "$base/toko/$id";
-  static String tokoKotaId(String id) => "$base/toko/kota/$id";
+  static String tokoKotaId(String id) => "$toko/kota/$id";
+
+  static const userLog = "$base/user-log";
+  static const userLogHeader = "$userLog/header";
+  static String userLogId(String id) => "$userLog/id";
 }
