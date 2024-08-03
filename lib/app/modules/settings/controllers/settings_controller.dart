@@ -51,9 +51,11 @@ class SettingsController extends GetxController {
     final param = {
       "nama": namaC.text,
       "username": unameC.text,
-      "currentPassword": hashString(passC.text),
-      "newPassword": hashString(conPassC.text),
     };
+    if (passC.text.isNotEmpty && conPassC.text.isNotEmpty) {
+      param["currentPassword"] = hashString(passC.text);
+      param["newPassword"] = hashString(conPassC.text);
+    }
     final response = await adminPatchProfile(param);
     if (response.data != null) {
       onInit();
