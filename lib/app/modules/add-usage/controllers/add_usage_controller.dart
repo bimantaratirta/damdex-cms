@@ -29,7 +29,11 @@ class AddUsageController extends GetxController {
       "judul": usage.judul,
       "deskripsi": await editorController.getText(),
       "idAsset": usage.idAsset,
-      "listTipe": types.map((type) => type.tipe.toJson()).toList(),
+      "listTipe": types.map((type) {
+        final tipe = type.tipe;
+        final result = {"index": types.indexOf(type), "judul": tipe.judul, "body": tipe.body};
+        return result;
+      }).toList(),
       "listArtikel": usage.listArtikel?.map((article) {
         return {"index": usage.listArtikel?.indexOf(article), "idArtikel": article.id};
       }).toList()

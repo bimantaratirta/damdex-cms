@@ -235,7 +235,7 @@ class UsageDetailContent extends GetView<UsageDetailController> {
                         onTap: () {
                           controller.types.add(
                             UsageType(
-                              tipe: Tipe(index: controller.usage.value?.listTipe?.length),
+                              tipe: Tipe(index: controller.types.length + 1),
                               focusNode: FocusNode(),
                               textController: TextEditingController(),
                               editorController: HtmlEditorController(),

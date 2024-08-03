@@ -74,12 +74,7 @@ class UsageDetailController extends GetxController {
             .toList(),
         "listTipe": types.map((type) {
           final tipe = type.tipe;
-          final result = {
-            "id": tipe.id,
-            "index": usage.value?.listTipe?.indexOf(tipe),
-            "judul": tipe.judul,
-            "body": tipe.body
-          };
+          final result = {"id": tipe.id, "index": types.indexOf(type), "judul": tipe.judul, "body": tipe.body};
           if (tipe.id == null) result.remove("id");
           return result;
         }).toList(),
