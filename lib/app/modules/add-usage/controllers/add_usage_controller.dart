@@ -21,10 +21,13 @@ class AddUsageController extends GetxController {
   final FocusNode nameFN = FocusNode();
 
   Rx<UsageType?> seletedType = Rx<UsageType?>(null);
+  RxBool isLoading = false.obs;
   RxBool isOnDialog = false.obs;
   final RxBool isError = false.obs;
 
   Future<void> submit() async {
+    isLoading.value = true;
+    update();
     final usage = this.usage.value;
     final response = await postUsage({
       "judul": usage.judul,
@@ -46,6 +49,8 @@ class AddUsageController extends GetxController {
       scrollController.jumpTo(0);
       isError.value = true;
     }
+    isLoading.value = true;
+    update();
   }
 
   @override

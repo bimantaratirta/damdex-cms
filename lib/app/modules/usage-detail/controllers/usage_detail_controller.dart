@@ -26,6 +26,7 @@ class UsageDetailController extends GetxController {
 
   Rx<UsageType?> seletedType = Rx<UsageType?>(null);
   RxBool isOnEdit = false.obs;
+  RxBool isLoading = false.obs;
   RxBool isOnDialog = false.obs;
   RxBool isError = false.obs;
 
@@ -65,6 +66,8 @@ class UsageDetailController extends GetxController {
   }
 
   Future<void> patch() async {
+    isLoading.value = true;
+    update();
     final response = await patchUsage(
       usage.value?.id ?? "",
       {
@@ -104,6 +107,8 @@ class UsageDetailController extends GetxController {
       scrollController.jumpTo(0);
       isError.value = true;
     }
+    isLoading.value = false;
+    update();
   }
 
   Future<void> delete() async {

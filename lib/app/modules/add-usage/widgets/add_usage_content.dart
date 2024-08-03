@@ -60,25 +60,31 @@ class AddUsageContent extends GetView<AddUsageController> {
                 ),
               ),
               Gaps.vertical.l,
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  b.AppButton(
-                    type: b.ButtonType.outlined,
-                    onPressed: () => Get.offAllNamed(Routes.USAGE),
-                    fixedSize: const Size(100, 40),
-                    child: const Text("Batal"),
-                  ),
-                  Gaps.horizontal.r,
-                  b.AppButton(
-                    type: b.ButtonType.elevated,
-                    backgroundColor: AppColors.primary,
-                    onPressed: controller.submit,
-                    fixedSize: const Size(100, 40),
-                    child: const Text("Simpan"),
-                  ),
-                ],
-              ),
+              Obx(() {
+                final isLoading = controller.isLoading.value;
+                final state = isLoading ? b.ButtonState.loading : b.ButtonState.enable;
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    b.AppButton(
+                      state: state,
+                      type: b.ButtonType.outlined,
+                      onPressed: () => Get.offAllNamed(Routes.USAGE),
+                      fixedSize: const Size(100, 40),
+                      child: const Text("Batal"),
+                    ),
+                    Gaps.horizontal.r,
+                    b.AppButton(
+                      state: state,
+                      type: b.ButtonType.elevated,
+                      backgroundColor: AppColors.primary,
+                      onPressed: controller.submit,
+                      fixedSize: const Size(100, 40),
+                      child: const Text("Simpan"),
+                    ),
+                  ],
+                );
+              }),
               Gaps.vertical.m,
               Obx(() {
                 final isError = controller.isError.value;
@@ -114,6 +120,7 @@ class AddUsageContent extends GetView<AddUsageController> {
               Gaps.vertical.r,
               GetBuilder<AddUsageController>(builder: (controller) {
                 final image = controller.usage.value.idAsset;
+                final isLoading = controller.isLoading.value;
                 return Align(
                   alignment: Alignment.centerLeft,
                   child: InkWell(
@@ -121,18 +128,22 @@ class AddUsageContent extends GetView<AddUsageController> {
                       final result = await FilePicker.platform.pickFiles(type: FileType.image);
                       if (result?.files.isNotEmpty ?? false) {
                         final file = result?.files[0];
+                        controller.isLoading.value = true;
+                        controller.update();
                         final response = await uploadAsset(bytes: file?.bytes?.toList(), fileName: file?.name ?? "");
                         if (response.data != null) {
                           final id = response.data ?? "";
                           controller.usage.value.idAsset = id;
                           controller.update();
                         }
+                        controller.isLoading.value = false;
+                        controller.update();
                       }
                     },
                     child: Container(
                       width: 350,
                       height: 150,
-                      alignment: Alignment.topRight,
+                      alignment: isLoading ? Alignment.center : Alignment.topRight,
                       padding: const EdgeInsets.all(Sizes.s),
                       decoration: BoxDecoration(
                         borderRadius: const BorderRadius.all(Radius.circular(Sizes.xs)),
@@ -144,10 +155,9 @@ class AddUsageContent extends GetView<AddUsageController> {
                                 fit: BoxFit.cover,
                               ),
                       ),
-                      child: const Icon(
-                        Icons.edit_rounded,
-                        size: 24,
-                      ),
+                      child: isLoading
+                          ? const SizedBox(width: 24, height: 24, child: CircularProgressIndicator())
+                          : const Icon(Icons.edit_rounded, size: 24),
                     ),
                   ),
                 );
