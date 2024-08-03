@@ -16,6 +16,7 @@ class UsageDetailController extends GetxController {
   final Rx<ModelUsage?> usage = Rx<ModelUsage?>(null);
   final RxList<UsageType> types = RxList<UsageType>([]);
   final Rx<ModelArticles> articles = Rx<ModelArticles>(ModelArticles(totalAllData: 0, payload: []));
+  final RxList<Artikel> searchedList = RxList<Artikel>([]);
   final Rx<Artikel?> selectedArticle = Rx<Artikel?>(null);
 
   final ScrollController scrollController = ScrollController();
@@ -41,6 +42,7 @@ class UsageDetailController extends GetxController {
     getArticles().then((res) {
       if (res.data != null) {
         articles.value = res.data!;
+        searchedList.value = res.data!.payload ?? [];
       }
     });
     final response = await getUsage(Get.arguments ?? "null");
@@ -128,6 +130,17 @@ class UsageDetailController extends GetxController {
         ),
       ],
     ));
+  }
+
+  void onSearch(String text) {
+    bool isOnSearch = text != "";
+    searchedList.value = (articles.value.payload ?? []).where((artikel) {
+      final String judul = artikel.judul?.toLowerCase() ?? "";
+      final String keyword = text.toLowerCase();
+      bool searchedItem = judul.contains(keyword);
+      return isOnSearch ? searchedItem : true;
+    }).toList();
+    update();
   }
 }
 
