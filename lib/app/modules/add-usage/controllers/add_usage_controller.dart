@@ -11,6 +11,7 @@ import '../../../routes/app_pages.dart';
 class AddUsageController extends GetxController {
   final Rx<ModelUsage> usage = Rx<ModelUsage>(ModelUsage(listArtikel: [], listTipe: []));
   final Rx<ModelArticles> articles = Rx<ModelArticles>(ModelArticles(totalAllData: 0, payload: []));
+  final RxList<Artikel> searchedList = RxList<Artikel>([]);
   final RxList<UsageType> types = RxList<UsageType>([]);
   final Rx<Artikel?> selectedArticle = Rx<Artikel?>(null);
 
@@ -52,9 +53,21 @@ class AddUsageController extends GetxController {
     getArticles().then((res) {
       if (res.data != null) {
         articles.value = res.data!;
+        searchedList.value = res.data!.payload ?? [];
       }
     });
     super.onInit();
+  }
+
+  void onSearch(String text) {
+    bool isOnSearch = text != "";
+    searchedList.value = (articles.value.payload ?? []).where((artikel) {
+      final String judul = artikel.judul?.toLowerCase() ?? "";
+      final String keyword = text.toLowerCase();
+      bool searchedItem = judul.contains(keyword);
+      return isOnSearch ? searchedItem : true;
+    }).toList();
+    update();
   }
 }
 

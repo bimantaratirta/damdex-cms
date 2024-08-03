@@ -7,6 +7,8 @@ import '../../../data/api/api_path.dart';
 import '../../../data/api/article/model/model_articles.dart';
 import '../../../data/api/usage/model/model_usage.dart';
 import '../../../shareds/widgets/app_gaps.dart';
+import '../../../shareds/widgets/app_textfield.dart';
+import '../../../shareds/widgets/empty_list.dart';
 import '../../../shareds/widgets/text_bold.dart';
 import '../../../theme/app_colors.dart';
 import '../../../shareds/widgets/app_button.dart' as b;
@@ -22,10 +24,18 @@ class AddUsageArticleDialog extends StatelessWidget {
       title: const Text("Pilih Artikel"),
       scrollable: true,
       content: GetBuilder<AddUsageController>(builder: (controller) {
-        final articles = controller.articles.value.payload ?? [];
+        final articles = controller.searchedList;
         final selectedArticle = controller.selectedArticle.value;
         return Column(
+          mainAxisSize: MainAxisSize.max,
           children: [
+            AppTextField(
+              label: const Text("Cari Artikel"),
+              isError: false,
+              focusNode: FocusNode(),
+              onChanged: controller.onSearch,
+            ),
+            if (articles.isEmpty) const EmptyList(description: "Artikel Tidak Ditemukan"),
             for (Artikel article in articles)
               InkWell(
                 onTap: () {
@@ -95,6 +105,7 @@ class AddUsageArticleDialog extends StatelessWidget {
         ),
         GetBuilder<AddUsageController>(builder: (controller) {
           return b.AppButton(
+            state: controller.selectedArticle.value != null ? b.ButtonState.enable : b.ButtonState.disable,
             type: b.ButtonType.elevated,
             backgroundColor: AppColors.primary,
             onPressed: () {
@@ -103,6 +114,7 @@ class AddUsageArticleDialog extends StatelessWidget {
                   UsageArtikel.fromJson(controller.selectedArticle.value!.toJson()),
                 );
                 controller.selectedArticle.value = null;
+                controller.searchedList.value = controller.articles.value.payload ?? [];
                 controller.update();
               }
               Get.back();
