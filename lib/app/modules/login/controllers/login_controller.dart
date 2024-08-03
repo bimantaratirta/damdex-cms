@@ -32,7 +32,7 @@ class LoginController extends GetxController {
   Future<void> onSubmitLogin() async {
     buttonState.value = ButtonState.loading;
     isError.value = false;
-    final response = await login(username: "admin", password: hashString("password"));
+    final response = await login(username: usernameC.text, password: hashString(passC.text));
     if (response.statusCode == 200) {
       buttonState.value = ButtonState.disable;
       Get.offAllNamed(Routes.PRODUCT);

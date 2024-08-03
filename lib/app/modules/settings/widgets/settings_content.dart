@@ -6,10 +6,12 @@ import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:get/route_manager.dart';
 
 import '../../../constants/sizes.dart';
+import '../../../data/api/admin/data/admin_logout.dart';
 import '../../../data/api/api_path.dart';
 import '../../../data/api/asset/data/upload_asset.dart';
 import '../../../data/api/settings/data/delete_setting.dart';
 import '../../../data/api/settings/data/post_setting.dart';
+import '../../../routes/app_pages.dart';
 import '../../../shareds/widgets/app_button.dart';
 import '../../../shareds/widgets/app_gaps.dart';
 import '../../../shareds/widgets/app_icon_button.dart';
@@ -44,6 +46,38 @@ class SettingsContent extends GetView<SettingsController> {
                 text: "Pengaturan",
                 fontWeight: FontWeight.bold,
                 fontSize: Sizes.l,
+              ),
+              Align(
+                alignment: Alignment.centerRight,
+                child: AppButton(
+                  type: ButtonType.elevated,
+                  backgroundColor: AppColors.red,
+                  onPressed: () async {
+                    Get.dialog(AlertDialog(
+                      title: const Text("Yakin ingin keluar?"),
+                      actions: [
+                        AppButton(
+                          type: ButtonType.outlined,
+                          onPressed: Get.back,
+                          fixedSize: const Size(100, 40),
+                          child: const Text("Batal"),
+                        ),
+                        AppButton(
+                          type: ButtonType.elevated,
+                          backgroundColor: AppColors.red,
+                          onPressed: () async {
+                            await adminLogout();
+                            Get.offAllNamed(Routes.LOGIN);
+                          },
+                          fixedSize: const Size(100, 40),
+                          child: const Text("Keluar"),
+                        ),
+                      ],
+                    ));
+                  },
+                  fixedSize: const Size(100, 40),
+                  child: const Text("Keluar"),
+                ),
               ),
               Gaps.vertical.xh,
               const TextBold(
