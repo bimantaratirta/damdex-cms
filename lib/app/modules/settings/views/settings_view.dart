@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import '../../home/widgets/home_sidebar.dart';
 import '../controllers/settings_controller.dart';
+import '../widgets/settings_content.dart';
 
 class SettingsView extends GetView<SettingsController> {
   const SettingsView({super.key});
@@ -11,9 +12,7 @@ class SettingsView extends GetView<SettingsController> {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Row(
-        children: [
-          HomeSideBar(),
-        ],
+        children: [HomeSideBar(), SettingsContent()],
       ),
     );
   }

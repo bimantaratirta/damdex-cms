@@ -20,7 +20,7 @@ class EmptyList extends StatelessWidget {
         Gaps.vertical.r,
         Text(
           description,
-          style: TextStyle(),
+          style: const TextStyle(),
           textAlign: textAlign,
         ),
         const Row(), // in order to expand the width
