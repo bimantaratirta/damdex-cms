@@ -171,7 +171,7 @@ class AddProductContent extends GetView<AddProductController> {
                     onTap: () {
                       controller.features.add(
                         Feature(
-                          fitur: Fitur(index: (controller.features.length)),
+                          fitur: Fitur(index: controller.features.length),
                           focusNode: FocusNode(),
                           textController: TextEditingController(),
                           editorController: HtmlEditorController(),

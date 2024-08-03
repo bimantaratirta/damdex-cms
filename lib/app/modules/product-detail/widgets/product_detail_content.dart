@@ -67,7 +67,10 @@ class ProductDetailContent extends GetView<ProductDetailController> {
                       ? [
                           b.AppButton(
                             type: b.ButtonType.outlined,
-                            onPressed: () => controller.isOnEdit.value = false,
+                            onPressed: () {
+                              controller.isOnEdit.value = false;
+                              controller.update();
+                            },
                             fixedSize: const Size(100, 40),
                             child: const Text("Batal"),
                           ),
@@ -83,7 +86,10 @@ class ProductDetailContent extends GetView<ProductDetailController> {
                       : [
                           b.AppButton(
                             type: b.ButtonType.elevated,
-                            onPressed: () => controller.isOnEdit.value = true,
+                            onPressed: () {
+                              controller.isOnEdit.value = true;
+                              controller.update();
+                            },
                             fixedSize: const Size(100, 40),
                             child: const Text("Edit"),
                           ),
@@ -141,7 +147,7 @@ class ProductDetailContent extends GetView<ProductDetailController> {
                       );
               }),
               Gaps.vertical.r,
-              Obx(() {
+              GetBuilder<ProductDetailController>(builder: (controller) {
                 final isOnEdit = controller.isOnEdit.value;
                 final image = controller.produk.value?.idAsset ?? "";
                 return Align(
@@ -157,6 +163,7 @@ class ProductDetailContent extends GetView<ProductDetailController> {
                                 final id = response.data ?? "";
                                 controller.produk.value?.idAsset = id;
                               }
+                              controller.update();
                             }
                           }
                         : null,
@@ -223,7 +230,7 @@ class ProductDetailContent extends GetView<ProductDetailController> {
                         onTap: () {
                           controller.features.add(
                             Feature(
-                              fitur: Fitur(index: controller.produk.value?.listFitur?.length),
+                              fitur: Fitur(index: controller.features.length),
                               focusNode: FocusNode(),
                               textController: TextEditingController(),
                               editorController: HtmlEditorController(),
