@@ -63,16 +63,20 @@ class LoginForm extends GetView<LoginController> {
                 );
               }),
               Gaps.vertical.m,
-              AppButton(
-                type: ButtonType.elevated,
-                onPressed: controller.onSubmitLogin,
-                fixedSize: const Size(100, 40),
-                child: const TextBold(
-                  text: "Masuk",
-                  fontWeight: FontWeight.w500,
-                  fontSize: 16,
-                ),
-              )
+              Obx(() {
+                final state = controller.buttonState.value;
+                return AppButton(
+                  state: state,
+                  type: ButtonType.elevated,
+                  onPressed: controller.onSubmitLogin,
+                  fixedSize: const Size(100, 40),
+                  child: const TextBold(
+                    text: "Masuk",
+                    fontWeight: FontWeight.w500,
+                    fontSize: 16,
+                  ),
+                );
+              })
             ],
           ),
         ),

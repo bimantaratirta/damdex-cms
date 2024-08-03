@@ -39,5 +39,6 @@ class LoginController extends GetxController {
     } else {
       isError.value = true;
     }
+    buttonState.value = ButtonState.enable;
   }
 }

@@ -21,6 +21,7 @@ class ProductDetailController extends GetxController {
 
   Rx<Feature?> selectedFeature = Rx<Feature?>(null);
   RxBool isOnEdit = false.obs;
+  RxBool isLoading = false.obs;
   RxBool isError = false.obs;
 
   void setSelectedFeature(Feature val) {
@@ -32,6 +33,7 @@ class ProductDetailController extends GetxController {
   }
 
   Future<void> patch() async {
+    isLoading.value = true;
     final response = await patchProduct(produk.value?.id ?? "", {
       "judul": produk.value?.judul,
       "deskripsi": await editorController.getText(),
@@ -66,10 +68,12 @@ class ProductDetailController extends GetxController {
       scrollController.jumpTo(0);
       isError.value = true;
     }
+    isLoading.value = false;
   }
 
   @override
   Future<void> onInit() async {
+    isLoading.value = true;
     final response = await getProduct(Get.arguments ?? "null");
     if (response.data != null) {
       produk.value = response.data;
@@ -85,6 +89,7 @@ class ProductDetailController extends GetxController {
     } else {
       Get.offNamed(Routes.PRODUCT);
     }
+    isLoading.value = false;
     update();
     super.onInit();
   }
