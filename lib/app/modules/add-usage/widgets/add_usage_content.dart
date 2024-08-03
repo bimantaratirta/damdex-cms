@@ -211,7 +211,6 @@ class AddUsageContent extends GetView<AddUsageController> {
                       Future.delayed(const Duration(milliseconds: 1)).then((e) {
                         controller.scrollController.jumpTo(controller.scrollController.position.maxScrollExtent);
                       });
-                      print(controller.types.length);
                     },
                     icon: Icons.add,
                   ),

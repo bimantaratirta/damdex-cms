@@ -19,9 +19,12 @@ class ArticleDetailController extends GetxController {
   final HtmlEditorController editorController = HtmlEditorController();
 
   RxBool isOnEdit = false.obs;
+  RxBool isLoading = false.obs;
   RxBool isError = false.obs;
 
   Future<void> patch() async {
+    isLoading.value = true;
+    update();
     final response = await patchArticle(
       article.value?.id ?? "",
       {
@@ -43,11 +46,14 @@ class ArticleDetailController extends GetxController {
       scrollController.jumpTo(0);
       isError.value = true;
     }
+    isLoading.value = false;
     update();
   }
 
   @override
   Future<void> onInit() async {
+    isLoading.value = true;
+    update();
     final response = await getArticle(Get.arguments ?? "null");
     if (response.data != null) {
       article.value = response.data;
@@ -55,6 +61,7 @@ class ArticleDetailController extends GetxController {
     } else {
       Get.offNamed(Routes.ARTICLE);
     }
+    isLoading.value = false;
     update();
     super.onInit();
   }

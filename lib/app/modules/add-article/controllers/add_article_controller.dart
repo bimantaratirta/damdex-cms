@@ -14,9 +14,12 @@ class AddArticleController extends GetxController {
   final TextEditingController nameC = TextEditingController();
   final FocusNode nameFN = FocusNode();
 
+  final RxBool isLoading = false.obs;
   final RxBool isError = false.obs;
 
   Future<void> submit() async {
+    isLoading.value = true;
+    update();
     final response = await postArticle({
       "judul": article.value.judul,
       "body": await editorController.getText(),
@@ -29,5 +32,7 @@ class AddArticleController extends GetxController {
       scrollController.jumpTo(0);
       isError.value = true;
     }
+    isLoading.value = false;
+    update();
   }
 }
