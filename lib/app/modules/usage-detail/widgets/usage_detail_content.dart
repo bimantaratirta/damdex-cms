@@ -152,7 +152,7 @@ class UsageDetailContent extends GetView<UsageDetailController> {
                       );
               }),
               Gaps.vertical.r,
-              Obx(() {
+              GetBuilder<UsageDetailController>(builder: (controller) {
                 final isOnEdit = controller.isOnEdit.value;
                 final image = controller.usage.value?.idAsset ?? "";
                 return Align(
@@ -168,6 +168,7 @@ class UsageDetailContent extends GetView<UsageDetailController> {
                                 final id = response.data ?? "";
                                 controller.usage.value?.idAsset = id;
                               }
+                              controller.update();
                             }
                           }
                         : null,
