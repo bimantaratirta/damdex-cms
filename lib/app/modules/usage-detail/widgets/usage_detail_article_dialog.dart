@@ -10,6 +10,7 @@ import '../../../shareds/widgets/app_gaps.dart';
 import '../../../shareds/widgets/text_bold.dart';
 import '../../../theme/app_colors.dart';
 import '../../../shareds/widgets/app_button.dart' as b;
+import '../../../utils/iso_parser.dart';
 import '../controllers/usage_detail_controller.dart';
 
 class UsageDetailArticleDialog extends StatelessWidget {
@@ -68,9 +69,9 @@ class UsageDetailArticleDialog extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                             ),
                             Gaps.vertical.xs,
-                            const Text(
-                              "1 Januari 2024",
-                              style: TextStyle(
+                            Text(
+                              isoParser(article.updatedAt?.toIso8601String()),
+                              style: const TextStyle(
                                 fontWeight: FontWeight.w300,
                                 fontSize: 10,
                               ),
