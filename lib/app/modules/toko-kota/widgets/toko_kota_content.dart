@@ -72,13 +72,18 @@ class TokoKotaContent extends GetView<TokoKotaController> {
             Gaps.vertical.m,
             Align(
               alignment: Alignment.centerRight,
-              child: AppButton(
-                type: ButtonType.elevated,
-                onPressed: () {
-                  Get.dialog(const TokoKotaAddDialog());
-                },
-                child: const Text("Tambah Toko"),
-              ),
+              child: Obx(() {
+                final isLoading = controller.isLoading.value;
+                final state = isLoading ? ButtonState.loading : ButtonState.enable;
+                return AppButton(
+                  state: state,
+                  type: ButtonType.elevated,
+                  onPressed: () {
+                    Get.dialog(const TokoKotaAddDialog());
+                  },
+                  child: const Text("Tambah Toko"),
+                );
+              }),
             ),
             Gaps.vertical.l,
             Obx(() {
