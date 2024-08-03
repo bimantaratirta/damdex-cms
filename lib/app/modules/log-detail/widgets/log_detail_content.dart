@@ -48,6 +48,9 @@ class LogDetailContent extends GetView<LogDetailController> {
               Gaps.vertical.l,
               Obx(() {
                 final log = controller.log.value;
+                if (log == null) {
+                  return const Center(child: SizedBox(width: 50, height: 50, child: CircularProgressIndicator()));
+                }
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -58,7 +61,7 @@ class LogDetailContent extends GetView<LogDetailController> {
                     ),
                     Gaps.vertical.xs,
                     TextBold(
-                      text: log?.device ?? "-",
+                      text: log.device ?? "-",
                       fontWeight: FontWeight.w500,
                       fontSize: 16,
                     ),
@@ -72,12 +75,12 @@ class LogDetailContent extends GetView<LogDetailController> {
                     Text.rich(
                       TextSpan(
                         children: [
-                          for (dynamic key in log?.lokasi?.keys ?? []) ...[
+                          for (dynamic key in log.lokasi?.keys ?? []) ...[
                             TextSpan(
                               text: "$key: ",
                               children: [
                                 TextSpan(
-                                  text: "${log?.lokasi?["$key"]}\n",
+                                  text: "${log.lokasi?["$key"]}\n",
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontFamily: GoogleFonts.poppins(fontWeight: FontWeight.w400).fontFamily,
@@ -102,7 +105,7 @@ class LogDetailContent extends GetView<LogDetailController> {
                     ),
                     Gaps.vertical.xs,
                     TextBold(
-                      text: log?.konten ?? "-",
+                      text: log.konten ?? "-",
                       fontWeight: FontWeight.w500,
                       fontSize: 16,
                     ),
