@@ -75,7 +75,7 @@ class TokoContent extends GetView<TokoController> {
                       label: Text('Provinsi'),
                     ),
                     DataColumn(
-                      label: Text('Kota'),
+                      label: Text('Kabupaten/Kota'),
                     ),
                     DataColumn(
                       label: Text('Total'),

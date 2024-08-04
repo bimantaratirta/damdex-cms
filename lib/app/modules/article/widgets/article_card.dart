@@ -28,11 +28,11 @@ class ArticleCard extends StatelessWidget {
             width: 160,
             decoration: const BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(Sizes.xs)),
-              color: AppColors.lightenGrey,
+              color: AppColors.white,
             ),
             child: Image.network(
               APIPath.assetId(artikel.idAsset ?? ""),
-              fit: BoxFit.cover,
+              fit: BoxFit.contain,
             ),
           ),
           Gaps.horizontal.m,

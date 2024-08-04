@@ -3,6 +3,7 @@ import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 
+import '../../../shareds/widgets/app_button.dart';
 import '../../../shareds/widgets/app_gaps.dart';
 import '../../../shareds/widgets/app_html_editor.dart';
 import '../../../shareds/widgets/app_icon_button.dart';
@@ -20,13 +21,18 @@ class UsageDetailInputTypeCard extends GetView<UsageDetailController> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        AppIconButton(
-          onTap: () {
-            controller.types.removeWhere((type) => type == this.type);
-          },
-          icon: Icons.remove_rounded,
-          color: AppColors.red,
-        ),
+        Obx(() {
+          final isLoading = controller.isLoading.value;
+          final state = isLoading ? ButtonState.loading : ButtonState.enable;
+          return AppIconButton(
+            state: state,
+            onTap: () {
+              controller.types.removeWhere((type) => type == this.type);
+            },
+            icon: Icons.remove_rounded,
+            color: AppColors.red,
+          );
+        }),
         Gaps.horizontal.s,
         Expanded(
           child: Column(

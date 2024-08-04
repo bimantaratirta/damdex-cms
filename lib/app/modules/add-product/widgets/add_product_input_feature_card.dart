@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 
+import '../../../shareds/widgets/app_button.dart';
 import '../../../shareds/widgets/app_gaps.dart';
 import '../../../shareds/widgets/app_html_editor.dart';
 import '../../../shareds/widgets/app_icon_button.dart';
@@ -18,14 +20,19 @@ class AddProductInputFeatureCard extends GetView<AddProductController> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        AppIconButton(
-          onTap: () {
-            controller.features.removeWhere((fitur) => fitur == feature);
-            controller.update();
-          },
-          icon: Icons.remove_rounded,
-          color: AppColors.red,
-        ),
+        GetBuilder<AddProductController>(builder: (controller) {
+          final isLoading = controller.isLoading.value;
+          final state = isLoading ? ButtonState.loading : ButtonState.enable;
+          return AppIconButton(
+            state: state,
+            onTap: () {
+              controller.features.removeWhere((fitur) => fitur == feature);
+              controller.update();
+            },
+            icon: Icons.remove_rounded,
+            color: AppColors.red,
+          );
+        }),
         Gaps.horizontal.s,
         Expanded(
           child: Column(
