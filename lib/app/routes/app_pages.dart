@@ -16,6 +16,8 @@ import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/logs/bindings/logs_binding.dart';
 import '../modules/logs/views/logs_view.dart';
+import '../modules/newversion.apk/bindings/newversion_apk_binding.dart';
+import '../modules/newversion.apk/views/newversion_apk_view.dart';
 import '../modules/product-detail/bindings/product_detail_binding.dart';
 import '../modules/product-detail/views/product_detail_view.dart';
 import '../modules/product/bindings/product_binding.dart';
@@ -115,6 +117,11 @@ class AppPages {
       name: _Paths.LOG_DETAIL,
       page: () => const LogDetailView(),
       binding: LogDetailBinding(),
+    ),
+    GetPage(
+      name: _Paths.NEWVERSION_APK,
+      page: () => const NewversionApkView(),
+      binding: NewversionApkBinding(),
     ),
   ];
 }
