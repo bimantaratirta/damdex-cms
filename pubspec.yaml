@@ -2,20 +2,41 @@ name: cms
 version: 1.0.0+1
 publish_to: none
 description: A new Flutter project.
-environment: 
-  sdk: '>=3.4.3 <4.0.0'
+environment:
+  sdk: ">=3.4.3 <4.0.0"
 
-dependencies: 
+dependencies:
   cupertino_icons: ^1.0.6
   get: 4.6.6
-  flutter: 
+  google_fonts: ^6.2.1
+  flutter:
     sdk: flutter
+  shared_preferences: ^2.2.3
+  dio: ^5.5.0+1
+  crypto: ^3.0.3
+  flutter_staggered_grid_view: ^0.7.0
+  flutter_widget_from_html: ^0.15.1
+  html_editor_enhanced:
+    git: https://github.com/carmigo/html-editor-enhanced
+  file_picker: ^5.5.0
+  intl: ^0.19.0
 
-dev_dependencies: 
+dev_dependencies:
   flutter_lints: 4.0.0
-  flutter_test: 
+  flutter_test:
     sdk: flutter
+  flutter_launcher_icons: "^0.13.1"
 
-flutter: 
+flutter_launcher_icons:
+  web:
+    generate: true
+    image_path: "assets/logo/app-logo.png"
+    background_color: "#ffffff"
+    theme_color: "#ffffff"
+
+flutter:
+  assets:
+    - assets/logo/
+    - assets/icon/
+    - assets/dummy/
   uses-material-design: true
-
