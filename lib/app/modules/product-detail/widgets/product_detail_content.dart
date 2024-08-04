@@ -12,6 +12,7 @@ import '../../../data/api/api_path.dart';
 import '../../../data/api/asset/data/upload_asset.dart';
 import '../../../data/api/product/models/model_get_product.dart';
 import '../../../routes/app_pages.dart';
+import '../../../shareds/widgets/app_button.dart';
 import '../../../shareds/widgets/app_html_editor.dart';
 import '../../../shareds/widgets/app_icon_button.dart';
 import '../../../shareds/widgets/app_textfield.dart';
@@ -226,6 +227,8 @@ class ProductDetailContent extends GetView<ProductDetailController> {
               Gaps.vertical.m,
               Obx(() {
                 final isOnEdit = controller.isOnEdit.value;
+                final isLoading = controller.isLoading.value;
+                final state = isLoading ? ButtonState.loading : ButtonState.enable;
                 return Wrap(
                   spacing: Sizes.m,
                   children: [
@@ -236,6 +239,7 @@ class ProductDetailContent extends GetView<ProductDetailController> {
                     ),
                     if (isOnEdit)
                       AppIconButton(
+                        state: state,
                         onTap: () {
                           controller.features.add(
                             Feature(

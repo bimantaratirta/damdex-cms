@@ -198,22 +198,27 @@ class AddUsageContent extends GetView<AddUsageController> {
                     fontWeight: FontWeight.bold,
                     fontSize: Sizes.r,
                   ),
-                  AppIconButton(
-                    onTap: () {
-                      controller.types.add(
-                        UsageType(
-                          tipe: Tipe(index: controller.types.length),
-                          focusNode: FocusNode(),
-                          textController: TextEditingController(),
-                          editorController: HtmlEditorController(),
-                        ),
-                      );
-                      Future.delayed(const Duration(milliseconds: 1)).then((e) {
-                        controller.scrollController.jumpTo(controller.scrollController.position.maxScrollExtent);
-                      });
-                    },
-                    icon: Icons.add,
-                  ),
+                  Obx(() {
+                    final isLoading = controller.isLoading.value;
+                    final state = isLoading ? b.ButtonState.loading : b.ButtonState.enable;
+                    return AppIconButton(
+                      state: state,
+                      onTap: () {
+                        controller.types.add(
+                          UsageType(
+                            tipe: Tipe(index: controller.types.length),
+                            focusNode: FocusNode(),
+                            textController: TextEditingController(),
+                            editorController: HtmlEditorController(),
+                          ),
+                        );
+                        Future.delayed(const Duration(milliseconds: 1)).then((e) {
+                          controller.scrollController.jumpTo(controller.scrollController.position.maxScrollExtent);
+                        });
+                      },
+                      icon: Icons.add,
+                    );
+                  }),
                 ],
               ),
               Gaps.vertical.r,
@@ -238,6 +243,8 @@ class AddUsageContent extends GetView<AddUsageController> {
               }),
               Gaps.vertical.m,
               GetBuilder<AddUsageController>(builder: (controller) {
+                final isLoading = controller.isLoading.value;
+                final state = isLoading ? b.ButtonState.loading : b.ButtonState.enable;
                 return Wrap(
                   spacing: Sizes.m,
                   children: [
@@ -247,6 +254,7 @@ class AddUsageContent extends GetView<AddUsageController> {
                       fontSize: Sizes.r,
                     ),
                     AppIconButton(
+                      state: state,
                       onTap: () async {
                         controller.isOnDialog.value = true;
                         await Get.dialog(const AddUsageArticleDialog());
@@ -260,6 +268,8 @@ class AddUsageContent extends GetView<AddUsageController> {
               Gaps.vertical.r,
               GetBuilder<AddUsageController>(builder: (controller) {
                 final listArtikel = controller.usage.value.listArtikel ?? [];
+                final isLoading = controller.isLoading.value;
+                final state = isLoading ? b.ButtonState.loading : b.ButtonState.enable;
                 return AlignedGridView.extent(
                   shrinkWrap: true,
                   maxCrossAxisExtent: 600,
@@ -276,6 +286,7 @@ class AddUsageContent extends GetView<AddUsageController> {
                         Align(
                           alignment: Alignment.topRight,
                           child: AppIconButton(
+                            state: state,
                             onTap: () {
                               controller.usage.value.listArtikel?.removeWhere((article) => article == artikel);
                               controller.update();

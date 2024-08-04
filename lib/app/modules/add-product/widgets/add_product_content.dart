@@ -176,23 +176,28 @@ class AddProductContent extends GetView<AddProductController> {
                     fontWeight: FontWeight.bold,
                     fontSize: Sizes.r,
                   ),
-                  AppIconButton(
-                    onTap: () {
-                      controller.features.add(
-                        Feature(
-                          fitur: Fitur(index: controller.features.length),
-                          focusNode: FocusNode(),
-                          textController: TextEditingController(),
-                          editorController: HtmlEditorController(),
-                        ),
-                      );
-                      controller.update();
-                      Future.delayed(const Duration(milliseconds: 1)).then((e) {
-                        controller.scrollController.jumpTo(controller.scrollController.position.maxScrollExtent);
-                      });
-                    },
-                    icon: Icons.add,
-                  ),
+                  Obx(() {
+                    final isLoading = controller.isLoading.value;
+                    final state = isLoading ? b.ButtonState.loading : b.ButtonState.enable;
+                    return AppIconButton(
+                      state: state,
+                      onTap: () {
+                        controller.features.add(
+                          Feature(
+                            fitur: Fitur(index: controller.features.length),
+                            focusNode: FocusNode(),
+                            textController: TextEditingController(),
+                            editorController: HtmlEditorController(),
+                          ),
+                        );
+                        controller.update();
+                        Future.delayed(const Duration(milliseconds: 1)).then((e) {
+                          controller.scrollController.jumpTo(controller.scrollController.position.maxScrollExtent);
+                        });
+                      },
+                      icon: Icons.add,
+                    );
+                  }),
                 ],
               ),
               Gaps.vertical.r,

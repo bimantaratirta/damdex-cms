@@ -14,6 +14,7 @@ import '../../../data/api/article/model/model_articles.dart';
 import '../../../data/api/asset/data/upload_asset.dart';
 import '../../../data/api/usage/model/model_usage.dart';
 import '../../../routes/app_pages.dart';
+import '../../../shareds/widgets/app_button.dart';
 import '../../../shareds/widgets/app_gaps.dart';
 import '../../../shareds/widgets/app_button.dart' as b;
 import '../../../shareds/widgets/app_html_editor.dart';
@@ -232,6 +233,8 @@ class UsageDetailContent extends GetView<UsageDetailController> {
               Gaps.vertical.m,
               Obx(() {
                 final isOnEdit = controller.isOnEdit.value;
+                final isLoading = controller.isLoading.value;
+                final state = isLoading ? ButtonState.loading : ButtonState.enable;
                 return Wrap(
                   spacing: Sizes.m,
                   children: [
@@ -242,6 +245,7 @@ class UsageDetailContent extends GetView<UsageDetailController> {
                     ),
                     if (isOnEdit)
                       AppIconButton(
+                        state: state,
                         onTap: () {
                           controller.types.add(
                             UsageType(
@@ -280,6 +284,8 @@ class UsageDetailContent extends GetView<UsageDetailController> {
               Gaps.vertical.m,
               GetBuilder<UsageDetailController>(builder: (controller) {
                 final isOnEdit = controller.isOnEdit.value;
+                final isLoading = controller.isLoading.value;
+                final state = isLoading ? ButtonState.loading : ButtonState.enable;
                 return Wrap(
                   spacing: Sizes.m,
                   children: [
@@ -290,6 +296,7 @@ class UsageDetailContent extends GetView<UsageDetailController> {
                     ),
                     if (isOnEdit)
                       AppIconButton(
+                        state: state,
                         onTap: () async {
                           controller.isOnDialog.value = true;
                           await Get.dialog(const UsageDetailArticleDialog());
@@ -304,6 +311,8 @@ class UsageDetailContent extends GetView<UsageDetailController> {
               GetBuilder<UsageDetailController>(builder: (controller) {
                 final isOnEdit = controller.isOnEdit.value;
                 final listArtikel = controller.usage.value?.listArtikel ?? [];
+                final isLoading = controller.isLoading.value;
+                final state = isLoading ? ButtonState.loading : ButtonState.enable;
                 return AlignedGridView.extent(
                   shrinkWrap: true,
                   maxCrossAxisExtent: 600,
@@ -321,6 +330,7 @@ class UsageDetailContent extends GetView<UsageDetailController> {
                           Align(
                             alignment: Alignment.topRight,
                             child: AppIconButton(
+                              state: state,
                               onTap: () {
                                 controller.usage.value?.listArtikel?.removeWhere((article) => article == artikel);
                                 controller.update();
