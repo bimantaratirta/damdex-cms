@@ -88,6 +88,8 @@ class TokoKotaContent extends GetView<TokoKotaController> {
             Gaps.vertical.l,
             Obx(() {
               final listToko = controller.tokoKota.value?.listToko;
+              final isLoading = controller.isLoading.value;
+              final state = isLoading ? ButtonState.loading : ButtonState.enable;
               if (listToko == null) {
                 return const Center(child: SizedBox(width: 50, height: 50, child: CircularProgressIndicator()));
               }
@@ -126,11 +128,13 @@ class TokoKotaContent extends GetView<TokoKotaController> {
                       DataCell(Row(
                         children: [
                           AppIconButton(
+                            state: state,
                             onTap: () => Get.dialog(TokoKotaEditDialog(toko: toko)),
                             icon: Icons.edit_rounded,
                           ),
                           Gaps.horizontal.xs,
                           AppIconButton(
+                            state: state,
                             onTap: () => controller.delete(toko),
                             icon: Icons.close_rounded,
                             color: AppColors.red,

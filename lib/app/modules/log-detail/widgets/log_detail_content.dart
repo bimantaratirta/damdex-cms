@@ -8,6 +8,7 @@ import '../../../constants/sizes.dart';
 import '../../../routes/app_pages.dart';
 import '../../../shareds/widgets/app_gaps.dart';
 import '../../../shareds/widgets/text_bold.dart';
+import '../../../utils/iso_parser.dart';
 import '../controllers/log_detail_controller.dart';
 
 class LogDetailContent extends GetView<LogDetailController> {
@@ -62,6 +63,18 @@ class LogDetailContent extends GetView<LogDetailController> {
                     Gaps.vertical.xs,
                     TextBold(
                       text: log.device ?? "-",
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                    ),
+                    Gaps.vertical.m,
+                    const TextBold(
+                      text: "Tanggal",
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                    Gaps.vertical.xs,
+                    TextBold(
+                      text: isoParser(log.createdAt?.toIso8601String()),
                       fontWeight: FontWeight.w500,
                       fontSize: 16,
                     ),
