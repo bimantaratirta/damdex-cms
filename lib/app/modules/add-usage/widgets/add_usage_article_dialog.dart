@@ -62,6 +62,7 @@ class AddUsageArticleDialog extends StatelessWidget {
                           color: AppColors.white,
                         ),
                         child: Image.network(
+                          alignment: Alignment.centerLeft,
                           APIPath.assetId(article.idAsset ?? ""),
                           fit: BoxFit.contain,
                         ),

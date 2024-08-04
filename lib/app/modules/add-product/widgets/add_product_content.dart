@@ -145,6 +145,7 @@ class AddProductContent extends GetView<AddProductController> {
                         image: image == null
                             ? null
                             : DecorationImage(
+                                alignment: Alignment.centerLeft,
                                 image: NetworkImage(APIPath.assetId(image)),
                                 fit: BoxFit.cover,
                               ),

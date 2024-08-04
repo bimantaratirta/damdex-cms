@@ -151,6 +151,7 @@ class AddUsageContent extends GetView<AddUsageController> {
                         image: image == null
                             ? null
                             : DecorationImage(
+                                alignment: Alignment.centerLeft,
                                 image: NetworkImage(APIPath.assetId(image)),
                                 fit: BoxFit.contain,
                               ),

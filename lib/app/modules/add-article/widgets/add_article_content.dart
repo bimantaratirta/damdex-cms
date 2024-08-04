@@ -141,6 +141,7 @@ class AddArticleContent extends GetView<AddArticleController> {
                         image: image == null
                             ? null
                             : DecorationImage(
+                                alignment: Alignment.centerLeft,
                                 image: NetworkImage(APIPath.assetId(image)),
                                 fit: BoxFit.contain,
                               ),

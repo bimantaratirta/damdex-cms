@@ -182,6 +182,7 @@ class ArticleDetailContent extends GetView<ArticleDetailController> {
                         borderRadius: const BorderRadius.all(Radius.circular(Sizes.xs)),
                         color: AppColors.white,
                         image: DecorationImage(
+                          alignment: Alignment.centerLeft,
                           image: NetworkImage(APIPath.assetId(image)),
                           fit: BoxFit.contain,
                         ),

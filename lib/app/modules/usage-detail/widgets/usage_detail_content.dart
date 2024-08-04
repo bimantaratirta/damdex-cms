@@ -192,6 +192,7 @@ class UsageDetailContent extends GetView<UsageDetailController> {
                         borderRadius: const BorderRadius.all(Radius.circular(Sizes.xs)),
                         color: AppColors.white,
                         image: DecorationImage(
+                          alignment: Alignment.centerLeft,
                           image: NetworkImage(APIPath.assetId(image)),
                           fit: BoxFit.contain,
                         ),
