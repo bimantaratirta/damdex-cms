@@ -147,12 +147,12 @@ class AddUsageContent extends GetView<AddUsageController> {
                       padding: const EdgeInsets.all(Sizes.s),
                       decoration: BoxDecoration(
                         borderRadius: const BorderRadius.all(Radius.circular(Sizes.xs)),
-                        color: AppColors.lightenGrey,
+                        color: AppColors.white,
                         image: image == null
                             ? null
                             : DecorationImage(
                                 image: NetworkImage(APIPath.assetId(image)),
-                                fit: BoxFit.cover,
+                                fit: BoxFit.contain,
                               ),
                       ),
                       child: isLoading

@@ -180,10 +180,10 @@ class ArticleDetailContent extends GetView<ArticleDetailController> {
                       padding: const EdgeInsets.all(Sizes.s),
                       decoration: BoxDecoration(
                         borderRadius: const BorderRadius.all(Radius.circular(Sizes.xs)),
-                        color: AppColors.lightenGrey,
+                        color: AppColors.white,
                         image: DecorationImage(
                           image: NetworkImage(APIPath.assetId(image)),
-                          fit: BoxFit.cover,
+                          fit: BoxFit.contain,
                         ),
                       ),
                       child: isOnEdit

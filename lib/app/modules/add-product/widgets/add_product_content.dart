@@ -140,7 +140,7 @@ class AddProductContent extends GetView<AddProductController> {
                       alignment: isLoading ? Alignment.center : Alignment.topRight,
                       padding: const EdgeInsets.all(Sizes.s),
                       decoration: BoxDecoration(
-                        color: AppColors.lightenGrey,
+                        color: AppColors.white,
                         borderRadius: const BorderRadius.all(Radius.circular(Sizes.xs)),
                         image: image == null
                             ? null
