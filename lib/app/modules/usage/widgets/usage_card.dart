@@ -42,7 +42,7 @@ class UsageCard extends StatelessWidget {
                 image: NetworkImage(
                   APIPath.assetId(usage.idAsset ?? ""),
                 ),
-                fit: BoxFit.cover,
+                fit: BoxFit.contain,
               ),
             ),
           ),

@@ -42,7 +42,7 @@ class ProductCard extends StatelessWidget {
                 image: NetworkImage(
                   APIPath.assetId(produk.idAsset ?? ""),
                 ),
-                fit: BoxFit.cover,
+                fit: BoxFit.contain,
               ),
             ),
           ),

@@ -60,7 +60,7 @@ class TokoKotaContent extends GetView<TokoKotaController> {
                   ),
                   Gaps.horizontal.l,
                   Flexible(
-                    child: TokoKotaLabel(title: "Kota", desc: tokoKota?.kota ?? "-"),
+                    child: TokoKotaLabel(title: "Kabupaten/Kota", desc: tokoKota?.kota ?? "-"),
                   ),
                   Gaps.horizontal.l,
                   Flexible(
