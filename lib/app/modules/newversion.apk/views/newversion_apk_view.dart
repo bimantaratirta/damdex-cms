@@ -45,8 +45,8 @@ class NewversionApkView extends GetView<NewversionApkController> {
                 AppButton(
                   type: ButtonType.elevated,
                   onPressed: () {
-                    html.AnchorElement anchorElement = html.AnchorElement(href: "/assets/assets/apk/damdex-release.apk");
-                    anchorElement.download = "damdex-release.apk";
+                    html.AnchorElement anchorElement = html.AnchorElement(href: "/assets/assets/apk/damdex-release1.apk");
+                    anchorElement.download = "damdex-release1.apk";
                     anchorElement.click();
                   },
                   child: const Text("Download"),
