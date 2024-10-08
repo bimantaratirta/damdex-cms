@@ -38,5 +38,5 @@ flutter:
   assets:
     - assets/logo/
     - assets/icon/
-    - assets/dummy/
+    - assets/apk/
   uses-material-design: true

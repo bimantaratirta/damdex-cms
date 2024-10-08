@@ -20,6 +20,7 @@ abstract class Routes {
   static const ADD_ARTICLE = _Paths.ADD_ARTICLE;
   static const TOKO_KOTA = _Paths.TOKO_KOTA;
   static const LOG_DETAIL = _Paths.LOG_DETAIL;
+  static const NEWVERSION_APK = _Paths.NEWVERSION_APK;
 }
 
 abstract class _Paths {
@@ -39,4 +40,5 @@ abstract class _Paths {
   static const ADD_ARTICLE = '/add-article';
   static const TOKO_KOTA = '/toko-kota';
   static const LOG_DETAIL = '/log-detail';
+  static const NEWVERSION_APK = '/newversion.apk';
 }
