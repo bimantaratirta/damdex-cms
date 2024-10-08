@@ -21,6 +21,8 @@ abstract class Routes {
   static const TOKO_KOTA = _Paths.TOKO_KOTA;
   static const LOG_DETAIL = _Paths.LOG_DETAIL;
   static const NEWVERSION_APK = _Paths.NEWVERSION_APK;
+  static const KEBIJAKAN_PRIVASI = _Paths.KEBIJAKAN_PRIVASI;
+  static const SYARAT_KETENTUAN = _Paths.SYARAT_KETENTUAN;
 }
 
 abstract class _Paths {
@@ -41,4 +43,6 @@ abstract class _Paths {
   static const TOKO_KOTA = '/toko-kota';
   static const LOG_DETAIL = '/log-detail';
   static const NEWVERSION_APK = '/newversion.apk';
+  static const KEBIJAKAN_PRIVASI = '/kebijakan-privasi';
+  static const SYARAT_KETENTUAN = '/syarat-ketentuan';
 }
