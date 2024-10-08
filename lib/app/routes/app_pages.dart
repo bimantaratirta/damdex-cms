@@ -10,6 +10,8 @@ import '../modules/article-detail/bindings/article_detail_binding.dart';
 import '../modules/article-detail/views/article_detail_view.dart';
 import '../modules/article/bindings/article_binding.dart';
 import '../modules/article/views/article_view.dart';
+import '../modules/kebijakan-privasi/bindings/kebijakan_privasi_binding.dart';
+import '../modules/kebijakan-privasi/views/kebijakan_privasi_view.dart';
 import '../modules/log-detail/bindings/log_detail_binding.dart';
 import '../modules/log-detail/views/log_detail_view.dart';
 import '../modules/login/bindings/login_binding.dart';
@@ -24,6 +26,8 @@ import '../modules/product/bindings/product_binding.dart';
 import '../modules/product/views/product_view.dart';
 import '../modules/settings/bindings/settings_binding.dart';
 import '../modules/settings/views/settings_view.dart';
+import '../modules/syarat-ketentuan/bindings/syarat_ketentuan_binding.dart';
+import '../modules/syarat-ketentuan/views/syarat_ketentuan_view.dart';
 import '../modules/toko-kota/bindings/toko_kota_binding.dart';
 import '../modules/toko-kota/views/toko_kota_view.dart';
 import '../modules/toko/bindings/toko_binding.dart';
@@ -122,6 +126,16 @@ class AppPages {
       name: _Paths.NEWVERSION_APK,
       page: () => const NewversionApkView(),
       binding: NewversionApkBinding(),
+    ),
+    GetPage(
+      name: _Paths.KEBIJAKAN_PRIVASI,
+      page: () => const KebijakanPrivasiView(),
+      binding: KebijakanPrivasiBinding(),
+    ),
+    GetPage(
+      name: _Paths.SYARAT_KETENTUAN,
+      page: () => const SyaratKetentuanView(),
+      binding: SyaratKetentuanBinding(),
     ),
   ];
 }

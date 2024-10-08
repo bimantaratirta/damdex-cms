@@ -88,7 +88,7 @@ class LogDetailContent extends GetView<LogDetailController> {
                     Text.rich(
                       TextSpan(
                         children: [
-                          for (dynamic key in log.lokasi?.keys ?? []) ...[
+                          for (dynamic key in (log.lokasi?.keys ?? []).toList()) ...[
                             TextSpan(
                               text: "$key: ",
                               children: [
