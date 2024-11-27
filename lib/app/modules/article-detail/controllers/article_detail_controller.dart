@@ -21,6 +21,7 @@ class ArticleDetailController extends GetxController {
   RxBool isOnEdit = false.obs;
   RxBool isLoading = false.obs;
   RxBool isError = false.obs;
+  RxBool isHidden = false.obs;
 
   Future<void> patch() async {
     isLoading.value = true;

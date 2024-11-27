@@ -1,25 +1,22 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
-import 'package:get/get_state_manager/src/simple/get_state.dart';
-import 'package:get/get_state_manager/src/simple/get_view.dart';
-import 'package:get/route_manager.dart';
+import 'package:get/get.dart';
 
 import '../../../constants/sizes.dart';
 import '../../../data/api/api_path.dart';
 import '../../../data/api/asset/data/upload_asset.dart';
 import '../../../routes/app_pages.dart';
-import '../../../shareds/widgets/app_button.dart' as b;
+import '../../../shareds/widgets/app_button.dart';
 import '../../../shareds/widgets/app_gaps.dart';
-import '../../../shareds/widgets/app_html_editor.dart';
 import '../../../shareds/widgets/app_textfield.dart';
 import '../../../shareds/widgets/text_bold.dart';
 import '../../../theme/app_colors.dart';
-import '../controllers/article_detail_controller.dart';
+import '../../../utils/convert_url_to_id.dart';
+import '../controllers/video_detail_controller.dart';
 
-class ArticleDetailContent extends GetView<ArticleDetailController> {
-  const ArticleDetailContent({super.key});
+class VideoDetailContent extends GetView<VideoDetailController> {
+  const VideoDetailContent({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +32,7 @@ class ArticleDetailContent extends GetView<ArticleDetailController> {
               Align(
                 alignment: Alignment.centerLeft,
                 child: InkWell(
-                  onTap: () => Get.offAllNamed(Routes.ARTICLE),
+                  onTap: () => Get.offAllNamed(Routes.VIDEOS),
                   child: Padding(
                     padding: const EdgeInsets.all(Sizes.s),
                     child: Row(
@@ -44,7 +41,7 @@ class ArticleDetailContent extends GetView<ArticleDetailController> {
                         const Icon(Icons.arrow_back),
                         Gaps.horizontal.r,
                         const TextBold(
-                          text: "Artikel",
+                          text: "Video",
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
                         ),
@@ -57,14 +54,14 @@ class ArticleDetailContent extends GetView<ArticleDetailController> {
               Obx(() {
                 final isOnEdit = controller.isOnEdit.value;
                 final isLoading = controller.isLoading.value;
-                final state = isLoading ? b.ButtonState.loading : b.ButtonState.enable;
+                final state = isLoading ? ButtonState.loading : ButtonState.enable;
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: isOnEdit
                       ? [
-                          b.AppButton(
+                          AppButton(
                             state: state,
-                            type: b.ButtonType.outlined,
+                            type: ButtonType.outlined,
                             onPressed: () {
                               controller.isOnEdit.value = false;
                               controller.update();
@@ -73,9 +70,9 @@ class ArticleDetailContent extends GetView<ArticleDetailController> {
                             child: const Text("Batal"),
                           ),
                           Gaps.horizontal.r,
-                          b.AppButton(
+                          AppButton(
                             state: state,
-                            type: b.ButtonType.elevated,
+                            type: ButtonType.elevated,
                             backgroundColor: AppColors.primary,
                             onPressed: controller.patch,
                             fixedSize: const Size(100, 40),
@@ -83,9 +80,9 @@ class ArticleDetailContent extends GetView<ArticleDetailController> {
                           ),
                         ]
                       : [
-                          b.AppButton(
+                          AppButton(
                             state: state,
-                            type: b.ButtonType.elevated,
+                            type: ButtonType.elevated,
                             onPressed: () {
                               controller.isOnEdit.value = true;
                               controller.update();
@@ -94,9 +91,9 @@ class ArticleDetailContent extends GetView<ArticleDetailController> {
                             child: const Text("Edit"),
                           ),
                           Gaps.horizontal.r,
-                          b.AppButton(
+                          AppButton(
                             state: state,
-                            type: b.ButtonType.elevated,
+                            type: ButtonType.elevated,
                             backgroundColor: AppColors.red,
                             onPressed: controller.delete,
                             fixedSize: const Size(100, 40),
@@ -123,7 +120,7 @@ class ArticleDetailContent extends GetView<ArticleDetailController> {
                     : const SizedBox();
               }),
               Obx(() {
-                final judul = controller.article.value?.judul ?? "";
+                final judul = controller.video.value?.judul ?? "";
                 final isOnEdit = controller.isOnEdit.value;
                 return isOnEdit
                     ? Align(
@@ -131,12 +128,12 @@ class ArticleDetailContent extends GetView<ArticleDetailController> {
                         child: ConstrainedBox(
                           constraints: const BoxConstraints(maxWidth: 400),
                           child: AppTextField(
-                            label: const Text("Judul Artikel"),
+                            label: const Text("Judul Video"),
                             isError: false,
                             focusNode: controller.nameFN,
                             controller: controller.nameC,
                             onChanged: (text) {
-                              controller.article.value?.judul = text;
+                              controller.video.value?.judul = text;
                             },
                           ),
                         ),
@@ -148,10 +145,10 @@ class ArticleDetailContent extends GetView<ArticleDetailController> {
                       );
               }),
               Gaps.vertical.r,
-              GetBuilder<ArticleDetailController>(builder: (controller) {
+              GetBuilder<VideoDetailController>(builder: (controller) {
                 final isOnEdit = controller.isOnEdit.value;
                 final isLoading = controller.isLoading.value;
-                final image = controller.article.value?.idAsset ?? "";
+                final image = controller.video.value?.idAsset ?? "";
                 return Align(
                   alignment: Alignment.centerLeft,
                   child: InkWell(
@@ -165,7 +162,7 @@ class ArticleDetailContent extends GetView<ArticleDetailController> {
                               final response = await uploadAsset(bytes: file?.bytes?.toList(), fileName: file?.name ?? "");
                               if (response.data != null) {
                                 final id = response.data ?? "";
-                                controller.article.value?.idAsset = id;
+                                controller.video.value?.idAsset = id;
                               }
                             }
 
@@ -198,38 +195,35 @@ class ArticleDetailContent extends GetView<ArticleDetailController> {
               }),
               Gaps.vertical.m,
               const TextBold(
-                text: "Deskripsi",
+                text: "Video",
                 fontWeight: FontWeight.bold,
                 fontSize: Sizes.r,
               ),
               Gaps.vertical.r,
               Obx(() {
-                final deskripsi = controller.article.value?.body ?? "";
+                final url = controller.video.value?.url ?? "";
                 final isOnEdit = controller.isOnEdit.value;
                 final isHidden = controller.isHidden.value;
+                final isNotYoutubeLink = controller.isNotYouTubeLink.value;
                 return isOnEdit
-                    ? GetBuilder<ArticleDetailController>(builder: (controller) {
-                        return Stack(
-                          children: [
-                            if (isHidden) Container(),
-                            AppHtmlEditor(
-                                editorController: controller.editorController,
-                                hint: "Deskripsi Artikel",
-                                initialText: deskripsi,
-                                onVideoDialogOpen: (isOpen) async {
-                                  controller.isHidden.value = isOpen;
-                                },
-                                onComplete: (text) async {
-                                  controller.editorController.insertHtml(text);
-                                }),
-                          ],
-                        );
-                      })
-                    : HtmlWidget(
-                        deskripsi,
-                        renderMode: RenderMode.column,
-                        textStyle: const TextStyle(fontSize: 14),
-                      );
+                    ? AppTextField(
+                        label: const Text("Masukan url YouTube"),
+                        isError: isNotYoutubeLink,
+                        focusNode: controller.urlFN,
+                        errorText: "Masukan url YouTube yang valid.",
+                        controller: controller.urlC,
+                        onChanged: (text) {
+                          controller.video.value?.url = text;
+                        },
+                      )
+                    : !isHidden
+                        ? HtmlWidget(
+                            '<iframe width="560" height="315" src="https://www.youtube.com/embed/${convertUrlToId(url)}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+                            renderMode: RenderMode.column,
+                            key: key,
+                            textStyle: const TextStyle(fontSize: 14),
+                          )
+                        : const SizedBox();
               }),
             ],
           ),

@@ -6,10 +6,13 @@ import '../../routes/app_pages.dart';
 class APIInterceptor extends InterceptorsWrapper {
   APIInterceptor();
 
-  // @override
-  // void onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
-  //   return super.onRequest(options, handler);
-  // }
+  @override
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
+    options.headers['Origin'] = "https://cms.damdexapps.com";
+    options.headers['Referer'] = "https://cms.damdexapps.com";
+    // options.headers.addAll(await userAgentClientHintsHeader());
+    return super.onRequest(options, handler);
+  }
 
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) async {

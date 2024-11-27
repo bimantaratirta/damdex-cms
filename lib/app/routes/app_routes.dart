@@ -23,6 +23,9 @@ abstract class Routes {
   static const NEWVERSION_APK = _Paths.NEWVERSION_APK;
   static const KEBIJAKAN_PRIVASI = _Paths.KEBIJAKAN_PRIVASI;
   static const SYARAT_KETENTUAN = _Paths.SYARAT_KETENTUAN;
+  static const VIDEOS = _Paths.VIDEOS;
+  static const VIDEO_DETAIL = _Paths.VIDEO_DETAIL;
+  static const ADD_VIDEO = _Paths.ADD_VIDEO;
 }
 
 abstract class _Paths {
@@ -45,4 +48,7 @@ abstract class _Paths {
   static const NEWVERSION_APK = '/newversion.apk';
   static const KEBIJAKAN_PRIVASI = '/kebijakan-privasi';
   static const SYARAT_KETENTUAN = '/syarat-ketentuan';
+  static const VIDEOS = '/videos';
+  static const VIDEO_DETAIL = '/video-detail';
+  static const ADD_VIDEO = '/add-video';
 }

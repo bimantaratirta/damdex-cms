@@ -1,5 +1,6 @@
 class APIPath {
   static const base = "https://api.damdexapps.com";
+  // static const base = "http://10.200.165.212";
   static const admin = "$base/admin";
   static const adminLogin = "$admin/login";
   static const adminLogout = "$admin/logout";
@@ -30,4 +31,7 @@ class APIPath {
 
   static const settings = "$base/pengaturan";
   static String settingId(String id) => "$base/pengaturan/$id";
+
+  static const video = "$base/video";
+  static videoId(String id) => "$video/$id";
 }

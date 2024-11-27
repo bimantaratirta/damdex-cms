@@ -6,6 +6,8 @@ import '../modules/add-product/bindings/add_product_binding.dart';
 import '../modules/add-product/views/add_product_view.dart';
 import '../modules/add-usage/bindings/add_usage_binding.dart';
 import '../modules/add-usage/views/add_usage_view.dart';
+import '../modules/add-video/bindings/add_video_binding.dart';
+import '../modules/add-video/views/add_video_view.dart';
 import '../modules/article-detail/bindings/article_detail_binding.dart';
 import '../modules/article-detail/views/article_detail_view.dart';
 import '../modules/article/bindings/article_binding.dart';
@@ -36,6 +38,10 @@ import '../modules/usage-detail/bindings/usage_detail_binding.dart';
 import '../modules/usage-detail/views/usage_detail_view.dart';
 import '../modules/usage/bindings/usage_binding.dart';
 import '../modules/usage/views/usage_view.dart';
+import '../modules/video_detail/bindings/video_detail_binding.dart';
+import '../modules/video_detail/views/video_detail_view.dart';
+import '../modules/videos/bindings/videos_binding.dart';
+import '../modules/videos/views/videos_view.dart';
 
 // ignore_for_file: constant_identifier_names
 
@@ -136,6 +142,21 @@ class AppPages {
       name: _Paths.SYARAT_KETENTUAN,
       page: () => const SyaratKetentuanView(),
       binding: SyaratKetentuanBinding(),
+    ),
+    GetPage(
+      name: _Paths.VIDEOS,
+      page: () => const VideosView(),
+      binding: VideosBinding(),
+    ),
+    GetPage(
+      name: _Paths.VIDEO_DETAIL,
+      page: () => const VideoDetailView(),
+      binding: VideoDetailBinding(),
+    ),
+    GetPage(
+      name: _Paths.ADD_VIDEO,
+      page: () => const AddVideoView(),
+      binding: AddVideoBinding(),
     ),
   ];
 }

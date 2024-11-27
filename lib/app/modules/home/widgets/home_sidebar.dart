@@ -53,6 +53,16 @@ class HomeSideBar extends StatelessWidget {
           ),
           const HomeSidebarMenu(
             icon: Icon(
+              Icons.video_collection_rounded,
+              color: AppColors.white,
+              size: Sizes.m,
+            ),
+            title: "Videos",
+            route: Routes.VIDEOS,
+            routes: [Routes.VIDEOS, Routes.VIDEO_DETAIL, Routes.ADD_VIDEO],
+          ),
+          const HomeSidebarMenu(
+            icon: Icon(
               Icons.location_on,
               color: AppColors.white,
               size: Sizes.m,
