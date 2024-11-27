@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
+import 'package:pointer_interceptor/pointer_interceptor.dart';
 
 import '../../../data/api/article/data/delete_article.dart';
 import '../../../data/api/article/data/get_article.dart';
@@ -69,27 +70,29 @@ class ArticleDetailController extends GetxController {
 
   Future<void> delete() async {
     final article = this.article.value;
-    Get.dialog(AlertDialog(
-      title: Text("Hapus Artikel ${article?.judul}?"),
-      actions: [
-        b.AppButton(
-          type: b.ButtonType.outlined,
-          onPressed: Get.back,
-          fixedSize: const Size(100, 40),
-          child: const Text("Batal"),
-        ),
-        b.AppButton(
-          type: b.ButtonType.elevated,
-          backgroundColor: AppColors.red,
-          onPressed: () {
-            deleteArticle(article?.id ?? "").then((res) {
-              Get.offAllNamed(Routes.ARTICLE);
-            });
-          },
-          fixedSize: const Size(100, 40),
-          child: const Text("Hapus"),
-        ),
-      ],
+    Get.dialog(PointerInterceptor(
+      child: AlertDialog(
+        title: Text("Hapus Artikel ${article?.judul}?"),
+        actions: [
+          b.AppButton(
+            type: b.ButtonType.outlined,
+            onPressed: Get.back,
+            fixedSize: const Size(100, 40),
+            child: const Text("Batal"),
+          ),
+          b.AppButton(
+            type: b.ButtonType.elevated,
+            backgroundColor: AppColors.red,
+            onPressed: () {
+              deleteArticle(article?.id ?? "").then((res) {
+                Get.offAllNamed(Routes.ARTICLE);
+              });
+            },
+            fixedSize: const Size(100, 40),
+            child: const Text("Hapus"),
+          ),
+        ],
+      ),
     ));
   }
 }

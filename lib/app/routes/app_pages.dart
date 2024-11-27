@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../modules/about/bindings/about_binding.dart';
+import '../modules/about/views/about_view.dart';
 import '../modules/add-article/bindings/add_article_binding.dart';
 import '../modules/add-article/views/add_article_view.dart';
 import '../modules/add-product/bindings/add_product_binding.dart';
@@ -157,6 +159,11 @@ class AppPages {
       name: _Paths.ADD_VIDEO,
       page: () => const AddVideoView(),
       binding: AddVideoBinding(),
+    ),
+    GetPage(
+      name: _Paths.ABOUT,
+      page: () => const AboutView(),
+      binding: AboutBinding(),
     ),
   ];
 }

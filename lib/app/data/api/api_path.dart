@@ -34,4 +34,6 @@ class APIPath {
 
   static const video = "$base/video";
   static videoId(String id) => "$video/$id";
+
+  static const about = "$base/about";
 }

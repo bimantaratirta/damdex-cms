@@ -83,6 +83,16 @@ class HomeSideBar extends StatelessWidget {
           ),
           const HomeSidebarMenu(
             icon: Icon(
+              Icons.attribution,
+              color: AppColors.white,
+              size: Sizes.m,
+            ),
+            title: "Kesimpulan",
+            route: Routes.ABOUT,
+            routes: [Routes.ABOUT],
+          ),
+          const HomeSidebarMenu(
+            icon: Icon(
               Icons.settings,
               color: AppColors.white,
               size: Sizes.m,

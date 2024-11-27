@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pointer_interceptor/pointer_interceptor.dart';
 
 import '../../../data/api/videos/data/delete_video.dart';
 import '../../../data/api/videos/data/get_video.dart';
@@ -79,27 +80,29 @@ class VideoDetailController extends GetxController {
     final video = this.video.value;
     isHidden.value = true;
     update();
-    await Get.dialog(AlertDialog(
-      title: Text("Hapus Video ${video?.judul}?"),
-      actions: [
-        AppButton(
-          type: ButtonType.outlined,
-          onPressed: Get.back,
-          fixedSize: const Size(100, 40),
-          child: const Text("Batal"),
-        ),
-        AppButton(
-          type: ButtonType.elevated,
-          backgroundColor: AppColors.red,
-          onPressed: () {
-            deleteVideo(video?.id ?? "").then((res) {
-              Get.offAllNamed(Routes.VIDEOS);
-            });
-          },
-          fixedSize: const Size(100, 40),
-          child: const Text("Hapus"),
-        ),
-      ],
+    await Get.dialog(PointerInterceptor(
+      child: AlertDialog(
+        title: Text("Hapus Video ${video?.judul}?"),
+        actions: [
+          AppButton(
+            type: ButtonType.outlined,
+            onPressed: Get.back,
+            fixedSize: const Size(100, 40),
+            child: const Text("Batal"),
+          ),
+          AppButton(
+            type: ButtonType.elevated,
+            backgroundColor: AppColors.red,
+            onPressed: () {
+              deleteVideo(video?.id ?? "").then((res) {
+                Get.offAllNamed(Routes.VIDEOS);
+              });
+            },
+            fixedSize: const Size(100, 40),
+            child: const Text("Hapus"),
+          ),
+        ],
+      ),
     ));
     isHidden.value = false;
     update();

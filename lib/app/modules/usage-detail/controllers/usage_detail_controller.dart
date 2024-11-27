@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
+import 'package:pointer_interceptor/pointer_interceptor.dart';
 
 import '../../../data/api/article/data/get_articles.dart';
 import '../../../data/api/article/model/model_articles.dart';
@@ -113,27 +114,29 @@ class UsageDetailController extends GetxController {
 
   Future<void> delete() async {
     final usage = this.usage.value;
-    Get.dialog(AlertDialog(
-      title: Text("Hapus Cara Penggunaan ${usage?.judul}?"),
-      actions: [
-        b.AppButton(
-          type: b.ButtonType.outlined,
-          onPressed: Get.back,
-          fixedSize: const Size(100, 40),
-          child: const Text("Batal"),
-        ),
-        b.AppButton(
-          type: b.ButtonType.elevated,
-          backgroundColor: AppColors.red,
-          onPressed: () {
-            deleteUsage(usage?.id ?? "").then((res) {
-              Get.offAllNamed(Routes.USAGE);
-            });
-          },
-          fixedSize: const Size(100, 40),
-          child: const Text("Hapus"),
-        ),
-      ],
+    Get.dialog(PointerInterceptor(
+      child: AlertDialog(
+        title: Text("Hapus Cara Penggunaan ${usage?.judul}?"),
+        actions: [
+          b.AppButton(
+            type: b.ButtonType.outlined,
+            onPressed: Get.back,
+            fixedSize: const Size(100, 40),
+            child: const Text("Batal"),
+          ),
+          b.AppButton(
+            type: b.ButtonType.elevated,
+            backgroundColor: AppColors.red,
+            onPressed: () {
+              deleteUsage(usage?.id ?? "").then((res) {
+                Get.offAllNamed(Routes.USAGE);
+              });
+            },
+            fixedSize: const Size(100, 40),
+            child: const Text("Hapus"),
+          ),
+        ],
+      ),
     ));
   }
 
