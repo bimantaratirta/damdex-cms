@@ -213,15 +213,10 @@ class ArticleDetailContent extends GetView<ArticleDetailController> {
                           children: [
                             if (isHidden) Container(),
                             AppHtmlEditor(
-                                editorController: controller.editorController,
-                                hint: "Deskripsi Artikel",
-                                initialText: deskripsi,
-                                onVideoDialogOpen: (isOpen) async {
-                                  controller.isHidden.value = isOpen;
-                                },
-                                onComplete: (text) async {
-                                  controller.editorController.insertHtml(text);
-                                }),
+                              editorController: controller.editorController,
+                              hint: "Deskripsi Artikel",
+                              initialText: deskripsi,
+                            )
                           ],
                         );
                       })

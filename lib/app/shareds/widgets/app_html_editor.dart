@@ -18,16 +18,12 @@ class AppHtmlEditor extends StatelessWidget {
     this.initialText,
     required this.hint,
     this.onChanged,
-    this.onVideoDialogOpen,
-    this.onComplete,
   });
 
   final String? initialText;
   final String hint;
   final HtmlEditorController editorController;
   final Function(String?)? onChanged;
-  final Function(bool)? onVideoDialogOpen;
-  final Function(String)? onComplete;
 
   @override
   Widget build(BuildContext context) {
@@ -43,17 +39,10 @@ class AppHtmlEditor extends StatelessWidget {
         customToolbarButtons: [
           InkWell(
             onTap: () async {
-              if (onVideoDialogOpen != null) onVideoDialogOpen!(true);
               Get.dialog(
                 barrierDismissible: false,
                 HtmlEditorIframeDialog(
                   editorController: editorController,
-                  onVideoDialogClose: () {
-                    if (onVideoDialogOpen != null) onVideoDialogOpen!(false);
-                  },
-                  onComplete: (text) {
-                    if (onComplete != null) onComplete!(text);
-                  },
                 ),
               );
             },
@@ -98,13 +87,9 @@ class HtmlEditorIframeDialog extends StatefulWidget {
   const HtmlEditorIframeDialog({
     super.key,
     required this.editorController,
-    required this.onVideoDialogClose,
-    required this.onComplete,
   });
 
   final HtmlEditorController editorController;
-  final Function() onVideoDialogClose;
-  final Function(String) onComplete;
 
   @override
   State<HtmlEditorIframeDialog> createState() => _HtmlEditorIframeDialogState();
@@ -134,7 +119,6 @@ class _HtmlEditorIframeDialogState extends State<HtmlEditorIframeDialog> {
           TextButton(
             onPressed: () {
               Navigator.of(context).pop();
-              widget.onVideoDialogClose();
             },
             child: const Text('Cancel'),
           ),
@@ -143,10 +127,9 @@ class _HtmlEditorIframeDialogState extends State<HtmlEditorIframeDialog> {
               if (!isValidYouTubeLink(c.text)) {
                 setState(() => isError = true);
               } else {
-                widget.onComplete(
+                widget.editorController.insertHtml(
                     '<iframe width="560" height="315" src="https://www.youtube.com/embed/${convertUrlToId(c.text)}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>');
                 Navigator.of(context).pop();
-                widget.onVideoDialogClose();
               }
             },
             child: const Text("OK"),
