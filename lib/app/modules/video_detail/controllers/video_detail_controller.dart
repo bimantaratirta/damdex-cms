@@ -17,14 +17,17 @@ class VideoDetailController extends GetxController {
   final ScrollController scrollController = ScrollController();
   final TextEditingController nameC = TextEditingController();
   final TextEditingController urlC = TextEditingController();
+  final TextEditingController indexC = TextEditingController();
   final FocusNode nameFN = FocusNode();
   final FocusNode urlFN = FocusNode();
+  final FocusNode indexFN = FocusNode();
 
   RxBool isOnEdit = false.obs;
   RxBool isLoading = false.obs;
   RxBool isError = false.obs;
   RxBool isHidden = false.obs;
   RxBool isNotYouTubeLink = false.obs;
+  RxBool isNaN = false.obs;
 
   Future<void> patch() async {
     isNotYouTubeLink.value = false;
@@ -37,6 +40,7 @@ class VideoDetailController extends GetxController {
     final response = await patchVideo(
       video.value?.id ?? "",
       {
+        "index": video.value?.index,
         "judul": video.value?.judul,
         "url": video.value?.url,
         "idAsset": video.value?.idAsset,
@@ -49,6 +53,8 @@ class VideoDetailController extends GetxController {
       if (response.data != null) {
         video.value = response.data;
         nameC.text = response.data?.judul ?? "";
+        urlC.text = response.data?.url ?? "";
+        indexC.text = response.data?.index.toString() ?? "0";
       }
       isError.value = false;
     } else {
@@ -68,6 +74,7 @@ class VideoDetailController extends GetxController {
       video.value = response.data;
       nameC.text = response.data?.judul ?? "";
       urlC.text = response.data?.url ?? "";
+      indexC.text = response.data?.index.toString() ?? "0";
     } else {
       Get.offNamed(Routes.VIDEOS);
     }

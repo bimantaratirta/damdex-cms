@@ -102,6 +102,39 @@ class VideoDetailContent extends GetView<VideoDetailController> {
                         ],
                 );
               }),
+              Obx(
+                () {
+                  final isNaN = controller.isNaN.value;
+                  final isOnEdit = controller.isOnEdit.value;
+                  final index = controller.video.value?.index;
+                  if (index == null) return const SizedBox();
+                  return !isOnEdit
+                      ? TextBold(
+                          text: "Urutan ke-$index",
+                          fontWeight: FontWeight.bold,
+                          fontSize: Sizes.m,
+                        )
+                      : ConstrainedBox(
+                          constraints: const BoxConstraints(maxWidth: 200),
+                          child: AppTextField(
+                            label: const Text("Urutan Video"),
+                            isError: isNaN,
+                            errorText: "Harus berupa angka",
+                            keyboardType: TextInputType.number,
+                            focusNode: controller.indexFN,
+                            controller: controller.indexC,
+                            onChanged: (text) {
+                              try {
+                                controller.video.value?.index = int.parse(text);
+                                controller.isNaN.value = false;
+                              } catch (e) {
+                                controller.isNaN.value = true;
+                              }
+                            },
+                          ),
+                        );
+                },
+              ),
               Gaps.vertical.m,
               Obx(() {
                 final isError = controller.isError.value;

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 class Video {
   String? id;
+  int? index;
   String? judul;
   String? url;
   String? idAsset;
@@ -10,6 +11,7 @@ class Video {
 
   Video({
     this.id,
+    this.index,
     this.judul,
     this.url,
     this.idAsset,
@@ -23,6 +25,7 @@ class Video {
 
   factory Video.fromJson(Map<String, dynamic> json) => Video(
         id: json["id"],
+        index: json["index"],
         judul: json["judul"],
         url: json["url"],
         idAsset: json["idAsset"],
@@ -32,6 +35,7 @@ class Video {
 
   Map<String, dynamic> toJson() => {
         "id": id,
+        "index": index,
         "judul": judul,
         "url": url,
         "idAsset": idAsset,
