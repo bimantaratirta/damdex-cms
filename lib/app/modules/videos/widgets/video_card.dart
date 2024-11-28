@@ -56,21 +56,38 @@ class VideoCard extends StatelessWidget {
                   ),
                 ),
                 Gaps.vertical.s,
-                AppButton(
-                  type: ButtonType.elevated,
-                  onPressed: () => Get.toNamed(Routes.VIDEO_DETAIL, arguments: video.id),
-                  fixedSize: const Size(110, 25),
-                  // padding: EdgeInsets.zero,
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(Sizes.s),
-                  ),
-                  child: const Text(
-                    "Selengkapnya",
-                    style: TextStyle(
-                      fontSize: 10,
-                      fontWeight: FontWeight.w500,
+                Row(
+                  children: [
+                    AppButton(
+                      type: ButtonType.elevated,
+                      onPressed: () => Get.toNamed(Routes.VIDEO_DETAIL, arguments: video.id),
+                      fixedSize: const Size(110, 25),
+                      // padding: EdgeInsets.zero,
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(Sizes.s),
+                      ),
+                      child: const Text(
+                        "Selengkapnya",
+                        style: TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
                     ),
-                  ),
+                    const Spacer(),
+                    Container(
+                      padding: const EdgeInsets.all(Sizes.s),
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: AppColors.primary,
+                      ),
+                      child: TextBold(
+                        text: video.index.toString(),
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.white,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

@@ -21,6 +21,7 @@ class AddVideoController extends GetxController {
     isLoading.value = true;
     update();
     final response = await postVideo({
+      "index": video.value.index,
       "judul": video.value.judul,
       "url": video.value.url,
       "idAsset": video.value.idAsset,
