@@ -92,6 +92,31 @@ class AddVideoContent extends GetView<AddVideoController> {
                       )
                     : const SizedBox();
               }),
+              Obx(
+                () {
+                  final isNaN = controller.isNaN.value;
+                  return ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 200),
+                    child: AppTextField(
+                      label: const Text("Urutan Video"),
+                      isError: isNaN,
+                      errorText: "Harus berupa angka",
+                      keyboardType: TextInputType.number,
+                      focusNode: controller.indexFN,
+                      controller: controller.indexC,
+                      onChanged: (text) {
+                        try {
+                          controller.video.value.index = int.parse(text);
+                          controller.isNaN.value = false;
+                        } catch (e) {
+                          controller.isNaN.value = true;
+                        }
+                      },
+                    ),
+                  );
+                },
+              ),
+              Gaps.vertical.m,
               Align(
                 alignment: Alignment.centerLeft,
                 child: ConstrainedBox(

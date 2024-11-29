@@ -5,7 +5,7 @@ import 'package:pointer_interceptor/pointer_interceptor.dart';
 
 import '../../../constants/sizes.dart';
 import '../../../data/api/api_path.dart';
-import '../../../data/api/article/model/model_articles.dart';
+import '../../../data/api/article/model/model_article.dart';
 import '../../../data/api/usage/model/model_usage.dart';
 import '../../../shareds/widgets/app_gaps.dart';
 import '../../../shareds/widgets/app_textfield.dart';
@@ -37,7 +37,7 @@ class UsageDetailArticleDialog extends StatelessWidget {
                 onChanged: controller.onSearch,
               ),
               if (articles.isEmpty) const EmptyList(description: "Artikel Tidak Ditemukan"),
-              for (Artikel article in articles)
+              for (ModelArticle article in articles)
                 InkWell(
                   onTap: () {
                     controller.selectedArticle.value = article;

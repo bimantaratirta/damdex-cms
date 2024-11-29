@@ -16,13 +16,16 @@ class ArticleDetailController extends GetxController {
 
   final ScrollController scrollController = ScrollController();
   final TextEditingController nameC = TextEditingController();
+  final TextEditingController indexC = TextEditingController();
   final FocusNode nameFN = FocusNode();
+  final FocusNode indexFN = FocusNode();
   final HtmlEditorController editorController = HtmlEditorController();
 
   RxBool isOnEdit = false.obs;
   RxBool isLoading = false.obs;
   RxBool isError = false.obs;
   RxBool isHidden = false.obs;
+  RxBool isNaN = false.obs;
 
   Future<void> patch() async {
     isLoading.value = true;
@@ -30,6 +33,7 @@ class ArticleDetailController extends GetxController {
     final response = await patchArticle(
       article.value?.id ?? "",
       {
+        "index": article.value?.index,
         "judul": article.value?.judul,
         "body": await editorController.getText(),
         "idAsset": article.value?.idAsset,
@@ -42,6 +46,7 @@ class ArticleDetailController extends GetxController {
       if (response.data != null) {
         article.value = response.data;
         nameC.text = response.data?.judul ?? "";
+        indexC.text = response.data?.index.toString() ?? "";
       }
       isError.value = false;
     } else {
@@ -60,6 +65,7 @@ class ArticleDetailController extends GetxController {
     if (response.data != null) {
       article.value = response.data;
       nameC.text = response.data?.judul ?? "";
+      indexC.text = response.data?.index.toString() ?? "";
     } else {
       Get.offNamed(Routes.ARTICLE);
     }

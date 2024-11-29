@@ -3,7 +3,7 @@ import 'package:get/route_manager.dart';
 
 import '../../../constants/sizes.dart';
 import '../../../data/api/api_path.dart';
-import '../../../data/api/article/model/model_articles.dart';
+import '../../../data/api/article/model/model_article.dart';
 import '../../../routes/app_pages.dart';
 import '../../../shareds/widgets/app_button.dart';
 import '../../../shareds/widgets/app_gaps.dart';
@@ -14,7 +14,7 @@ import '../../../utils/iso_parser.dart';
 class ArticleCard extends StatelessWidget {
   const ArticleCard({super.key, required this.artikel});
 
-  final Artikel artikel;
+  final ModelArticle artikel;
 
   @override
   Widget build(BuildContext context) {
@@ -56,21 +56,38 @@ class ArticleCard extends StatelessWidget {
                   ),
                 ),
                 Gaps.vertical.s,
-                AppButton(
-                  type: ButtonType.elevated,
-                  onPressed: () => Get.toNamed(Routes.ARTICLE_DETAIL, arguments: artikel.id),
-                  fixedSize: const Size(110, 25),
-                  // padding: EdgeInsets.zero,
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(Sizes.s),
-                  ),
-                  child: const Text(
-                    "Selengkapnya",
-                    style: TextStyle(
-                      fontSize: 10,
-                      fontWeight: FontWeight.w500,
+                Row(
+                  children: [
+                    AppButton(
+                      type: ButtonType.elevated,
+                      onPressed: () => Get.toNamed(Routes.ARTICLE_DETAIL, arguments: artikel.id),
+                      fixedSize: const Size(110, 25),
+                      // padding: EdgeInsets.zero,
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(Sizes.s),
+                      ),
+                      child: const Text(
+                        "Selengkapnya",
+                        style: TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
                     ),
-                  ),
+                    const Spacer(),
+                    Container(
+                      padding: const EdgeInsets.all(Sizes.s),
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: AppColors.primary,
+                      ),
+                      child: TextBold(
+                        text: artikel.index.toString(),
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.white,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

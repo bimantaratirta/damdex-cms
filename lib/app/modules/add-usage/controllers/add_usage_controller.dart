@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
 
 import '../../../data/api/article/data/get_articles.dart';
+import '../../../data/api/article/model/model_article.dart';
 import '../../../data/api/article/model/model_articles.dart';
 import '../../../data/api/usage/data/post_usage.dart';
 import '../../../data/api/usage/model/model_usage.dart';
@@ -11,9 +12,9 @@ import '../../../routes/app_pages.dart';
 class AddUsageController extends GetxController {
   final Rx<ModelUsage> usage = Rx<ModelUsage>(ModelUsage(listArtikel: [], listTipe: []));
   final Rx<ModelArticles> articles = Rx<ModelArticles>(ModelArticles(totalAllData: 0, payload: []));
-  final RxList<Artikel> searchedList = RxList<Artikel>([]);
+  final RxList<ModelArticle> searchedList = RxList<ModelArticle>([]);
   final RxList<UsageType> types = RxList<UsageType>([]);
-  final Rx<Artikel?> selectedArticle = Rx<Artikel?>(null);
+  final Rx<ModelArticle?> selectedArticle = Rx<ModelArticle?>(null);
 
   final ScrollController scrollController = ScrollController();
   final HtmlEditorController editorController = HtmlEditorController();

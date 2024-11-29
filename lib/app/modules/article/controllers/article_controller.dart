@@ -3,11 +3,11 @@ import 'package:get/get.dart';
 
 import '../../../data/api/admin/data/admin_validate.dart';
 import '../../../data/api/article/data/get_articles.dart';
-import '../../../data/api/article/model/model_articles.dart';
+import '../../../data/api/article/model/model_article.dart';
 
 class ArticleController extends GetxController {
-  List<Artikel>? listArtikel;
-  Rx<List<Artikel>?> searchedList = Rx<List<Artikel>?>(null);
+  List<ModelArticle>? listArtikel;
+  Rx<List<ModelArticle>?> searchedList = Rx<List<ModelArticle>?>(null);
 
   final TextEditingController searchC = TextEditingController();
   final FocusNode searchFN = FocusNode();

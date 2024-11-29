@@ -8,7 +8,7 @@ import 'package:html_editor_enhanced/html_editor.dart';
 
 import '../../../constants/sizes.dart';
 import '../../../data/api/api_path.dart';
-import '../../../data/api/article/model/model_articles.dart';
+import '../../../data/api/article/model/model_article.dart';
 import '../../../data/api/asset/data/upload_asset.dart';
 import '../../../data/api/usage/model/model_usage.dart';
 import '../../../routes/app_pages.dart';
@@ -282,7 +282,7 @@ class AddUsageContent extends GetView<AddUsageController> {
                     return Stack(
                       children: [
                         ArticleCard(
-                          artikel: Artikel.fromJson(artikel.toJson()),
+                          artikel: ModelArticle.fromJson(artikel.toJson()),
                         ),
                         Align(
                           alignment: Alignment.topRight,

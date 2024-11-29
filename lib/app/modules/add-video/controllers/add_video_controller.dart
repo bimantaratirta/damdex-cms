@@ -11,11 +11,14 @@ class AddVideoController extends GetxController {
   final ScrollController scrollController = ScrollController();
   final TextEditingController nameC = TextEditingController();
   final TextEditingController urlC = TextEditingController();
+  final TextEditingController indexC = TextEditingController();
   final FocusNode nameFN = FocusNode();
   final FocusNode urlFN = FocusNode();
+  final FocusNode indexFN = FocusNode();
 
   final RxBool isLoading = false.obs;
   final RxBool isError = false.obs;
+  final RxBool isNaN = false.obs;
 
   Future<void> submit() async {
     isLoading.value = true;

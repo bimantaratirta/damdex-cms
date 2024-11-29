@@ -12,15 +12,19 @@ class AddArticleController extends GetxController {
   final ScrollController scrollController = ScrollController();
   final HtmlEditorController editorController = HtmlEditorController();
   final TextEditingController nameC = TextEditingController();
+  final TextEditingController indexC = TextEditingController();
   final FocusNode nameFN = FocusNode();
+  final FocusNode indexFN = FocusNode();
 
   final RxBool isLoading = false.obs;
   final RxBool isError = false.obs;
+  final RxBool isNaN = false.obs;
 
   Future<void> submit() async {
     isLoading.value = true;
     update();
     final response = await postArticle({
+      "index": article.value.index,
       "judul": article.value.judul,
       "body": await editorController.getText(),
       "idAsset": article.value.idAsset,
