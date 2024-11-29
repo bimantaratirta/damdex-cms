@@ -56,35 +56,40 @@ class ArticleCard extends StatelessWidget {
                   ),
                 ),
                 Gaps.vertical.s,
-                Row(
+                Stack(
                   children: [
-                    AppButton(
-                      type: ButtonType.elevated,
-                      onPressed: () => Get.toNamed(Routes.ARTICLE_DETAIL, arguments: artikel.id),
-                      fixedSize: const Size(110, 25),
-                      // padding: EdgeInsets.zero,
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(Sizes.s),
-                      ),
-                      child: const Text(
-                        "Selengkapnya",
-                        style: TextStyle(
-                          fontSize: 10,
-                          fontWeight: FontWeight.w500,
+                    Flexible(
+                      child: AppButton(
+                        type: ButtonType.elevated,
+                        onPressed: () => Get.toNamed(Routes.ARTICLE_DETAIL, arguments: artikel.id),
+                        fixedSize: const Size(110, 25),
+                        // padding: EdgeInsets.zero,
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(Sizes.s),
+                        ),
+                        child: const Text(
+                          "Selengkapnya",
+                          style: TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          softWrap: true,
                         ),
                       ),
                     ),
-                    const Spacer(),
-                    Container(
-                      padding: const EdgeInsets.all(Sizes.s),
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: AppColors.primary,
-                      ),
-                      child: TextBold(
-                        text: artikel.index.toString(),
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.white,
+                    Align(
+                      alignment: Alignment.bottomRight,
+                      child: Container(
+                        padding: const EdgeInsets.all(Sizes.s),
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: AppColors.primary,
+                        ),
+                        child: TextBold(
+                          text: artikel.index.toString(),
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.white,
+                        ),
                       ),
                     ),
                   ],

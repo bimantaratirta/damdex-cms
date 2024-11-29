@@ -58,6 +58,13 @@ class AppHtmlEditor extends StatelessWidget {
           if (response.data != null) {
             final id = response.data ?? "";
             editorController.insertHtml('<p><img src="${APIPath.assetId(id)}" data-filename="${file.name}"></p>');
+          } else {
+            Get.showSnackbar(
+              const GetSnackBar(
+                title: "Terjadi kesalahan saat memasukan gambar",
+                message: "Ukuran gambar tidak boleh lebih dari 1MB, dan pastikan file tersebut adalah gambar",
+              ),
+            );
           }
           return false;
         },

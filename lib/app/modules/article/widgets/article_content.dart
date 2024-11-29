@@ -66,7 +66,7 @@ class ArticleContent extends GetView<ArticleController> {
               ] else ...[
                 AlignedGridView.extent(
                   shrinkWrap: true,
-                  maxCrossAxisExtent: 600,
+                  maxCrossAxisExtent: 800,
                   itemCount: listArtikel.length,
                   mainAxisSpacing: Sizes.r,
                   crossAxisSpacing: Sizes.r,
