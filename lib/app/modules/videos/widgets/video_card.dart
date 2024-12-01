@@ -74,7 +74,6 @@ class VideoCard extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const Spacer(),
                     Container(
                       padding: const EdgeInsets.all(Sizes.s),
                       decoration: const BoxDecoration(

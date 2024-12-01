@@ -63,6 +63,9 @@ class AppHtmlEditor extends StatelessWidget {
               const GetSnackBar(
                 title: "Terjadi kesalahan saat memasukan gambar",
                 message: "Ukuran gambar tidak boleh lebih dari 1MB, dan pastikan file tersebut adalah gambar",
+                duration: Duration(seconds: 5),
+                backgroundColor: Colors.red,
+                snackPosition: SnackPosition.TOP,
               ),
             );
           }
