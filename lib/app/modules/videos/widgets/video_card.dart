@@ -24,15 +24,27 @@ class VideoCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            height: 80,
+            height: 90,
             width: 160,
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(Sizes.xs)),
+            alignment: Alignment.topLeft,
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(Radius.circular(Sizes.xs)),
               color: AppColors.white,
+              image: DecorationImage(
+                image: NetworkImage(APIPath.assetId(video.idAsset ?? "")),
+              ),
             ),
-            child: Image.network(
-              APIPath.assetId(video.idAsset ?? ""),
-              fit: BoxFit.contain,
+            child: Container(
+              padding: const EdgeInsets.all(Sizes.s),
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: AppColors.primary,
+              ),
+              child: TextBold(
+                text: video.index.toString(),
+                fontWeight: FontWeight.w500,
+                color: AppColors.white,
+              ),
             ),
           ),
           Gaps.horizontal.m,
@@ -56,37 +68,21 @@ class VideoCard extends StatelessWidget {
                   ),
                 ),
                 Gaps.vertical.s,
-                Row(
-                  children: [
-                    AppButton(
-                      type: ButtonType.elevated,
-                      onPressed: () => Get.toNamed(Routes.VIDEO_DETAIL, arguments: video.id),
-                      fixedSize: const Size(110, 25),
-                      // padding: EdgeInsets.zero,
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(Sizes.s),
-                      ),
-                      child: const Text(
-                        "Selengkapnya",
-                        style: TextStyle(
-                          fontSize: 10,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
+                AppButton(
+                  type: ButtonType.elevated,
+                  onPressed: () => Get.toNamed(Routes.VIDEO_DETAIL, arguments: video.id),
+                  fixedSize: const Size(110, 25),
+                  // padding: EdgeInsets.zero,
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(Sizes.s),
+                  ),
+                  child: const Text(
+                    "Selengkapnya",
+                    style: TextStyle(
+                      fontSize: 10,
+                      fontWeight: FontWeight.w500,
                     ),
-                    Container(
-                      padding: const EdgeInsets.all(Sizes.s),
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: AppColors.primary,
-                      ),
-                      child: TextBold(
-                        text: video.index.toString(),
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.white,
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ],
             ),

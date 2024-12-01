@@ -24,15 +24,27 @@ class ArticleCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            height: 80,
+            height: 90,
             width: 160,
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(Sizes.xs)),
+            alignment: Alignment.topLeft,
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(Radius.circular(Sizes.xs)),
               color: AppColors.white,
+              image: DecorationImage(
+                image: NetworkImage(APIPath.assetId(artikel.idAsset ?? "")),
+              ),
             ),
-            child: Image.network(
-              APIPath.assetId(artikel.idAsset ?? ""),
-              fit: BoxFit.contain,
+            child: Container(
+              padding: const EdgeInsets.all(Sizes.s),
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: AppColors.primary,
+              ),
+              child: TextBold(
+                text: artikel.index.toString(),
+                fontWeight: FontWeight.w500,
+                color: AppColors.white,
+              ),
             ),
           ),
           Gaps.horizontal.m,
@@ -56,7 +68,7 @@ class ArticleCard extends StatelessWidget {
                   ),
                 ),
                 Gaps.vertical.s,
-                Stack(
+                Row(
                   children: [
                     Flexible(
                       child: AppButton(
@@ -74,21 +86,6 @@ class ArticleCard extends StatelessWidget {
                             fontWeight: FontWeight.w500,
                           ),
                           softWrap: true,
-                        ),
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: Container(
-                        padding: const EdgeInsets.all(Sizes.s),
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: AppColors.primary,
-                        ),
-                        child: TextBold(
-                          text: artikel.index.toString(),
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.white,
                         ),
                       ),
                     ),
